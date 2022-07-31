@@ -6,7 +6,10 @@
   "scripts": {
     "lint": "./node_modules/.bin/eslint ./client/src ./server/src",
     "pretty": "prettier --write **/*.{js,json} !node_modules/**",
-    "postpretty": "yarn lint --fix"
+    "postpretty": "yarn lint --fix",
+    "server": "npm run startdev --prefix server",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -19,6 +22,7 @@
   },
   "homepage": "https://github.com/wfarat/LifePlanner#readme",
   "devDependencies": {
+    "concurrently": "^7.3.0",
     "eslint": "^8.20.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",

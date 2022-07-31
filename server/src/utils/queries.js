@@ -14,4 +14,5 @@ DROP TABLE users;
 `;
 
 export const insertIntoAllTables = `
-INSERT INTO users (email, password, firstname, lastname) VALUES ('test user', 'testpassword', 'test', 'user');
+INSERT INTO users (email, password, firstname, lastname) VALUES ('test user', 'testpassword', 'test', 'user')
+`;
