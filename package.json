@@ -1,0 +1,27 @@
+{
+  "name": "lifeplanner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint ./client/src ./server/src",
+    "pretty": "prettier --write **/*.{js,json} !node_modules/**",
+    "postpretty": "yarn lint --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wfarat/LifePlanner.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wfarat/LifePlanner/issues"
+  },
+  "homepage": "https://github.com/wfarat/LifePlanner#readme",
+  "devDependencies": {
+    "eslint": "^8.20.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "prettier": "^2.7.1"
+  }
+}
