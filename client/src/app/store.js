@@ -12,9 +12,11 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import daySlice from '../features/day/daySlice';
 
 const appReducer = combineReducers({
   user: userSlice,
+  day: daySlice,
 });
 
 const rootReducer = (state, action) => {

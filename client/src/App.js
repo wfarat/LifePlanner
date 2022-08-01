@@ -1,6 +1,4 @@
 import React from 'react';
-import './App.css';
-
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -32,6 +30,9 @@ function App() {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto">
+                <Nav.Link as={Link} to="calendar" href="#">
+                  Calendar
+                </Nav.Link>
                 <User />
               </Nav>
             </Navbar.Collapse>
