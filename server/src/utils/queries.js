@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS days (
   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
   day_ref INT NOT NULL,
   user_id INT NOT NULL,
-  comment VARCHAR NOT NULL,
+  comment VARCHAR DEFAULT '',
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
 CREATE TABLE IF NOT EXISTS goals (
@@ -32,10 +32,10 @@ CREATE TABLE IF NOT EXISTS goals (
 CREATE TABLE IF NOT EXISTS tasks (
   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
   user_id INT NOT NULL,
-  repeat VARCHAR(50) DEFAULT '',
+  repeat VARCHAR(100) NOT NULL,
   name VARCHAR(100) NOT NULL,
-  duration INT,
-  description VARCHAR NOT NULL,
+  duration INT DEFAULT 0,
+  description VARCHAR DEFAULT '',
   goal_id INT,
   FOREIGN KEY (goal_id) REFERENCES goals(id),
   FOREIGN KEY (user_id) REFERENCES users(id)
@@ -80,7 +80,7 @@ DROP TABLE users;
 export const insertIntoAllTables = `
 INSERT INTO users (email, password, firstname, lastname) VALUES ('test user', 'testpassword', 'test', 'user');
 INSERT INTO days (day_ref, user_id, comment) VALUES (111990, 1, 'this day was cool');
-INSERT INTO tasks (name, description, user_id) VALUES ('unga bunga', 'good task', 1);
+INSERT INTO tasks (name, repeat, description, user_id) VALUES ('unga bunga', 'no-repeat', 'good task', 1);
 INSERT INTO day_tasks (day_id, task_id) VALUES (1, 1);
 INSERT INTO day_notes (day_id, content) VALUES (1, 'blah blah');
 `;
