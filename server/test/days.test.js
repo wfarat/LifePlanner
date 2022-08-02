@@ -1,6 +1,6 @@
 import { expect, server } from './setup';
 
-describe('Cart', () => {
+describe('Days', () => {
   it('gets day', (done) => {
     server
       .get('/api/days/1/111990')
