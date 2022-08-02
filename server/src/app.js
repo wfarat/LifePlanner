@@ -5,7 +5,7 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import authRouter from './routes/auth';
 import usersRouter from './routes/users';
-import dayRouter from './routes/day';
+import daysRouter from './routes/days';
 
 const app = express();
 app.use(logger('dev'));
@@ -15,9 +15,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/api', authRouter);
 app.use('/api/users', usersRouter);
-app.use('/api/day', dayRouter);
-app.use(express.static(path.resolve(__dirname, '../client/build')));
+app.use('/api/days', daysRouter);
+app.use(express.static(path.resolve(__dirname, '../../client/build')));
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+  res.sendFile(path.resolve(__dirname, '../../client/build', 'index.html'));
 });
 export default app;

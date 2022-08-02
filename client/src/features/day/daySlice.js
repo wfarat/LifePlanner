@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const getDay = createAsyncThunk('getDay', async (data) => {
-  const res = await axios(`/api/day/${data.userId}/${data.day}`, {
+  const res = await axios(`/api/days/${data.userId}/${data.dayRef}`, {
     method: 'GET',
     headers: { 'x-access-token': data.accessToken },
   });

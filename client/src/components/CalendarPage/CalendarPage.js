@@ -6,7 +6,7 @@ export default function CalendarPage() {
   const navigate = useNavigate();
 
   const onChange = (value) => {
-    const day = value.getDay();
+    const day = value.getDate();
     const month = value.getMonth() + 1;
     const year = value.getFullYear();
     const dateString = `${day}${month}${year}`;
