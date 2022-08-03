@@ -15,6 +15,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import Register from './components/Register/Register';
 import CalendarPage from './components/CalendarPage/CalendarPage';
 import Day from './features/day/Day';
+import AddTask from './components/AddTask/AddTask';
 const container = document.getElementById('root');
 const root = createRoot(container);
 let persistor = persistStore(store);
@@ -32,6 +33,7 @@ root.render(
                 <Route path="user" element={<UserPage />} />
                 <Route path="day/:dayRef" element={<Day />} />
                 <Route path="user/password" element={<Password />} />
+                <Route path="tasks/addtask" element={<AddTask />} />
                 <Route path="calendar" element={<CalendarPage />} />
               </Route>
             </Routes>

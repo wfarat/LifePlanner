@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS goals (
   name VARCHAR(100) NOT NULL,
   description VARCHAR NOT NULL,
   user_id INT NOT NULL,
+  duration INT DEFAULT 0,
   created TIMESTAMPTZ NOT NULL,
   edited TIMESTAMPTZ NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id)
@@ -32,7 +33,7 @@ CREATE TABLE IF NOT EXISTS goals (
 CREATE TABLE IF NOT EXISTS tasks (
   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
   user_id INT NOT NULL,
-  repeat VARCHAR(100) NOT NULL,
+  repeat TEXT[] NOT NULL,
   name VARCHAR(100) NOT NULL,
   duration INT DEFAULT 0,
   description VARCHAR DEFAULT '',
@@ -53,6 +54,7 @@ CREATE TABLE IF NOT EXISTS day_tasks (
   task_id INT NOT NULL,
   start INT,
   finish INT,
+  status VARCHAR(50) DEFAULT '',
   comment VARCHAR(100) DEFAULT '',
   FOREIGN KEY (day_id) REFERENCES days(id),
   FOREIGN KEY (task_id) REFERENCES tasks(id)

@@ -33,6 +33,9 @@ function App() {
                 <Nav.Link as={Link} to="calendar" href="#">
                   Calendar
                 </Nav.Link>
+                <Nav.Link as={Link} to="tasks/addtask" href="#">
+                  Add Task
+                </Nav.Link>
                 <User />
               </Nav>
             </Navbar.Collapse>

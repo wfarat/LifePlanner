@@ -40,32 +40,40 @@ export const sendDay = async (req, res) => {
 
 export const addDay = async (req, res) => {
   const { tasks, comment, notes } = req.body;
-  const data = await daysModel.insertWithReturn(
-    'day_ref, user_id, comment',
-    `${req.params.dayRef}, ${req.user.id}, '${comment}'`
-  );
-  const day = data.rows[0];
-  tasks.forEach(async (task) => {
-    if (!task.start && !task.finish) {
-      await dayTasksModel.insert('day_id, task_id', `${day.id}, ${task.id}`);
-    } else {
-      const columns = 'day_id, task_id, start, finish';
-      const values = `${day.id}, ${task.id}, ${task.start}, ${task.finish}`;
-      await dayTasksModel.insert(columns, values);
-    }
-  });
-  notes.forEach(async (note) => {
-    if (note.title) {
-      await dayNotesModel.insert(
-        'day_id, title, content',
-        `${day.id}, '${note.title}', '${note.content}'`
-      );
-    } else {
-      await dayNotesModel.insert(
-        'day_id, content',
-        `${day.id}, '${day.content}'`
-      );
-    }
-  });
-  res.status(200).send({ day });
+  const dayCheck = await findDay(req.user.id, req.params.dayRef);
+  if (dayCheck) {
+    res.status(400).send();
+  } else {
+    const data = await daysModel.insertWithReturn(
+      'day_ref, user_id, comment',
+      `${req.params.dayRef}, ${req.user.id}, '${comment}'`
+    );
+    const day = data.rows[0];
+    tasks.forEach(async (task) => {
+      if (!task.start && !task.finish) {
+        await dayTasksModel.insert(
+          'day_id, task_id, status',
+          `${day.id}, ${task.id}, 'todo'`
+        );
+      } else {
+        const columns = 'day_id, task_id, start, finish, status';
+        const values = `${day.id}, ${task.id}, ${task.start}, ${task.finish}, 'todo'`;
+        await dayTasksModel.insert(columns, values);
+      }
+    });
+    notes.forEach(async (note) => {
+      if (note.title) {
+        await dayNotesModel.insert(
+          'day_id, title, content',
+          `${day.id}, '${note.title}', '${note.content}'`
+        );
+      } else {
+        await dayNotesModel.insert(
+          'day_id, content',
+          `${day.id}, '${day.content}'`
+        );
+      }
+    });
+    res.status(200).send({ day });
+  }
 };
