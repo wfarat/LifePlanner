@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const getGoals = createAsyncThunk('getGoals', async (data) => {
-  const res = await axios(`/api/goals/${data.userId}}`, {
+  const res = await axios(`/api/goals/${data.userId}`, {
     method: 'GET',
     headers: { 'x-access-token': data.accessToken },
   });
@@ -32,6 +32,7 @@ const goalsSlice = createSlice({
       .addCase(getGoals.fulfilled, (state, { payload }) => {
         state.status = 'idle';
         state.data.goals = payload.goals;
+        state.data.message = '';
       })
       .addCase(getGoals.rejected, (state) => {
         state.status = 'rejected';
@@ -45,6 +46,7 @@ const goalsSlice = createSlice({
         if (payload.goal) {
           state.data.goals.push(payload.goal);
         }
+        state.data.message = '';
       })
       .addCase(addGoal.rejected, (state) => {
         state.status = 'rejected';

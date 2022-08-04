@@ -1,7 +1,7 @@
 import Model from '../models/model';
 
 const tasksModel = new Model('tasks');
-
+const goalTasksModel = new Model('goal_tasks');
 const findByUser = async (userId) => {
   const data = await tasksModel.select('*', ` WHERE user_id = ${userId}`);
   return data.rows;
@@ -25,13 +25,15 @@ export const sendTasks = async (req, res) => {
 
 export const addTask = async (req, res) => {
   const {
-    repeat, name, duration, description, goalId
+    repeat, name, duration, description, goal, times
   } = req.body;
-  if (goalId) {
-    const columns = 'user_id, repeat, name, duration, description, goal_id';
-    const values = `${req.user.id}, '{${repeat}}', '${name}', ${duration}, '${description}', ${goalId}`;
+  if (goal && times > 0) {
+    const columns = 'user_id, repeat, name, duration, description';
+    const values = `${req.user.id}, '{${repeat}}', '${name}', ${duration}, '${description}'`;
     const data = await tasksModel.insertWithReturn(columns, values);
-    res.status(201).send({ task: data.rows[0] });
+    const task = data.rows[0];
+    await goalTasksModel.insert('goal_id, task_id, times', `${goal}, ${task.id}, ${times}`);
+    res.status(201).send({ task });
   } else {
     const columns = 'user_id, repeat, name, duration, description';
     const values = `${req.user.id}, '{${repeat}}', '${name}', ${duration}, '${description}'`;

@@ -5,6 +5,7 @@ import Model from '../models/model';
 dayjs.extend(utc);
 
 const goalsModel = new Model('goals');
+const goalTasksModel = new Model('goal_tasks');
 
 const findByUser = async (userId) => {
   const data = await goalsModel.select('*', ` WHERE user_id = ${userId}`);
@@ -28,11 +29,16 @@ export const sendGoals = async (req, res) => {
 };
 
 export const addGoal = async (req, res) => {
-  const { description, duration, name } = req.body;
+  const { description, name, tasksArray } = req.body;
   const time = dayjs.utc().local().toISOString();
-  const columns = 'name, description, duration, user_id, created, edited';
-  const values = `'${name}', '${description}', ${duration}, ${req.user.id}, '${time}', '${time}'`;
+  const columns = 'name, description, user_id, created, edited';
+  const values = `'${name}', '${description}', ${req.user.id}, '${time}', '${time}'`;
   const data = await goalsModel.insertWithReturn(columns, values);
   const goal = data.rows[0];
+  if (tasksArray.length > 0) {
+    tasksArray.map(async (task) => {
+      await goalTasksModel.insert('goal_id, task_id, times', `${goal.id}, ${task.id}, ${task.times}`);
+    })
+  }
   res.status(201).send({ goal });
 };

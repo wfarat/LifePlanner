@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const getTasks = createAsyncThunk('getTasks', async (data) => {
-  const res = await axios(`/api/tasks/${data.userId}}`, {
+  const res = await axios(`/api/tasks/${data.userId}`, {
     method: 'GET',
     headers: { 'x-access-token': data.accessToken },
   });
@@ -33,6 +33,7 @@ const tasksSlice = createSlice({
       .addCase(getTasks.fulfilled, (state, { payload }) => {
         state.status = 'idle';
         state.data.tasks = payload.tasks;
+        state.data.message = '';
       })
       .addCase(getTasks.rejected, (state) => {
         state.status = 'rejected';
@@ -46,6 +47,7 @@ const tasksSlice = createSlice({
         if (payload.task) {
           state.data.tasks.push(payload.task);
         }
+        state.data.message = '';
       })
       .addCase(addTask.rejected, (state) => {
         state.status = 'rejected';

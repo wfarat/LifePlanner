@@ -2,6 +2,7 @@ export const createAllTables = `
 DROP TABLE IF EXISTS notes;
 DROP TABLE IF EXISTS day_tasks;
 DROP TABLE IF EXISTS day_notes;
+DROP TABLE IF EXISTS goal_tasks;
 DROP TABLE IF EXISTS tasks;
 DROP TABLE IF EXISTS goals;
 DROP TABLE IF EXISTS days;
@@ -25,7 +26,6 @@ CREATE TABLE IF NOT EXISTS goals (
   name VARCHAR(100) NOT NULL,
   description VARCHAR NOT NULL,
   user_id INT NOT NULL,
-  duration INT DEFAULT 0,
   created TIMESTAMPTZ NOT NULL,
   edited TIMESTAMPTZ NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id)
@@ -37,9 +37,16 @@ CREATE TABLE IF NOT EXISTS tasks (
   name VARCHAR(100) NOT NULL,
   duration INT DEFAULT 0,
   description VARCHAR DEFAULT '',
-  goal_id INT,
-  FOREIGN KEY (goal_id) REFERENCES goals(id),
   FOREIGN KEY (user_id) REFERENCES users(id)
+);
+CREATE TABLE IF NOT EXISTS goal_tasks (
+  id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
+  goal_id INT NOT NULL,
+  task_id INT NOT NULL,
+  times INT NOT NULL,
+  done INT DEFAULT 0,
+  FOREIGN KEY (goal_id) REFERENCES goals(id),
+  FOREIGN KEY (task_id) REFERENCES tasks(id)
 );
 CREATE TABLE IF NOT EXISTS day_notes (
   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
@@ -73,6 +80,7 @@ export const dropAllTables = `
 DROP TABLE notes;
 DROP TABLE day_tasks;
 DROP TABLE day_notes;
+DROP TABLE goal_tasks;
 DROP TABLE tasks;
 DROP TABLE goals;
 DROP TABLE days;

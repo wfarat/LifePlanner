@@ -14,6 +14,7 @@ export default function AddTask() {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [duration, setDuration] = useState(0);
+  const [times, setTimes] = useState(0);
   const [goal, setGoal] = useState(null);
   const [message, setMessage] = useState('');
   const [repeat, setRepeat] = useState([]);
@@ -29,10 +30,14 @@ export default function AddTask() {
     }
   }
   const handleGoal = (e) => {
+    if (e.target.value === 'null') {
+      setGoal(null);
+    } else {
     setGoal(e.target.value);
+    }
   }
   const handleClick = async () => {
-    if (tasks.findIndex(goal => goal.name === name) === -1) {
+    if (tasks.findIndex(task => task.name === name) === -1) {
       if (name) { 
         if (!description) {
           setDescription('empty');
@@ -46,7 +51,8 @@ export default function AddTask() {
           description,
           duration,
           repeat,
-          goalId: goal
+          goal,
+          times
           }
       }
       dispatch(addTask(data));
@@ -92,12 +98,14 @@ export default function AddTask() {
             id={`inline-checkbox-${index}`}
           />
       ))}
-          <Form.Select onChange={handleGoal} aria-label="Default select example">
-      <option value={null}>Select Goal (not required)</option>
+          <Form.Select onChange={handleGoal} aria-label="Select goal">
+      <option value={'null'}>Select Goal (not required)</option>
       {goals.map(goal => {
         return <option value={goal.id} key={goal.id}>{goal.name}</option>
       })}
     </Form.Select>
+    <Form.Label>Set Goal: {times} times</Form.Label>
+    <Form.Range value={times} onChange={e => setTimes(e.target.value)} max="100"/>
     <Form.Text className="text-danger">{message}{tasksData.message}</Form.Text>
       <Button variant="primary" onClick={handleClick}>
         Submit
