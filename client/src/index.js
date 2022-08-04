@@ -16,6 +16,7 @@ import Register from './components/Register/Register';
 import CalendarPage from './components/CalendarPage/CalendarPage';
 import Day from './features/day/Day';
 import AddTask from './components/AddTask/AddTask';
+import AddGoal from './components/AddGoal/AddGoal';
 const container = document.getElementById('root');
 const root = createRoot(container);
 let persistor = persistStore(store);
@@ -33,7 +34,8 @@ root.render(
                 <Route path="user" element={<UserPage />} />
                 <Route path="day/:dayRef" element={<Day />} />
                 <Route path="user/password" element={<Password />} />
-                <Route path="tasks/addtask" element={<AddTask />} />
+                <Route path="tasks/add" element={<AddTask />} />
+                <Route path="goals/add" element={<AddGoal />} />
                 <Route path="calendar" element={<CalendarPage />} />
               </Route>
             </Routes>

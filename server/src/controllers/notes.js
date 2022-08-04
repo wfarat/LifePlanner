@@ -31,7 +31,7 @@ export const addNote = async (req, res) => {
   const { title, content } = req.body;
   const time = dayjs.utc().local().toISOString();
   const columns = 'title, content, user_id, created, edited';
-  const values = `'${title}', '${content}', ${req.user.id}, ${time}, ${time}`;
+  const values = `'${title}', '${content}', ${req.user.id}, '${time}', '${time}'`;
   const data = notesModel.insertWithReturn(columns, values);
   const note = data.rows[0];
   res.status(201).send({ note });
