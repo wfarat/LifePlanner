@@ -5,6 +5,14 @@ export const getDay = createAsyncThunk('getDay', async (data) => {
   const res = await axios(`/api/days/${data.userId}/${data.dayRef}`, {
     method: 'GET',
     headers: { 'x-access-token': data.accessToken },
+  }).catch(err => err.response);
+  return res.data;
+});
+export const addDay = createAsyncThunk('addDay', async (data) => {
+  const res = await axios(`/api/days/${data.userId}/${data.dayRef}`, {
+    method: 'POST',
+    headers: { 'x-access-token': data.accessToken },
+    data: data.day
   });
   return res.data;
 });
@@ -12,7 +20,7 @@ export const getDay = createAsyncThunk('getDay', async (data) => {
 const daySlice = createSlice({
   name: 'day',
   initialState: {
-    data: {},
+    data: { day: [], dayNotes: [], dayTasks: [], message: ''},
     status: 'idle',
   },
   reducers: {},
@@ -24,6 +32,17 @@ const daySlice = createSlice({
       .addCase(getDay.fulfilled, (state, { payload }) => {
         state.status = 'idle';
         state.data = payload;
+      })
+      .addCase(addDay.pending, (state) => {
+        state.status = 'pending';
+      })
+      .addCase(addDay.fulfilled, (state, {payload}) => {
+        state.status = 'idle';
+        state.data.day = payload.day;
+      })
+      .addCase(addDay.rejected, (state) => {
+        state.status = 'rejected';
+        state.data.message = 'There was a problem with adding day data.'
       });
   },
 });

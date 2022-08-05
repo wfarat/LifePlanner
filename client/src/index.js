@@ -32,7 +32,7 @@ root.render(
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
                 <Route path="user" element={<UserPage />} />
-                <Route path="day/:dayRef" element={<Day />} />
+                <Route path="day/:dayRef" element={<Day />} /> 
                 <Route path="user/password" element={<Password />} />
                 <Route path="tasks/add" element={<AddTask />} />
                 <Route path="goals/add" element={<AddGoal />} />

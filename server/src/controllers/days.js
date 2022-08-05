@@ -25,7 +25,7 @@ const findDayNotes = async (dayId) => {
 export const sendDay = async (req, res) => {
   const day = await findDay(req.user.id, req.params.dayRef);
   if (!day) {
-    res.status(400).send();
+    res.status(400).send({day: [], dayNotes: [], dayTasks: [], message: ''});
   } else {
     const dayTasks = await findDayTasks(day.id);
     const dayNotes = await findDayNotes(day.id);
@@ -57,7 +57,7 @@ export const addDay = async (req, res) => {
         );
       } else {
         const columns = 'day_id, task_id, start, finish, status';
-        const values = `${day.id}, ${task.id}, ${task.start}, ${task.finish}, 'todo'`;
+        const values = `${day.id}, ${task.id},${task.start}, ${task.finish}, 'todo'`;
         await dayTasksModel.insert(columns, values);
       }
     });
@@ -74,6 +74,6 @@ export const addDay = async (req, res) => {
         );
       }
     });
-    res.status(200).send({ day });
+    res.status(201).send({ day });
   }
 };
