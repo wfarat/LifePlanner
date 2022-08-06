@@ -36,8 +36,8 @@ function App() {
                 <Nav.Link as={Link} to="tasks/add" href="#">
                   Add Task
                 </Nav.Link>
-                <Nav.Link as={Link} to="goals/add" href="#">
-                  Add Goal
+                <Nav.Link as={Link} to="goals" href="#">
+                  Goals
                 </Nav.Link>
                 <User />
               </Nav>
