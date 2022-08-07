@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Form from 'react-bootstrap/Form';
 import { selectTasks } from '../../features/tasks/tasksSlice';
-export default function AddGoalTask( props ) {
+export default function AddGoalTask(props) {
   const { tasks } = useSelector(selectTasks);
   const [times, setTimes] = useState(0);
   const [task, setTask] = useState({});
@@ -63,9 +63,7 @@ export default function AddGoalTask( props ) {
             );
           })}
       </ListGroup>
-      <Form.Text className="text-danger">
-        {message}
-      </Form.Text>
+      <Form.Text className="text-danger">{message}</Form.Text>
       <Button variant="secondary" onClick={handleAddTask}>
         Add Task
       </Button>

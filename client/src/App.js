@@ -27,9 +27,6 @@ function App() {
     if (goals.length === 0 && user.auth) {
       dispatch(getGoals(data));
     }
-    if (user.logout) {
-      dispatch({ type: 'USER_LOGOUT' });
-    }
   }, [user.auth]);
   return (
     <div className="App">

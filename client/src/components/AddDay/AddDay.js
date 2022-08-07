@@ -28,14 +28,14 @@ export default function AddDay(props) {
   const dispatch = useDispatch();
   useEffect(() => {
     if (tasks.length === 0) {
-      const data = {   
+      const data = {
         accessToken: user.accessToken,
       };
       dispatch(getTasks(data));
     }
   }, []);
   const handleClick = async () => {
-    const data = { 
+    const data = {
       accessToken: user.accessToken,
       dayRef: props.dayRef,
       day: {

@@ -5,7 +5,7 @@ export const getTasks = createAsyncThunk('getTasks', async (data) => {
   const res = await axios(`/api/tasks`, {
     method: 'GET',
     headers: { 'x-access-token': data.accessToken },
-  }).catch(err => err.response);
+  }).catch((err) => err.response);
 
   return res.data;
 });
@@ -21,11 +21,11 @@ export const addTask = createAsyncThunk('addTask', async (data) => {
 export const deleteTask = createAsyncThunk('deleteTask', async (data) => {
   const res = await axios(`/api/tasks/${data.taskId}`, {
     method: 'DELETE',
-    headers: { 'x-access-token': data.accessToken }
+    headers: { 'x-access-token': data.accessToken },
   });
   console.log(res.data);
   return res.data;
-})
+});
 const tasksSlice = createSlice({
   name: 'tasks',
   initialState: {

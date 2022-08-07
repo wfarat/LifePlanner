@@ -15,39 +15,42 @@ export default function Task() {
   const user = useSelector(selectUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const task = tasks.find(task => task.id === Number(params.taskId));
-const handleDelete = () => {
-  const data = {
-    taskId: params.taskId,
-    accessToken: user.accessToken
-  }
-  dispatch(deleteTask(data));
-  navigate('../tasks')
-}
-const popover = (
-  <Popover id="popover-basic">
-    <Popover.Header as="h3">Are you sure?</Popover.Header>
-    <Popover.Body>
-        This action is irreversible, it will <strong>remove all your progress and plans for this task.</strong>
+  const task = tasks.find((task) => task.id === Number(params.taskId));
+  const handleDelete = () => {
+    const data = {
+      taskId: params.taskId,
+      accessToken: user.accessToken,
+    };
+    dispatch(deleteTask(data));
+    navigate('../tasks');
+  };
+  const popover = (
+    <Popover id="popover-basic">
+      <Popover.Header as="h3">Are you sure?</Popover.Header>
+      <Popover.Body>
+        This action is irreversible, it will{' '}
+        <strong>remove all your progress and plans for this task.</strong>
         If you are sure click: <Button onClick={handleDelete}>Delete</Button>
-    </Popover.Body>
-  </Popover>
-);
+      </Popover.Body>
+    </Popover>
+  );
   return (
     <Container>
-    <Container>
+      <Container>
+        <Row>
+          <Col>
+            <h2>{task.name}</h2>
+          </Col>
+        </Row>
+      </Container>
       <Row>
         <Col>
-          <h2>{task.name}</h2>
+          {' '}
+          <OverlayTrigger trigger="click" placement="left" overlay={popover}>
+            <Button variant="success">Delete Task</Button>
+          </OverlayTrigger>
         </Col>
       </Row>
-
     </Container>
-    <Row>
-            <Col>  <OverlayTrigger trigger="click" placement="left" overlay={popover}>
-    <Button variant="success">Delete Task</Button>
-  </OverlayTrigger></Col>
-          </Row>
-        </Container>
   );
 }

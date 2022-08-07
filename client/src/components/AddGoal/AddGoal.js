@@ -43,36 +43,36 @@ export default function AddGoal() {
   };
   return (
     <Container>
-    <Form className="taskForm">
-      <Form.Group className="mb-3" controlId="formBasicName">
-        <Form.Label>Goal Name</Form.Label>
-        <Form.Control
-          onChange={(e) => setName(e.target.value)}
-          autoComplete="name"
-          value={name}
-          type="text"
-          placeholder="Enter goal name"
-        />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formDescription">
-        <Form.Label>Description</Form.Label>
-        <Form.Control
-          onChange={(e) => setDescription(e.target.value)}
-          value={description}
-          as="textarea"
-          rows={3}
-          placeholder="Enter description"
-        />
-      </Form.Group>
-      <Form.Text className="text-danger">
-            {message}
-            {goalsData.message}
-          </Form.Text>
-    </Form>
-          <AddGoalTask tasksArray={tasksArray} setTasksArray={setTasksArray} />
-          <Button variant="primary" onClick={handleClick}>
-            Submit
-          </Button>
-          </Container>
+      <Form className="taskForm">
+        <Form.Group className="mb-3" controlId="formBasicName">
+          <Form.Label>Goal Name</Form.Label>
+          <Form.Control
+            onChange={(e) => setName(e.target.value)}
+            autoComplete="name"
+            value={name}
+            type="text"
+            placeholder="Enter goal name"
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formDescription">
+          <Form.Label>Description</Form.Label>
+          <Form.Control
+            onChange={(e) => setDescription(e.target.value)}
+            value={description}
+            as="textarea"
+            rows={3}
+            placeholder="Enter description"
+          />
+        </Form.Group>
+        <Form.Text className="text-danger">
+          {message}
+          {goalsData.message}
+        </Form.Text>
+      </Form>
+      <AddGoalTask tasksArray={tasksArray} setTasksArray={setTasksArray} />
+      <Button variant="primary" onClick={handleClick}>
+        Submit
+      </Button>
+    </Container>
   );
 }

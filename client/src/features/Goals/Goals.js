@@ -23,7 +23,12 @@ export default function Goals() {
           const created = new Date(goal.created).toLocaleString();
           const edited = new Date(goal.created).toLocaleString();
           return (
-            <Row as={Link} className="listLink border-bottom border-secondary" key={goal.id} to={`${goal.id}`}>
+            <Row
+              as={Link}
+              className="listLink border-bottom border-secondary"
+              key={goal.id}
+              to={`${goal.id}`}
+            >
               <Col>{goal.name}</Col>
               <Col>{created}</Col>
               <Col>{edited}</Col>

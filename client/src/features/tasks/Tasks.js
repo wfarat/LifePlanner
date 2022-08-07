@@ -22,9 +22,14 @@ export default function Tasks() {
       {tasks.length > 0 &&
         tasks.map((task) => {
           return (
-            <Row as={Link} className="listLink border-bottom border-secondary" key={task.id} to={`${task.id}`}>
+            <Row
+              as={Link}
+              className="listLink border-bottom border-secondary"
+              key={task.id}
+              to={`${task.id}`}
+            >
               <Col>{task.name}</Col>
-              <Col>{task.repeat.map(num => dayLetters[num])}</Col>
+              <Col>{task.repeat.map((num) => dayLetters[num])}</Col>
               <Col>{task.duration}</Col>
             </Row>
           );

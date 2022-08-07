@@ -65,4 +65,4 @@ export const deleteTask = async (req, res) => {
   await goalTasksModel.delete(`task_id = ${req.task.id}`);
   await tasksModel.delete(`id = ${req.task.id}`);
   res.status(200).send({ taskId: req.task.id });
-}
+};

@@ -83,10 +83,10 @@ export const addGoalTask = async (req, res) => {
   const data = await goalTasksModel.insertWithReturn(columns, values);
   const goalTask = data.rows[0];
   res.status(201).send({ goalTask });
-}
+};
 
 export const deleteGoal = async (req, res) => {
   await goalTasksModel.delete(`goal_id = ${req.goal.id}`);
   await goalsModel.delete(`id = ${req.goal.id}`);
   res.status(200).send({ goalId: req.goal.id });
-}
+};

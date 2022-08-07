@@ -1,7 +1,13 @@
 import express from 'express';
 import { checkAuth } from './auth';
 import { findUser } from '../controllers/users';
-import { addTask, deleteTask, findAllTasks, findTask, sendTasks } from '../controllers/tasks';
+import {
+  addTask,
+  deleteTask,
+  findAllTasks,
+  findTask,
+  sendTasks,
+} from '../controllers/tasks';
 
 const tasksRouter = express.Router();
 tasksRouter.use(checkAuth);

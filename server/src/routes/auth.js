@@ -4,11 +4,7 @@ import express from 'express';
 import { OAuth2Client, UserRefreshClient } from 'google-auth-library';
 import Model from '../models/model';
 import { addUser, findByEmail } from '../controllers/users';
-import {
-  googleClientID,
-  googleClientSecret,
-  jwtSecret,
-} from '../settings';
+import { googleClientID, googleClientSecret, jwtSecret } from '../settings';
 
 const usersModel = new Model('users');
 const authRouter = express.Router();
@@ -50,26 +46,23 @@ authRouter.post('/auth/google', async (req, res) => {
 });
 
 export const checkAuth = (req, res, next) => {
-    const token = req.headers['x-access-token'];
-    if (!token) {
-      return res.status(403).send({
-        message: 'No token provided!',
+  const token = req.headers['x-access-token'];
+  if (!token) {
+    return res.status(403).send({
+      message: 'No token provided!',
+    });
+  }
+  jwt.verify(token, jwtSecret, (err, decoded) => {
+    if (err) {
+      return res.status(401).send({
+        message: 'Unauthorized!',
       });
     }
-    jwt.verify(token, jwtSecret, (err, decoded) => {
-      if (err) {
-        return res.status(401).send({
-          logout: true
-        });
-      }
-      req.userId = decoded.id;
-      next();
-    });
-  };
+    req.userId = decoded.id;
+    next();
+  });
+};
 
-authRouter.get('/check', checkAuth, (req, res) => {
-  res.status(200).send({logout: false});
-})
 authRouter.post('/auth/google/refresh-token', async (req, res) => {
   const user = new UserRefreshClient(
     googleClientID,

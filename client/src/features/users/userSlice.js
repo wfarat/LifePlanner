@@ -8,13 +8,6 @@ export const login = createAsyncThunk(`login`, async (data) => {
   });
   return res.data;
 });
-export const check = createAsyncThunk('check', async (data) => {
-  const res = await axios(`/api/check`, {
-    method: 'GET',
-    headers: { 'x-access-token': data.accessToken },
-  }).catch(err => err.response);
-  return res.data;
-});
 export const update = createAsyncThunk('update', async (data) => {
   const res = await axios(`/api/users/${data.userId}`, {
     method: 'PUT',
@@ -85,12 +78,6 @@ const userSlice = createSlice({
       .addCase(update.rejected, (state) => {
         state.status = 'rejected';
         state.data.message = 'Please enter correct password';
-      })
-      .addCase(check.pending, (state) => {
-        state.status = 'pending';
-      })
-      .addCase(check.fulfilled, (state, {payload}) => {
-        state.data.logout = payload.logout;
       });
   },
 });

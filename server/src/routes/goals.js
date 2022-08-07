@@ -1,6 +1,6 @@
 import express from 'express';
 import { checkAuth } from './auth';
-import { findUser } from '../controllers/users';
+
 import {
   addGoal,
   addGoalTask,
