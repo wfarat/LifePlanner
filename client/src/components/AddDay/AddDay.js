@@ -107,7 +107,7 @@ export default function AddDay(props) {
           placeholder="Enter comment"
         />
       </Form.Group>
-      <Form.Text className="text-dark fs-5">Add tasks:</Form.Text>
+      <Form.Label className="fs-5">Add tasks:</Form.Label>
       <Form.Select onChange={handleChange} aria-label="Select task">
         <option value={'null'}>Add Task</option>
         {tasks.map((task) => {
@@ -121,7 +121,7 @@ export default function AddDay(props) {
       Set time:{' '}
       <TimeRangePicker value={time} disableClock={true} onChange={setTime} />{' '}
       (not required)
-      <Button variant="secondary" onClick={handleAddTask}>
+      <Button variant="warning" onClick={handleAddTask}>
         Add Task
       </Button>
       <ListGroup>
@@ -167,7 +167,7 @@ export default function AddDay(props) {
             );
           })}
       </ListGroup>
-      <Form.Text className="text-dark fs-5">Add notes:</Form.Text>
+      <Form.Label className="fs-5">Add notes:</Form.Label>
       <Form.Group className="mb-3" controlId="formBasicTitle">
         <Form.Label>Title</Form.Label>
         <Form.Control
@@ -188,7 +188,7 @@ export default function AddDay(props) {
           placeholder="Enter content"
         />
       </Form.Group>
-      <Button variant="secondary" onClick={handleAddNote}>
+      <Button variant="warning" onClick={handleAddNote}>
         Add Note
       </Button>
       <ListGroup>
@@ -232,7 +232,7 @@ export default function AddDay(props) {
         {message}
         {dayData.message}
       </Form.Text>
-      <Button variant="primary" onClick={handleClick}>
+      <Button variant="success" onClick={handleClick}>
         Submit
       </Button>
     </Form>

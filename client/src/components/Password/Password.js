@@ -85,7 +85,7 @@ export default function Password() {
             )}
           </Form.Text>
         </Form.Group>
-        <Button variant="primary" onClick={handleClick}>
+        <Button variant="success" onClick={handleClick}>
           Submit
         </Button>
       </Form>

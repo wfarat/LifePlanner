@@ -106,7 +106,7 @@ export default function UserForm() {
           </Form.Text>
         </Form.Group>
       )}
-      <Button variant="primary" onClick={handleClick}>
+      <Button variant="success" onClick={handleClick}>
         Submit
       </Button>
     </Form>

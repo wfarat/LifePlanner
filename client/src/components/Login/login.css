@@ -2,3 +2,17 @@
     width: 330px;
     margin: 0 auto;
 }
+
+.login {
+    height: 100%;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}
+
+.loginButton {
+    display: grid;
+    height: 120px;
+    justify-content: center;
+    align-content: space-around;
+}

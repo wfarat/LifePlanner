@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
+import GoogleButton from 'react-google-button'
 import { Navigate, Link } from 'react-router-dom';
 import { selectUser, login, loginGoogle } from '../../features/users/userSlice';
 import Button from 'react-bootstrap/Button';
+import Stack from 'react-bootstrap/Stack'
 import Form from 'react-bootstrap/Form';
 import './login.css';
 export default function Login() {
@@ -42,11 +44,12 @@ export default function Login() {
   };
 
   return (
+    <main className="login">
     <Form className="signForm">
-      <Form.Text className="text-secondary">
-        Not registered yet? <Link to="../register">Sign up</Link>
+      <Form.Text className="text-secondary fs-5">
+      Not registered yet? <Button variant="success" as={Link} to="/register">Sign up</Button>
       </Form.Text>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
+      <Form.Group className="m-3" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
         <Form.Control
           onChange={(e) => setEmail(e.target.value)}
@@ -57,7 +60,7 @@ export default function Login() {
         />
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
+      <Form.Group className="m-3" controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
         <Form.Control
           onChange={(e) => setPassword(e.target.value)}
@@ -71,12 +74,15 @@ export default function Login() {
           {user.message}
         </Form.Text>
       </Form.Group>
-      <Button variant="primary" onClick={handleClick}>
+      <div className="loginButton">
+      <Button variant="success" onClick={handleClick}>
         Submit
       </Button>
-      <Button onClick={googleLogin} variant="secondary">
+      <GoogleButton type="light" onClick={googleLogin}>
         Login with Google
-      </Button>
+      </GoogleButton>
+      </div>
     </Form>
+    </main>
   );
 }

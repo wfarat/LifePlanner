@@ -11,10 +11,10 @@ export default function Tasks() {
   const dayLetters = ['M', 'Tue', 'W', 'Thu', 'F', 'Sat', 'Sun'];
   return (
     <Container>
-      <Button variant="primary" as={Link} to="add">
+      <Button variant="success" as={Link} to="add">
         Add Task
       </Button>
-      <Row>
+      <Row className="border-bottom border-secondary">
         <Col>Task name:</Col>
         <Col>Repeat:</Col>
         <Col>Duration:</Col>

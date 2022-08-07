@@ -53,7 +53,7 @@ export default function AddNote() {
         {message}
         {notesData.message}
       </Form.Text>
-      <Button variant="primary" onClick={handleClick}>
+      <Button variant="success" onClick={handleClick}>
         Submit
       </Button>
     </Form>

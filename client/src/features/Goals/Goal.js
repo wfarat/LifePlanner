@@ -93,13 +93,13 @@ export default function Goal() {
           })}
       </Container>
       <AddGoalTask tasksArray={tasksArray} setTasksArray={setTasksArray} />
-      <Button variant="primary" onClick={handleClick}>
+      <Button variant="success" onClick={handleClick}>
         Submit Tasks
       </Button>
       <Row>
         <Col>
           <Button
-            variant="secondary"
+            variant="warning"
             as={Link}
             to={`../../tasks/add/${params.goalId}`}
           >

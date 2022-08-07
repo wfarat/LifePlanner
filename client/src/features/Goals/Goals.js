@@ -10,10 +10,10 @@ export default function Goals() {
   const { goals } = goalsData;
   return (
     <Container>
-      <Button variant="primary" as={Link} to="add">
+      <Button variant="success" as={Link} to="add">
         Add Goal
       </Button>
-      <Row>
+      <Row className="border-bottom border-secondary">
         <Col>Goal name:</Col>
         <Col>Created:</Col>
         <Col>Edited:</Col>

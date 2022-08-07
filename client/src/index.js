@@ -21,6 +21,7 @@ import AddGoal from './components/AddGoal/AddGoal';
 import Goals from './features/Goals/Goals';
 import Tasks from './features/tasks/Tasks';
 import Task from './features/tasks/Task';
+import AuthCheck from './components/authCheck/AuthCheck';
 const container = document.getElementById('root');
 const root = createRoot(container);
 let persistor = persistStore(store);
@@ -32,9 +33,11 @@ root.render(
         <PersistGate loading={null} persistor={persistor}>
           <Router>
             <Routes>
-              <Route path="/" element={<App />}>
-                <Route path="login" element={<Login />} />
-                <Route path="register" element={<Register />} />
+
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
+
+              <Route path="/" element={<AuthCheck><App /></AuthCheck>}>
                 <Route path="user" element={<UserPage />} />
                 <Route path="day/:dayRef" element={<Day />} />
                 <Route path="user/password" element={<Password />} />

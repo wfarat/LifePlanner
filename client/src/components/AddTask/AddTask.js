@@ -145,7 +145,7 @@ export default function AddTask() {
         {message}
         {tasksData.message}
       </Form.Text>
-      <Button variant="primary" onClick={handleClick}>
+      <Button variant="success" onClick={handleClick}>
         Submit
       </Button>
     </Form>
