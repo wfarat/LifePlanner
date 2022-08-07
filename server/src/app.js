@@ -22,8 +22,8 @@ app.use('/api/days', daysRouter);
 app.use('/api/tasks', tasksRouter);
 app.use('/api/goals', goalsRouter);
 app.use('/api/notes', notesRouter);
-app.use(express.static(path.resolve(__dirname, '../client/build')));
+app.use(express.static(path.resolve(__dirname, '../../client/build')));
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+  res.sendFile(path.resolve(__dirname, '../../client/build', 'index.html'));
 });
 export default app;
