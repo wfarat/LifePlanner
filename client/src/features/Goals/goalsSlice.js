@@ -23,6 +23,21 @@ export const addGoal = createAsyncThunk('addGoal', async (data) => {
   });
   return res.data;
 });
+export const addGoalTask = createAsyncThunk('addGoalTask', async (data) => {
+  const res = await axios(`/api/goals/${data.userId}/${data.goalId}`, {
+    method: 'POST',
+    headers: { 'x-access-token': data.accessToken },
+    data: data.goalTask,
+  });
+  return res.data;
+})
+export const deleteGoal = createAsyncThunk('deleteGoal', async (data) => {
+  const res = await axios(`/api/goals/${data.userId}/${data.goalId}`, {
+    method: 'DELETE',
+    headers: { 'x-access-token': data.accessToken }
+  });
+  return res.data;
+})
 const goalsSlice = createSlice({
   name: 'goals',
   initialState: {
@@ -69,6 +84,35 @@ const goalsSlice = createSlice({
       .addCase(getGoalTasks.rejected, (state) => {
         state.status = 'rejected';
         state.data.message = 'There was a problem with loading goal tasks';
+      })
+      .addCase(addGoalTask.pending, (state) => {
+        state.status = 'pending';
+      })
+      .addCase(addGoalTask.fulfilled, (state, {payload}) => {
+        state.status = 'idle';
+      if (payload.goalTask) {
+        state.data.goalTasks.push(payload.goalTask);
+      }
+      state.data.message = '';
+      })
+      .addCase(addGoalTask.rejected, (state) => {
+        state.status = 'rejected';
+        state.data.message = 'There was a problem with adding a goal task.';
+      })
+      .addCase(deleteGoal.pending, (state) => {
+        state.status = 'pending';
+      })
+      .addCase(deleteGoal.fulfilled, (state, { payload }) => {
+        state.status = 'idle';
+        const index = state.data.goals.findIndex(
+          (goal) => goal.id === payload.goalId
+        );
+        state.data.goals.splice(index, 1);
+        state.data.message = '';
+      })
+      .addCase(deleteGoal.rejected, (state) => {
+        state.status = 'rejected';
+        state.data.message = 'There was a problem with removing a goal.'
       });
   },
 });

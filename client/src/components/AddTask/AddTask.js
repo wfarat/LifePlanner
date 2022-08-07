@@ -75,6 +75,8 @@ export default function AddTask() {
         dispatch(addTask(data));
         if (linkGoal) {
           navigate(`../../goals/${linkGoal.id}`);
+        } else {
+          navigate('../tasks/');
         }
       } else {
         setMessage('Please enter name.');

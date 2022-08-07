@@ -17,7 +17,14 @@ export const addTask = createAsyncThunk('addTask', async (data) => {
   });
   return res.data;
 });
-
+export const deleteTask = createAsyncThunk('deleteTask', async (data) => {
+  const res = await axios(`/api/tasks/${data.userId}/${data.taskId}`, {
+    method: 'DELETE',
+    headers: { 'x-access-token': data.accessToken }
+  });
+  console.log(res.data);
+  return res.data;
+})
 const tasksSlice = createSlice({
   name: 'tasks',
   initialState: {
@@ -52,6 +59,21 @@ const tasksSlice = createSlice({
       .addCase(addTask.rejected, (state) => {
         state.status = 'rejected';
         state.data.message = 'There was a problem with adding a task.';
+      })
+      .addCase(deleteTask.pending, (state) => {
+        state.status = 'pending';
+      })
+      .addCase(deleteTask.fulfilled, (state, { payload }) => {
+        state.status = 'idle';
+        const index = state.data.tasks.findIndex(
+          (task) => task.id === payload.taskId
+        );
+        state.data.tasks.splice(index, 1);
+        state.data.message = '';
+      })
+      .addCase(deleteTask.rejected, (state) => {
+        state.status = 'rejected';
+        state.data.message = 'There was a problem with removing a task.';
       });
   },
 });

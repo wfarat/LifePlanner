@@ -3,6 +3,8 @@ import { checkAuth } from './auth';
 import { findUser } from '../controllers/users';
 import {
   addGoal,
+  addGoalTask,
+  deleteGoal,
   findAllGoals,
   findGoal,
   findGoalTasks,
@@ -19,4 +21,6 @@ goalsRouter.param('goalId', findGoal);
 goalsRouter.get('/:userId', findAllGoals, sendGoals);
 goalsRouter.get('/:userId/:goalId', findGoalTasks, sendGoalTasks);
 goalsRouter.post('/:userId', addGoal);
+goalsRouter.post('/:userId/:goalId', addGoalTask);
+goalsRouter.delete('/:userId/:goalId', deleteGoal);
 export default goalsRouter;

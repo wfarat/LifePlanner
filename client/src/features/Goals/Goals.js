@@ -3,7 +3,6 @@ import { selectGoals } from './goalsSlice';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import './goals.css';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 export default function Goals() {
@@ -24,7 +23,7 @@ export default function Goals() {
           const created = new Date(goal.created).toLocaleString();
           const edited = new Date(goal.created).toLocaleString();
           return (
-            <Row as={Link} className="goalLink" key={goal.id} to={`${goal.id}`}>
+            <Row as={Link} className="listLink border-bottom border-secondary" key={goal.id} to={`${goal.id}`}>
               <Col>{goal.name}</Col>
               <Col>{created}</Col>
               <Col>{edited}</Col>

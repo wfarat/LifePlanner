@@ -19,6 +19,8 @@ import AddTask from './components/AddTask/AddTask';
 import Goal from './features/Goals/Goal';
 import AddGoal from './components/AddGoal/AddGoal';
 import Goals from './features/Goals/Goals';
+import Tasks from './features/tasks/Tasks';
+import Task from './features/tasks/Task';
 const container = document.getElementById('root');
 const root = createRoot(container);
 let persistor = persistStore(store);
@@ -36,6 +38,8 @@ root.render(
                 <Route path="user" element={<UserPage />} />
                 <Route path="day/:dayRef" element={<Day />} />
                 <Route path="user/password" element={<Password />} />
+                <Route path="tasks" element={<Tasks />} />
+                <Route path="tasks/:taskId" element={<Task />} />
                 <Route path="tasks/add" element={<AddTask />} />
                 <Route path="tasks/add/:goalId" element={<AddTask />} />
                 <Route path="goals" element={<Goals />} />

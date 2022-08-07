@@ -35,3 +35,7 @@ main {
   padding-top: 4rem!important;
   padding-bottom: 4rem!important;
 }
+
+.listLink:hover {
+  background-color: grey;
+}

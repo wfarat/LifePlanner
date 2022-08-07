@@ -66,7 +66,7 @@ export const addGoal = async (req, res) => {
   const data = await goalsModel.insertWithReturn(columns, values);
   const goal = data.rows[0];
   if (tasksArray.length > 0) {
-    tasksArray.map(async (task) => {
+    tasksArray.forEach(async (task) => {
       await goalTasksModel.insert(
         'goal_id, task_id, times',
         `${goal.id}, ${task.id}, ${task.times}`
@@ -75,3 +75,18 @@ export const addGoal = async (req, res) => {
   }
   res.status(201).send({ goal });
 };
+
+export const addGoalTask = async (req, res) => {
+  const { times, taskId } = req.body;
+  const columns = 'goal_id, task_id, times';
+  const values = `${req.goal.id}, ${taskId}, ${times}`;
+  const data = await goalTasksModel.insertWithReturn(columns, values);
+  const goalTask = data.rows[0];
+  res.status(201).send({ goalTask });
+}
+
+export const deleteGoal = async (req, res) => {
+  await goalTasksModel.delete(`goal_id = ${req.goal.id}`);
+  await goalsModel.delete(`id = ${req.goal.id}`);
+  res.status(200).send({ goalId: req.goal.id });
+}
