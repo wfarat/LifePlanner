@@ -9,7 +9,7 @@ tasksRouter.use(checkAuth);
 tasksRouter.param('userId', findUser);
 tasksRouter.param('taskId', findTask);
 
-tasksRouter.get('/:userId', findAllTasks, sendTasks);
-tasksRouter.post('/:userId', addTask);
-tasksRouter.delete('/:userId/:taskId', deleteTask);
+tasksRouter.get('/', findAllTasks, sendTasks);
+tasksRouter.post('/', addTask);
+tasksRouter.delete('/:taskId', deleteTask);
 export default tasksRouter;

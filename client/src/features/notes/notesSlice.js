@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const getNotes = createAsyncThunk('getNotes', async (data) => {
-  const res = await axios(`/api/notes/${data.userId}`, {
+  const res = await axios(`/api/notes`, {
     method: 'GET',
     headers: { 'x-access-token': data.accessToken },
   });
@@ -10,7 +10,7 @@ export const getNotes = createAsyncThunk('getNotes', async (data) => {
 });
 
 export const addNote = createAsyncThunk('addNote', async (data) => {
-  const res = await axios(`/api/notes/${data.userId}`, {
+  const res = await axios(`/api/notes`, {
     method: 'POST',
     headers: { 'x-access-token': data.accessToken },
     data: data.note,

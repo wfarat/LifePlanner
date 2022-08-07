@@ -16,7 +16,6 @@ export default function AddNote() {
     if (content && title) {
       setMessage('');
       const data = {
-        userId: user.user.id,
         accessToken: user.accessToken,
         note: {
           title,

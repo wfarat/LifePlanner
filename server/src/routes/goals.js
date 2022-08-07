@@ -15,12 +15,11 @@ import {
 const goalsRouter = express.Router();
 goalsRouter.use(checkAuth);
 
-goalsRouter.param('userId', findUser);
 goalsRouter.param('goalId', findGoal);
 
-goalsRouter.get('/:userId', findAllGoals, sendGoals);
-goalsRouter.get('/:userId/:goalId', findGoalTasks, sendGoalTasks);
-goalsRouter.post('/:userId', addGoal);
-goalsRouter.post('/:userId/:goalId', addGoalTask);
-goalsRouter.delete('/:userId/:goalId', deleteGoal);
+goalsRouter.get('/', findAllGoals, sendGoals);
+goalsRouter.get('/:goalId', findGoalTasks, sendGoalTasks);
+goalsRouter.post('/', addGoal);
+goalsRouter.post('/:goalId', addGoalTask);
+goalsRouter.delete('/:goalId', deleteGoal);
 export default goalsRouter;

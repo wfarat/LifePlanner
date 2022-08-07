@@ -2,15 +2,16 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const getTasks = createAsyncThunk('getTasks', async (data) => {
-  const res = await axios(`/api/tasks/${data.userId}`, {
+  const res = await axios(`/api/tasks`, {
     method: 'GET',
     headers: { 'x-access-token': data.accessToken },
-  });
+  }).catch(err => err.response);
+
   return res.data;
 });
 
 export const addTask = createAsyncThunk('addTask', async (data) => {
-  const res = await axios(`/api/tasks/${data.userId}`, {
+  const res = await axios(`/api/tasks`, {
     method: 'POST',
     headers: { 'x-access-token': data.accessToken },
     data: data.task,
@@ -18,7 +19,7 @@ export const addTask = createAsyncThunk('addTask', async (data) => {
   return res.data;
 });
 export const deleteTask = createAsyncThunk('deleteTask', async (data) => {
-  const res = await axios(`/api/tasks/${data.userId}/${data.taskId}`, {
+  const res = await axios(`/api/tasks/${data.taskId}`, {
     method: 'DELETE',
     headers: { 'x-access-token': data.accessToken }
   });

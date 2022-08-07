@@ -28,16 +28,14 @@ export default function AddDay(props) {
   const dispatch = useDispatch();
   useEffect(() => {
     if (tasks.length === 0) {
-      const data = {
-        userId: user.user.id,
+      const data = {   
         accessToken: user.accessToken,
       };
       dispatch(getTasks(data));
     }
   }, []);
   const handleClick = async () => {
-    const data = {
-      userId: user.user.id,
+    const data = { 
       accessToken: user.accessToken,
       dayRef: props.dayRef,
       day: {
@@ -57,7 +55,7 @@ export default function AddDay(props) {
       setMessage('Pick a task');
       return;
     }
-    if (!time) {
+    if (time.length === 0) {
       const taskObj = { id: task.id, name: task.name };
       setTasksArray([...tasksArray, taskObj]);
     } else {

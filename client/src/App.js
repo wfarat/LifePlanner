@@ -18,19 +18,17 @@ function App() {
   const { goals } = useSelector(selectGoals);
   const dispatch = useDispatch();
   useEffect(() => {
+    const data = {
+      accessToken: user.accessToken,
+    };
     if (tasks.length === 0 && user.auth) {
-      const data = {
-        accessToken: user.accessToken,
-        userId: user.user.id,
-      };
       dispatch(getTasks(data));
     }
     if (goals.length === 0 && user.auth) {
-      const data = {
-        accessToken: user.accessToken,
-        userId: user.user.id,
-      };
       dispatch(getGoals(data));
+    }
+    if (user.logout) {
+      dispatch({ type: 'USER_LOGOUT' });
     }
   }, [user.auth]);
   return (

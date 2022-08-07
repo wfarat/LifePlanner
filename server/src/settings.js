@@ -6,4 +6,3 @@ export const production = process.env.PRODUCTION;
 export const jwtSecret = process.env.JWT_SECRET;
 export const googleClientID = process.env.GOOGLE_CLIENT_ID;
 export const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
-export const test = process.env.TEST;

@@ -15,10 +15,10 @@ const findTaskById = async (taskId, userId) => {
   return data.rows[0];
 };
 export const findAllTasks = async (req, res, next) => {
-  const tasks = await findByUser(req.user.id);
+  const tasks = await findByUser(req.userId);
   if (!tasks) {
     res.status(404).send({
-      message: `User id ${req.user.id} has no tasks created`,
+      message: `User id ${req.userId} has no tasks created`,
     });
   } else {
     req.tasks = tasks;
@@ -26,7 +26,7 @@ export const findAllTasks = async (req, res, next) => {
   }
 };
 export const findTask = async (req, res, next, taskId) => {
-  const task = await findTaskById(taskId, req.user.id);
+  const task = await findTaskById(taskId, req.userId);
   if (!task) {
     res.status(404).send({ message: 'Task not found.' });
   } else {
@@ -44,7 +44,7 @@ export const addTask = async (req, res) => {
   } = req.body;
   if (goal && times > 0) {
     const columns = 'user_id, repeat, name, duration, description';
-    const values = `${req.user.id}, '{${repeat}}', '${name}', ${duration}, '${description}'`;
+    const values = `${req.userId}, '{${repeat}}', '${name}', ${duration}, '${description}'`;
     const data = await tasksModel.insertWithReturn(columns, values);
     const task = data.rows[0];
     await goalTasksModel.insert(
@@ -54,7 +54,7 @@ export const addTask = async (req, res) => {
     res.status(201).send({ task });
   } else {
     const columns = 'user_id, repeat, name, duration, description';
-    const values = `${req.user.id}, '{${repeat}}', '${name}', ${duration}, '${description}'`;
+    const values = `${req.userId}, '{${repeat}}', '${name}', ${duration}, '${description}'`;
     const data = await tasksModel.insertWithReturn(columns, values);
     res.status(201).send({ task: data.rows[0] });
   }

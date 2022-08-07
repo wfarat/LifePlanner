@@ -23,7 +23,6 @@ export default function Goal() {
   const goal = goals.find((goal) => goal.id === Number(params.goalId));
   useEffect(() => {
     const data = {
-      userId: user.user.id,
       goalId: params.goalId,
       accessToken: user.accessToken,
     };
@@ -32,8 +31,7 @@ export default function Goal() {
   const handleClick = () => {
     if (tasksArray.length > 0) {
       tasksArray.forEach((task) => {
-        const data = {
-          userId: user.user.id,
+        const data = {       
           goalId: params.goalId,
           accessToken: user.accessToken,
           goalTask: {
@@ -47,8 +45,7 @@ export default function Goal() {
   }
 }
 const handleDelete = () => {
-  const data = {
-    userId: user.user.id,
+  const data = {    
     goalId: params.goalId,
     accessToken: user.accessToken
   }

@@ -18,7 +18,6 @@ export default function Task() {
   const task = tasks.find(task => task.id === Number(params.taskId));
 const handleDelete = () => {
   const data = {
-    userId: user.user.id,
     taskId: params.taskId,
     accessToken: user.accessToken
   }

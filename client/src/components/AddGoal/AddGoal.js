@@ -25,7 +25,6 @@ export default function AddGoal() {
         }
         setMessage('');
         const data = {
-          userId: user.user.id,
           accessToken: user.accessToken,
           goal: {
             name,

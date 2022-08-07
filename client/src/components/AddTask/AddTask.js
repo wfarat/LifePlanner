@@ -60,8 +60,7 @@ export default function AddTask() {
           setDescription('empty');
         }
         setMessage('');
-        const data = {
-          userId: user.user.id,
+        const data = {       
           accessToken: user.accessToken,
           task: {
             name,

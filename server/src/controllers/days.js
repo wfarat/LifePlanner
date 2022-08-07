@@ -23,7 +23,7 @@ const findDayNotes = async (dayId) => {
 };
 
 export const sendDay = async (req, res) => {
-  const day = await findDay(req.user.id, req.params.dayRef);
+  const day = await findDay(req.userId, req.params.dayRef);
   if (!day) {
     res.status(400).send({
       day: [], dayNotes: [], dayTasks: [], message: ''
@@ -42,13 +42,13 @@ export const sendDay = async (req, res) => {
 
 export const addDay = async (req, res) => {
   const { tasks, comment, notes } = req.body;
-  const dayCheck = await findDay(req.user.id, req.params.dayRef);
+  const dayCheck = await findDay(req.userId, req.params.dayRef);
   if (dayCheck) {
     res.status(400).send();
   } else {
     const data = await daysModel.insertWithReturn(
       'day_ref, user_id, comment',
-      `${req.params.dayRef}, ${req.user.id}, '${comment}'`
+      `${req.params.dayRef}, ${req.userId}, '${comment}'`
     );
     const day = data.rows[0];
     tasks.forEach(async (task) => {

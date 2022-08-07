@@ -14,7 +14,6 @@ export default function Day() {
     const data = {
       dayRef: params.dayRef,
       accessToken: user.accessToken,
-      userId: user.user.id,
     };
     dispatch(getDay(data));
   }, [params.dayRef]);

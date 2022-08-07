@@ -23,10 +23,10 @@ const findGoalById = async (goalId, userId) => {
   return data.rows[0];
 };
 export const findAllGoals = async (req, res, next) => {
-  const goals = await findByUser(req.user.id);
+  const goals = await findByUser(req.userId);
   if (!goals) {
     res.status(404).send({
-      message: `User id ${req.user.id} has no goals created`,
+      message: `User id ${req.userId} has no goals created`,
     });
   } else {
     req.goals = goals;
@@ -34,7 +34,7 @@ export const findAllGoals = async (req, res, next) => {
   }
 };
 export const findGoal = async (req, res, next, goalId) => {
-  const goal = await findGoalById(goalId, req.user.id);
+  const goal = await findGoalById(goalId, req.userId);
   if (!goal) {
     res.status(404).send({ message: 'Goal not found.' });
   } else {
@@ -62,7 +62,7 @@ export const addGoal = async (req, res) => {
   const { description, name, tasksArray } = req.body;
   const time = dayjs.utc().local().toISOString();
   const columns = 'name, description, user_id, created, edited';
-  const values = `'${name}', '${description}', ${req.user.id}, '${time}', '${time}'`;
+  const values = `'${name}', '${description}', ${req.userId}, '${time}', '${time}'`;
   const data = await goalsModel.insertWithReturn(columns, values);
   const goal = data.rows[0];
   if (tasksArray.length > 0) {

@@ -8,7 +8,6 @@ import {
   googleClientID,
   googleClientSecret,
   jwtSecret,
-  test,
 } from '../settings';
 
 const usersModel = new Model('users');
@@ -36,9 +35,7 @@ authRouter.post('/auth/google', async (req, res) => {
     const data = await usersModel.insertWithReturn(columns, values);
     [ user ] = data.rows;
   }
-  const token = jwt.sign({ id: user.id }, jwtSecret, {
-    expiresIn: 86400, // 24 hours
-  });
+  const token = jwt.sign({ id: user.id }, jwtSecret);
   res.send({
     user: {
       id: user.id,
@@ -53,9 +50,6 @@ authRouter.post('/auth/google', async (req, res) => {
 });
 
 export const checkAuth = (req, res, next) => {
-  if (test === 'true') {
-    next();
-  } else {
     const token = req.headers['x-access-token'];
     if (!token) {
       return res.status(403).send({
@@ -65,14 +59,17 @@ export const checkAuth = (req, res, next) => {
     jwt.verify(token, jwtSecret, (err, decoded) => {
       if (err) {
         return res.status(401).send({
-          message: 'Unauthorized!',
+          logout: true
         });
       }
       req.userId = decoded.id;
       next();
     });
-  }
-};
+  };
+
+authRouter.get('/check', checkAuth, (req, res) => {
+  res.status(200).send({logout: false});
+})
 authRouter.post('/auth/google/refresh-token', async (req, res) => {
   const user = new UserRefreshClient(
     googleClientID,

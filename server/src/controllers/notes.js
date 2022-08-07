@@ -12,10 +12,10 @@ const findByUser = async (userId) => {
 };
 
 export const findAllNotes = async (req, res, next) => {
-  const notes = await findByUser(req.user.id);
+  const notes = await findByUser(req.userId);
   if (!notes) {
     res.status(404).send({
-      message: `User id ${req.user.id} has no notes created`,
+      message: `User id ${req.userId} has no notes created`,
     });
   } else {
     req.notes = notes;
@@ -31,7 +31,7 @@ export const addNote = async (req, res) => {
   const { title, content } = req.body;
   const time = dayjs.utc().local().toISOString();
   const columns = 'title, content, user_id, created, edited';
-  const values = `'${title}', '${content}', ${req.user.id}, '${time}', '${time}'`;
+  const values = `'${title}', '${content}', ${req.userId}, '${time}', '${time}'`;
   const data = notesModel.insertWithReturn(columns, values);
   const note = data.rows[0];
   res.status(201).send({ note });

@@ -2,21 +2,21 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const getGoals = createAsyncThunk('getGoals', async (data) => {
-  const res = await axios(`/api/goals/${data.userId}`, {
+  const res = await axios(`/api/goals`, {
     method: 'GET',
     headers: { 'x-access-token': data.accessToken },
   });
   return res.data;
 });
 export const getGoalTasks = createAsyncThunk('getGoalTasks', async (data) => {
-  const res = await axios(`/api/goals/${data.userId}/${data.goalId}`, {
+  const res = await axios(`/api/goals/${data.goalId}`, {
     method: 'GET',
     headers: { 'x-access-token': data.accessToken },
   });
   return res.data;
 });
 export const addGoal = createAsyncThunk('addGoal', async (data) => {
-  const res = await axios(`/api/goals/${data.userId}`, {
+  const res = await axios(`/api/goals`, {
     method: 'POST',
     headers: { 'x-access-token': data.accessToken },
     data: data.goal,
@@ -24,7 +24,7 @@ export const addGoal = createAsyncThunk('addGoal', async (data) => {
   return res.data;
 });
 export const addGoalTask = createAsyncThunk('addGoalTask', async (data) => {
-  const res = await axios(`/api/goals/${data.userId}/${data.goalId}`, {
+  const res = await axios(`/api/goals/${data.goalId}`, {
     method: 'POST',
     headers: { 'x-access-token': data.accessToken },
     data: data.goalTask,
@@ -32,7 +32,7 @@ export const addGoalTask = createAsyncThunk('addGoalTask', async (data) => {
   return res.data;
 })
 export const deleteGoal = createAsyncThunk('deleteGoal', async (data) => {
-  const res = await axios(`/api/goals/${data.userId}/${data.goalId}`, {
+  const res = await axios(`/api/goals/${data.goalId}`, {
     method: 'DELETE',
     headers: { 'x-access-token': data.accessToken }
   });
