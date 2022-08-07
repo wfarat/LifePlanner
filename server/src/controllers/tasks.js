@@ -32,7 +32,10 @@ export const addTask = async (req, res) => {
     const values = `${req.user.id}, '{${repeat}}', '${name}', ${duration}, '${description}'`;
     const data = await tasksModel.insertWithReturn(columns, values);
     const task = data.rows[0];
-    await goalTasksModel.insert('goal_id, task_id, times', `${goal}, ${task.id}, ${times}`);
+    await goalTasksModel.insert(
+      'goal_id, task_id, times',
+      `${goal}, ${task.id}, ${times}`
+    );
     res.status(201).send({ task });
   } else {
     const columns = 'user_id, repeat, name, duration, description';

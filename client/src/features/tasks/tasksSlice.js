@@ -13,15 +13,15 @@ export const addTask = createAsyncThunk('addTask', async (data) => {
   const res = await axios(`/api/tasks/${data.userId}`, {
     method: 'POST',
     headers: { 'x-access-token': data.accessToken },
-    data: data.task
+    data: data.task,
   });
   return res.data;
-})
+});
 
 const tasksSlice = createSlice({
   name: 'tasks',
   initialState: {
-    data: { tasks: [], message: ''},
+    data: { tasks: [], message: '' },
     status: 'idle',
   },
   reducers: {},

@@ -22,7 +22,7 @@ export default function Day() {
   return (
     <div>
       {day.day.comment}
-      {day.day.length === 0 && <AddDay dayRef={params.dayRef}/>}
+      {day.day.length === 0 && <AddDay dayRef={params.dayRef} />}
     </div>
   );
 }

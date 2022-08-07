@@ -16,6 +16,7 @@ import Register from './components/Register/Register';
 import CalendarPage from './components/CalendarPage/CalendarPage';
 import Day from './features/day/Day';
 import AddTask from './components/AddTask/AddTask';
+import Goal from './features/Goals/Goal';
 import AddGoal from './components/AddGoal/AddGoal';
 import Goals from './features/Goals/Goals';
 const container = document.getElementById('root');
@@ -33,11 +34,13 @@ root.render(
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
                 <Route path="user" element={<UserPage />} />
-                <Route path="day/:dayRef" element={<Day />} /> 
+                <Route path="day/:dayRef" element={<Day />} />
                 <Route path="user/password" element={<Password />} />
                 <Route path="tasks/add" element={<AddTask />} />
-                <Route path="goals" element={<Goals />}/>
+                <Route path="tasks/add/:goalId" element={<AddTask />} />
+                <Route path="goals" element={<Goals />} />
                 <Route path="goals/add" element={<AddGoal />} />
+                <Route path="goals/:goalId" element={<Goal />} />
                 <Route path="calendar" element={<CalendarPage />} />
               </Route>
             </Routes>

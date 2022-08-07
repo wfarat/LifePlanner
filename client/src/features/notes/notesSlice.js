@@ -10,17 +10,17 @@ export const getNotes = createAsyncThunk('getNotes', async (data) => {
 });
 
 export const addNote = createAsyncThunk('addNote', async (data) => {
-    const res = await axios(`/api/notes/${data.userId}`, {
-      method: 'POST',
-      headers: { 'x-access-token': data.accessToken },
-      data: data.note
-    });
-    return res.data;
-  })
+  const res = await axios(`/api/notes/${data.userId}`, {
+    method: 'POST',
+    headers: { 'x-access-token': data.accessToken },
+    data: data.note,
+  });
+  return res.data;
+});
 const notesSlice = createSlice({
   name: 'notes',
   initialState: {
-    data: { notes: [], message: ''},
+    data: { notes: [], message: '' },
     status: 'idle',
   },
   reducers: {},

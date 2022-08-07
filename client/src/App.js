@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -6,10 +6,33 @@ import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/esm/Button';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import User from './features/users/User';
+import { useDispatch, useSelector } from 'react-redux';
+import { getTasks, selectTasks } from './features/tasks/tasksSlice';
+import { selectUser } from './features/users/userSlice';
+import { getGoals, selectGoals } from './features/Goals/goalsSlice';
 
 function App() {
   const navigate = useNavigate();
-
+  const user = useSelector(selectUser);
+  const { tasks } = useSelector(selectTasks);
+  const { goals } = useSelector(selectGoals);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (tasks.length === 0 && user.auth) {
+      const data = {
+        accessToken: user.accessToken,
+        userId: user.user.id,
+      };
+      dispatch(getTasks(data));
+    }
+    if (goals.length === 0 && user.auth) {
+      const data = {
+        accessToken: user.accessToken,
+        userId: user.user.id,
+      };
+      dispatch(getGoals(data));
+    }
+  }, [user.auth]);
   return (
     <div className="App">
       <header className="App-header">

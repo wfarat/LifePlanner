@@ -11,7 +11,17 @@ const findByUser = async (userId) => {
   const data = await goalsModel.select('*', ` WHERE user_id = ${userId}`);
   return data.rows;
 };
-
+const findTasksByGoal = async (goalId) => {
+  const data = await goalTasksModel.select('*', ` WHERE goal_id = ${goalId}`);
+  return data.rows;
+};
+const findGoalById = async (goalId, userId) => {
+  const data = await goalsModel.select(
+    '*',
+    ` WHERE id = ${goalId} AND user_id = ${userId}`
+  );
+  return data.rows[0];
+};
 export const findAllGoals = async (req, res, next) => {
   const goals = await findByUser(req.user.id);
   if (!goals) {
@@ -23,7 +33,27 @@ export const findAllGoals = async (req, res, next) => {
     next();
   }
 };
-
+export const findGoal = async (req, res, next, goalId) => {
+  const goal = await findGoalById(goalId, req.user.id);
+  if (!goal) {
+    res.status(404).send({ message: 'Goal not found.' });
+  } else {
+    req.goal = goal;
+    next();
+  }
+};
+export const findGoalTasks = async (req, res, next) => {
+  const goalTasks = await findTasksByGoal(req.goal.id);
+  if (!goalTasks) {
+    res.status(404).send({ message: 'No goals for this goal.' });
+  } else {
+    req.goalTasks = goalTasks;
+    next();
+  }
+};
+export const sendGoalTasks = async (req, res) => {
+  res.status(200).send({ goalTasks: req.goalTasks });
+};
 export const sendGoals = async (req, res) => {
   res.status(200).send({ goals: req.goals });
 };
@@ -37,8 +67,11 @@ export const addGoal = async (req, res) => {
   const goal = data.rows[0];
   if (tasksArray.length > 0) {
     tasksArray.map(async (task) => {
-      await goalTasksModel.insert('goal_id, task_id, times', `${goal.id}, ${task.id}, ${task.times}`);
-    })
+      await goalTasksModel.insert(
+        'goal_id, task_id, times',
+        `${goal.id}, ${task.id}, ${task.times}`
+      );
+    });
   }
   res.status(201).send({ goal });
 };

@@ -13,20 +13,20 @@ export default function AddNote() {
   const [message, setMessage] = useState('');
   const dispatch = useDispatch();
   const handleClick = async () => {
-      if (content && title) { 
-        setMessage('');
+    if (content && title) {
+      setMessage('');
       const data = {
-          userId: user.user.id,
-          accessToken: user.accessToken,
-          note: {
+        userId: user.user.id,
+        accessToken: user.accessToken,
+        note: {
           title,
           content,
-          }
-      }
+        },
+      };
       dispatch(addNote(data));
-  } else {
-  setMessage('Content and title cannot be empty.')
-  }
+    } else {
+      setMessage('Content and title cannot be empty.');
+    }
   };
   return (
     <Form className="taskForm">
@@ -50,7 +50,10 @@ export default function AddNote() {
           placeholder="Enter content"
         />
       </Form.Group>
-    <Form.Text className="text-danger">{message}{notesData.message}</Form.Text>
+      <Form.Text className="text-danger">
+        {message}
+        {notesData.message}
+      </Form.Text>
       <Button variant="primary" onClick={handleClick}>
         Submit
       </Button>
