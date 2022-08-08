@@ -18,6 +18,12 @@ html, body, #root {
 .listLink {
   color: rgba(248,249,250,1)!important;
 }
+.timePicker input {
+  color: rgba(248,249,250,1)!important;
+}
+.timePicker button {
+  background-color: rgba(248,249,250,1)!important;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

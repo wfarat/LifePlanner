@@ -34,8 +34,8 @@ function App() {
         <Navbar
           collapseOnSelect
           expand="lg"
-          bg="dark"
-          variant="dark"
+          bg="light"
+          variant="light"
           fixed="top"
         >
           <Container>

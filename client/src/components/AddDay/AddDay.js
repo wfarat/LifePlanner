@@ -118,8 +118,8 @@ export default function AddDay(props) {
           );
         })}
       </Form.Select>
-      Set time:{' '}
-      <TimeRangePicker value={time} disableClock={true} onChange={setTime} />{' '}
+      Set time:
+      <TimeRangePicker value={time} className="timePicker" disableClock={true} onChange={setTime} />
       (not required)
       <Button variant="warning" onClick={handleAddTask}>
         Add Task
