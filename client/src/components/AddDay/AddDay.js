@@ -8,6 +8,7 @@ import Popover from 'react-bootstrap/Popover';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+import { useNavigate } from 'react-router-dom';
 import Col from 'react-bootstrap/Col';
 import TimeRangePicker from '@wojtekmaj/react-timerange-picker';
 import { getTasks, selectTasks } from '../../features/tasks/tasksSlice';
@@ -15,6 +16,7 @@ import { addDay, selectDay } from '../../features/day/daySlice';
 export default function AddDay(props) {
   const user = useSelector(selectUser);
   const dayData = useSelector(selectDay);
+  const navigate = useNavigate();
   const { tasks } = useSelector(selectTasks);
   const [comment, setComment] = useState('');
   const [time, setTime] = useState([]);
@@ -45,6 +47,7 @@ export default function AddDay(props) {
       },
     };
     dispatch(addDay(data));
+    navigate(`/calendar`);
   };
   const handleChange = (e) => {
     const newTask = e.target.value.split('|');
@@ -119,7 +122,7 @@ export default function AddDay(props) {
         })}
       </Form.Select>
       Set time:
-      <TimeRangePicker value={time} className="timePicker" disableClock={true} onChange={setTime} />
+      <TimeRangePicker value={time} className="timePicker" disableClock={true} onChange={setTime} hourPlaceholder="00" minutePlaceholder="00" />
       (not required)
       <Button variant="warning" onClick={handleAddTask}>
         Add Task
@@ -217,7 +220,7 @@ export default function AddDay(props) {
                   <Col>
                     <OverlayTrigger
                       trigger="click"
-                      placement="left"
+                      placement="bottom"
                       overlay={popover}
                     >
                       <Button variant="success">Read Note</Button>

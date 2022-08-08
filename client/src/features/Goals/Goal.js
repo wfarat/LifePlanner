@@ -108,7 +108,7 @@ export default function Goal() {
         </Col>
         <Col>
           {' '}
-          <OverlayTrigger trigger="click" placement="left" overlay={popover}>
+          <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
             <Button variant="success">Delete Goal</Button>
           </OverlayTrigger>
         </Col>

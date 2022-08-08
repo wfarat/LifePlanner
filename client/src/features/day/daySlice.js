@@ -20,7 +20,7 @@ export const addDay = createAsyncThunk('addDay', async (data) => {
 const daySlice = createSlice({
   name: 'day',
   initialState: {
-    data: { day: [], dayNotes: [], dayTasks: [], message: '' },
+    data: { day: {}, dayNotes: [], dayTasks: [], message: '' },
     status: 'idle',
   },
   reducers: {},
@@ -33,12 +33,15 @@ const daySlice = createSlice({
         state.status = 'idle';
         state.data = payload;
       })
+      .addCase(getDay.rejected, (state) => {
+        state.status = 'rejected';
+        state.data = { day: {}, dayNotes: [], dayTasks: [], message: '' };
+      })
       .addCase(addDay.pending, (state) => {
         state.status = 'pending';
       })
-      .addCase(addDay.fulfilled, (state, { payload }) => {
+      .addCase(addDay.fulfilled, (state) => {
         state.status = 'idle';
-        state.data.day = payload.day;
       })
       .addCase(addDay.rejected, (state) => {
         state.status = 'rejected';

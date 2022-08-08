@@ -25,12 +25,7 @@ const findDayNotes = async (dayId) => {
 export const sendDay = async (req, res) => {
   const day = await findDay(req.userId, req.params.dayRef);
   if (!day) {
-    res.status(400).send({
-      day: [],
-      dayNotes: [],
-      dayTasks: [],
-      message: '',
-    });
+    res.status(400).send();
   } else {
     const dayTasks = await findDayTasks(day.id);
     const dayNotes = await findDayNotes(day.id);
@@ -79,6 +74,6 @@ export const addDay = async (req, res) => {
         );
       }
     });
-    res.status(201).send({ day });
+    res.status(201).send();
   }
 };

@@ -46,7 +46,7 @@ export default function Task() {
       <Row>
         <Col>
           {' '}
-          <OverlayTrigger trigger="click" placement="left" overlay={popover}>
+          <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
             <Button variant="success">Delete Task</Button>
           </OverlayTrigger>
         </Col>
