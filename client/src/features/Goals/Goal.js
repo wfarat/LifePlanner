@@ -16,6 +16,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { selectTasks } from '../tasks/tasksSlice';
 import AddGoalTask from '../../components/AddGoalTask/AddGoalTask';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 export default function Goal() {
   const params = useParams();
   const goalsData = useSelector(selectGoals);
@@ -77,22 +78,24 @@ export default function Goal() {
         </Row>
         <Row>
           <Col>Task name:</Col>
-          <Col>Goal:</Col>
-          <Col>Times finished:</Col>
+          <Col>Progress:</Col>
         </Row>
         {goalTasks.length > 0 &&
           goalTasks.map((goalTask) => {
             const task = tasks.find((task) => task.id === goalTask.task_id);
+            const progress = (goalTask.done / goalTask.times) * 100;
             return (
               <Row key={goalTask.id}>
                 <Col>{task.name}</Col>
-                <Col>{goalTask.times}</Col>
-                <Col>{goalTask.done}</Col>
+                <Col>
+                  <ProgressBar now={progress} label={`${progress}%`} />
+                </Col>
               </Row>
             );
           })}
       </Container>
       <AddGoalTask tasksArray={tasksArray} setTasksArray={setTasksArray} />
+      <p className="text-danger">{goalsData.message}</p>
       <Button variant="success" onClick={handleClick}>
         Submit Tasks
       </Button>

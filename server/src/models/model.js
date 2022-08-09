@@ -68,7 +68,7 @@ class Model {
 
   async updateOne(column, value, clause) {
     const query = `UPDATE ${this.table}
-    SET ${column} = '${value}'
+    SET ${column} = ${value}
     WHERE ${clause}`;
     return this.pool.query(query);
   }

@@ -12,6 +12,11 @@ const findTasksByGoal = async (goalId) => {
   const data = await goalTasksModel.select('*', ` WHERE goal_id = ${goalId}`);
   return data.rows;
 };
+
+const findTaskByTask = async (taskId) => {
+  const data = await goalTasksModel.select('*', ` WHERE task_id = ${taskId}`);
+  return data.rows[0];
+};
 const findGoalById = async (goalId, userId) => {
   const data = await goalsModel.select(
     '*',
@@ -75,6 +80,11 @@ export const addGoal = async (req, res) => {
 
 export const addGoalTask = async (req, res) => {
   const { times, taskId } = req.body;
+  const task = await findTaskByTask(taskId);
+  if (task) {
+    res.status(400).send();
+    return;
+  }
   const columns = 'goal_id, task_id, times';
   const values = `${req.goal.id}, ${taskId}, ${times}`;
   const data = await goalTasksModel.insertWithReturn(columns, values);

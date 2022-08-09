@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import { selectTasks } from '../../features/tasks/tasksSlice';
 export default function AddGoalTask(props) {
   const { tasks } = useSelector(selectTasks);
-  const [times, setTimes] = useState(0);
+  const [times, setTimes] = useState(1);
   const [task, setTask] = useState({});
   const [message, setMessage] = useState('');
   const handleChange = (e) => {
@@ -46,6 +46,7 @@ export default function AddGoalTask(props) {
         value={times}
         onChange={(e) => setTimes(e.target.value)}
         max="100"
+        min="1"
       />
       <ListGroup>
         {props.tasksArray.length > 0 &&

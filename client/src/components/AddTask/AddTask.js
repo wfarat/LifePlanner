@@ -17,7 +17,7 @@ export default function AddTask() {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [duration, setDuration] = useState(0);
-  const [times, setTimes] = useState(0);
+  const [times, setTimes] = useState(1);
   const [message, setMessage] = useState('');
   const linkGoal = goals.find((goal) => goal.id === Number(params.goalId));
   const [goal, setGoal] = useState(null);
@@ -139,6 +139,7 @@ export default function AddTask() {
       <Form.Range
         value={times}
         onChange={(e) => setTimes(e.target.value)}
+        min="1"
         max="100"
       />
       <Form.Text className="text-danger">

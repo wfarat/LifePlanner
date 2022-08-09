@@ -22,7 +22,8 @@ export default function Day() {
   const { tasks } = useSelector(selectTasks);
   const [status, setStatus] = useState('');
   const [comment, setComment] = useState('');
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState([]);
+  const [disabled, setDisabled] = useState(false);
   const user = useSelector(selectUser);
   const params = useParams();
   useEffect(() => {
@@ -35,16 +36,26 @@ export default function Day() {
     }
   }, [params.dayRef]);
   const statuses = [
-    { name: 'Started', color: 'warning' },
-    { name: 'Done', color: 'success' },
-    { name: 'Canceled', color: 'danger' },
+    { name: 'Started', style: 'warning' },
+    { name: 'Done', style: 'success' },
+    { name: 'Canceled', style: 'danger' },
   ];
   const handleChange = (e) => {
     setStatus(e.target.value);
   };
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  const handleUpdateTask = (taskId) => {
+  const handleClose = (taskId) => {
+    setShow(show.filter((task) => task !== taskId));
+  };
+  const handleShow = (taskId) => {
+    setShow([...show, taskId]);
+    const task = dayTasks.find((task) => task.id === taskId);
+    if (task.status === 'success') {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+  };
+  const handleUpdateTask = (dayTaskId, taskId) => {
     const data = {
       dayRef: params.dayRef,
       accessToken: user.accessToken,
@@ -52,10 +63,11 @@ export default function Day() {
         status,
         comment,
         taskId,
+        dayTaskId,
       },
     };
     dispatch(updateDayTask(data));
-    setShow(false);
+    setShow(show.filter((task) => task !== dayTaskId));
   };
   const handleNote = () => {};
   return (
@@ -68,7 +80,7 @@ export default function Day() {
             </Col>
           </Row>
           <Row>
-            <Col>Task Name:</Col>
+            <Col xs={6}>Task Name:</Col>
             <Col>Start</Col>
             <Col>Finish</Col>
           </Row>
@@ -100,11 +112,11 @@ export default function Day() {
                     <ListGroup.Item
                       action
                       variant={task.status}
-                      onClick={handleShow}
+                      onClick={() => handleShow(task.id)}
                       key={task.id + task.start}
                     >
                       <Row>
-                        <Col>{findTask.name} </Col>
+                        <Col xs={6}>{findTask.name} </Col>
 
                         <Col>
                           {' '}
@@ -120,27 +132,37 @@ export default function Day() {
                         </Col>
                       </Row>
                     </ListGroup.Item>
-                    <Modal key={task.task_id} show={show} onHide={handleClose}>
+                    <Modal
+                      key={task.task_id}
+                      show={show.includes(task.id)}
+                      onHide={() => handleClose(task.id)}
+                    >
                       <Modal.Header closeButton>
                         <Modal.Title className="text-dark">
                           Modal heading
                         </Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
-                        {statuses.map((status) => (
-                          <Form.Check
-                            inline
-                            label={status.name}
-                            value={status.color}
-                            onChange={handleChange}
-                            className="text-dark"
-                            name={status.name}
-                            key={status.name}
-                            type="radio"
-                            id={`inline-radio-${status.name}`}
-                          />
-                        ))}
-                        <Form.Group className="mb-3" controlId="formBasicName">
+                        <Form.Select
+                          disabled={disabled}
+                          key={task.id}
+                          onChange={handleChange}
+                          aria-label="Select goal"
+                        >
+                          <option value="light">Select status:</option>
+                          {statuses.map((status) => {
+                            return (
+                              <option value={status.style} key={status.name}>
+                                {status.name}
+                              </option>
+                            );
+                          })}
+                        </Form.Select>
+                        <Form.Group
+                          key={task.id + task.task_id}
+                          className="mb-3"
+                          controlId="formBasicName"
+                        >
                           <Form.Label className="fs-5 text-dark">
                             Add comment:
                           </Form.Label>
@@ -154,12 +176,17 @@ export default function Day() {
                         </Form.Group>
                       </Modal.Body>
                       <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
+                        <Button
+                          variant="secondary"
+                          onClick={() => handleClose(task.id)}
+                        >
                           Close
                         </Button>
                         <Button
                           variant="primary"
-                          onClick={() => handleUpdateTask(task.id)}
+                          onClick={() =>
+                            handleUpdateTask(task.id, task.task_id)
+                          }
                         >
                           Save Changes
                         </Button>
