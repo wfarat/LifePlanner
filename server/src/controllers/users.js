@@ -1,8 +1,6 @@
 /* eslint-disable consistent-return */
 import bcrypt from 'bcrypt';
-import Model from '../models/model';
-
-const usersModel = new Model('users');
+import { usersModel } from '../models/models';
 
 const findById = async (id) => {
   const clause = ` WHERE id='${id}'`;

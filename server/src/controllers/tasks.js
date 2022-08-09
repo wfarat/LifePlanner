@@ -1,8 +1,5 @@
-import Model from '../models/model';
+import { tasksModel, goalTasksModel, dayTasksModel } from '../models/models';
 
-const tasksModel = new Model('tasks');
-const goalTasksModel = new Model('goal_tasks');
-const dayTasksModel = new Model('day_tasks');
 const findByUser = async (userId) => {
   const data = await tasksModel.select('*', ` WHERE user_id = ${userId}`);
   return data.rows;

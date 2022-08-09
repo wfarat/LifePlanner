@@ -33,11 +33,17 @@ root.render(
         <PersistGate loading={null} persistor={persistor}>
           <Router>
             <Routes>
-
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
 
-              <Route path="/" element={<AuthCheck><App /></AuthCheck>}>
+              <Route
+                path="/"
+                element={
+                  <AuthCheck>
+                    <App />
+                  </AuthCheck>
+                }
+              >
                 <Route path="user" element={<UserPage />} />
                 <Route path="day/:dayRef" element={<Day />} />
                 <Route path="user/password" element={<Password />} />

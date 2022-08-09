@@ -23,7 +23,6 @@ export const deleteTask = createAsyncThunk('deleteTask', async (data) => {
     method: 'DELETE',
     headers: { 'x-access-token': data.accessToken },
   });
-  console.log(res.data);
   return res.data;
 });
 const tasksSlice = createSlice({

@@ -1,11 +1,8 @@
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import Model from '../models/model';
+import { goalTasksModel, goalsModel } from '../models/models';
 
 dayjs.extend(utc);
-
-const goalsModel = new Model('goals');
-const goalTasksModel = new Model('goal_tasks');
 
 const findByUser = async (userId) => {
   const data = await goalsModel.select('*', ` WHERE user_id = ${userId}`);

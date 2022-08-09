@@ -1,10 +1,8 @@
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import Model from '../models/model';
+import { notesModel } from '../models/models';
 
 dayjs.extend(utc);
-
-const notesModel = new Model('notes');
 
 const findByUser = async (userId) => {
   const data = await notesModel.select('*', ` WHERE user_id = ${userId}`);

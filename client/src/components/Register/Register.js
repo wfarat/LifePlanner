@@ -8,7 +8,10 @@ export default function Register() {
     <div className="login">
       <h2>Create an account:</h2>
       <Form.Text className="text-secondary fs-5">
-      Already have an account? <Button variant="success" as={Link} to="/login">Sign in</Button>
+        Already have an account?{' '}
+        <Button variant="success" as={Link} to="/login">
+          Sign in
+        </Button>
       </Form.Text>
       <UserForm />
     </div>

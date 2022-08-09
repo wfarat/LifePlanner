@@ -16,14 +16,25 @@ export const addDay = createAsyncThunk('addDay', async (data) => {
   });
   return res.data;
 });
-
+export const updateDayTask = createAsyncThunk('updateDayTask', async (data) => {
+  const res = await axios('/api/days/task/update', {
+    method: 'POST',
+    headers: { 'x-access-token': data.accessToken },
+    data: data.dayTask,
+  });
+  return res.data;
+});
 const daySlice = createSlice({
   name: 'day',
   initialState: {
     data: { day: {}, dayNotes: [], dayTasks: [], message: '' },
     status: 'idle',
   },
-  reducers: {},
+  reducers: {
+    dayClear(state) {
+      state.data = { day: {}, dayNotes: [], dayTasks: [], message: '' };
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getDay.pending, (state) => {
@@ -35,7 +46,6 @@ const daySlice = createSlice({
       })
       .addCase(getDay.rejected, (state) => {
         state.status = 'rejected';
-        state.data = { day: {}, dayNotes: [], dayTasks: [], message: '' };
       })
       .addCase(addDay.pending, (state) => {
         state.status = 'pending';
@@ -46,6 +56,23 @@ const daySlice = createSlice({
       .addCase(addDay.rejected, (state) => {
         state.status = 'rejected';
         state.data.message = 'There was a problem with adding day data.';
+      })
+      .addCase(updateDayTask.pending, (state) => {
+        state.status = 'pending';
+      })
+      .addCase(updateDayTask.fulfilled, (state, { payload }) => {
+        state.status = 'idle';
+        state.data.dayTasks = state.data.dayTasks.map((task) => {
+          if (task.id === payload.dayTask.id) {
+            return payload.dayTask;
+          } else {
+            return task;
+          }
+        });
+      })
+      .addCase(updateDayTask.rejected, (state) => {
+        state.status = 'rejected';
+        state.data.message = 'There was a problem with adding day data.';
       });
   },
 });
@@ -53,3 +80,4 @@ const daySlice = createSlice({
 export const selectDay = (state) => state.day.data;
 export const selectStatus = (state) => state.day.status;
 export default daySlice.reducer;
+export const { dayClear } = daySlice.actions;

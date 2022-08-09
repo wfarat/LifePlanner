@@ -122,7 +122,14 @@ export default function AddDay(props) {
         })}
       </Form.Select>
       Set time:
-      <TimeRangePicker value={time} className="timePicker" disableClock={true} onChange={setTime} hourPlaceholder="00" minutePlaceholder="00" />
+      <TimeRangePicker
+        value={time}
+        className="timePicker"
+        disableClock={true}
+        onChange={setTime}
+        hourPlaceholder="00"
+        minutePlaceholder="00"
+      />
       (not required)
       <Button variant="warning" onClick={handleAddTask}>
         Add Task
@@ -199,14 +206,16 @@ export default function AddDay(props) {
           notes.map((note) => {
             const popover = (
               <Popover id="popover-basic">
-                <Popover.Header as="h3">{note.title}</Popover.Header>
+                <Popover.Header className="text-black" as="h3">
+                  {note.title}
+                </Popover.Header>
                 <Popover.Body>{note.content}</Popover.Body>
               </Popover>
             );
             return (
               <Container>
                 <Row>
-                  <Col>
+                  <Col xs={8}>
                     <ListGroup.Item
                       action
                       onClick={() => {
@@ -220,10 +229,12 @@ export default function AddDay(props) {
                   <Col>
                     <OverlayTrigger
                       trigger="click"
-                      placement="bottom"
+                      placement="bottom-start"
                       overlay={popover}
                     >
-                      <Button variant="success">Read Note</Button>
+                      <Button key={note.id} variant="success">
+                        Read Note
+                      </Button>
                     </OverlayTrigger>
                   </Col>
                 </Row>

@@ -12,9 +12,9 @@ export default function User() {
       <NavDropdown.Item as={Link} href="#" to="/user">
         Settings
       </NavDropdown.Item>
-        <NavDropdown.Item onClick={handleClick} href="/">
-          Logout
-        </NavDropdown.Item>
+      <NavDropdown.Item onClick={handleClick} href="/">
+        Logout
+      </NavDropdown.Item>
     </NavDropdown>
   );
 }

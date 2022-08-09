@@ -1,8 +1,4 @@
-import Model from '../models/model';
-
-const daysModel = new Model('days');
-const dayTasksModel = new Model('day_tasks');
-const dayNotesModel = new Model('day_notes');
+import { dayNotesModel, dayTasksModel, daysModel } from '../models/models';
 
 const findDay = async (userId, dayRef) => {
   const data = await daysModel.select(
@@ -76,4 +72,15 @@ export const addDay = async (req, res) => {
     });
     res.status(201).send();
   }
+};
+
+export const updateDayTask = async (req, res) => {
+  const { taskId, status, comment } = req.body;
+  const pairs = [
+    { column: 'status', value: `'${status}'` },
+    { column: 'comment', value: `'${comment}'` },
+  ];
+  const data = await dayTasksModel.updateWithReturn(pairs, `id = ${taskId}`);
+  const dayTask = data.rows[0];
+  res.status(203).send({ dayTask });
 };
