@@ -26,8 +26,8 @@ CREATE TABLE IF NOT EXISTS goals (
   name VARCHAR(100) NOT NULL,
   description VARCHAR NOT NULL,
   user_id INT NOT NULL,
-  created TIMESTAMPTZ NOT NULL,
-  edited TIMESTAMPTZ NOT NULL,
+  times INT DEFAULT 0,
+  done INT DEFAULT 0,
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
 CREATE TABLE IF NOT EXISTS tasks (

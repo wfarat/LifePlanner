@@ -3,6 +3,7 @@ import {
   dayTasksModel,
   daysModel,
   goalTasksModel,
+  goalsModel,
 } from '../models/models';
 
 const findDay = async (userId, dayRef) => {
@@ -89,11 +90,15 @@ export const updateDayTask = async (req, res) => {
   ];
   let log;
   if (status === 'success') {
-    await goalTasksModel.updateOne(
+    const data = await goalTasksModel.updateOneWithReturn(
       'done',
       'done + 1',
       `task_id = '${taskId}' AND times > done`
     );
+    const goalTask = data.rows;
+    goalTask.forEach(async (task) => {
+    await goalsModel.updateOne('done', 'done + 1', `id = '${task.goal_id}'`);
+    });
   }
   const data = await dayTasksModel.updateWithReturn(pairs, `id = ${dayTaskId}`);
   const dayTask = data.rows[0];

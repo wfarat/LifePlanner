@@ -13,8 +13,8 @@ const findTasksByGoal = async (goalId) => {
   return data.rows;
 };
 
-const findTaskByTask = async (taskId) => {
-  const data = await goalTasksModel.select('*', ` WHERE task_id = ${taskId}`);
+const findTaskByTask = async (taskId, goalId) => {
+  const data = await goalTasksModel.select('*', ` WHERE task_id = ${taskId} AND id = ${goalId}`);
   return data.rows[0];
 };
 const findGoalById = async (goalId, userId) => {
@@ -62,9 +62,8 @@ export const sendGoals = async (req, res) => {
 
 export const addGoal = async (req, res) => {
   const { description, name, tasksArray } = req.body;
-  const time = dayjs.utc().local().toISOString();
-  const columns = 'name, description, user_id, created, edited';
-  const values = `'${name}', '${description}', ${req.userId}, '${time}', '${time}'`;
+  const columns = 'name, description, user_id';
+  const values = `'${name}', '${description}', ${req.userId}`;
   const data = await goalsModel.insertWithReturn(columns, values);
   const goal = data.rows[0];
   if (tasksArray.length > 0) {
@@ -73,6 +72,7 @@ export const addGoal = async (req, res) => {
         'goal_id, task_id, times',
         `${goal.id}, ${task.id}, ${task.times}`
       );
+      await goalsModel.updateOne('times', `times + ${task.times}`, `id = ${goal.id}`);
     });
   }
   res.status(201).send({ goal });
@@ -80,14 +80,15 @@ export const addGoal = async (req, res) => {
 
 export const addGoalTask = async (req, res) => {
   const { times, taskId } = req.body;
-  const task = await findTaskByTask(taskId);
+  const task = await findTaskByTask(taskId, req.goal.id);
   if (task) {
     res.status(400).send();
     return;
   }
-  const columns = 'goal_id, task_id, times';
-  const values = `${req.goal.id}, ${taskId}, ${times}`;
+  const columns = 'goal_id, task_id, times, done';
+  const values = `${req.goal.id}, ${taskId}, ${times}, 0`;
   const data = await goalTasksModel.insertWithReturn(columns, values);
+  await goalsModel.updateOne('times', `times + ${times}`, `id = ${req.goal.id}`);
   const goalTask = data.rows[0];
   res.status(201).send({ goalTask });
 };

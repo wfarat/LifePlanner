@@ -1,4 +1,4 @@
-import { tasksModel, goalTasksModel, dayTasksModel } from '../models/models';
+import { tasksModel, goalTasksModel, dayTasksModel, goalsModel } from '../models/models';
 
 const findByUser = async (userId) => {
   const data = await tasksModel.select('*', ` WHERE user_id = ${userId}`);
@@ -48,6 +48,7 @@ export const addTask = async (req, res) => {
       'goal_id, task_id, times',
       `${goal}, ${task.id}, ${times}`
     );
+    await goalsModel.updateOne('times', `times + ${times}`, `id = ${goal}`);
     res.status(201).send({ task });
   } else {
     const columns = 'user_id, repeat, name, duration, description';

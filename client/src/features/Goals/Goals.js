@@ -1,13 +1,24 @@
-import { useSelector } from 'react-redux';
-import { selectGoals } from './goalsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { getGoals, selectGoals } from './goalsSlice';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import ProgressBar from 'react-bootstrap/esm/ProgressBar';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { selectUser } from '../users/userSlice';
+import { useEffect } from 'react';
 export default function Goals() {
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
   const goalsData = useSelector(selectGoals);
   const { goals } = goalsData;
+  useEffect(() => {
+    const data = {
+      accessToken: user.accessToken
+    }
+    dispatch(getGoals(data));
+  }, [])
   return (
     <Container>
       <Button variant="success" as={Link} to="add">
@@ -15,13 +26,11 @@ export default function Goals() {
       </Button>
       <Row className="border-bottom border-secondary">
         <Col>Goal name:</Col>
-        <Col>Created:</Col>
-        <Col>Edited:</Col>
+        <Col>Progress:</Col>
       </Row>
       {goals.length > 0 &&
         goals.map((goal) => {
-          const created = new Date(goal.created).toLocaleString();
-          const edited = new Date(goal.created).toLocaleString();
+          const progress = (goal.done / goal.times) * 100;
           return (
             <Row
               as={Link}
@@ -30,8 +39,9 @@ export default function Goals() {
               to={`${goal.id}`}
             >
               <Col>{goal.name}</Col>
-              <Col>{created}</Col>
-              <Col>{edited}</Col>
+              <Col>
+                 {goal.times > 0 && <ProgressBar style={{margin: '3px'}} animated variant={progress === 100 ? 'success' : 'warning'} now={progress} label={`${progress}%`} /> }
+                </Col>
             </Row>
           );
         })}

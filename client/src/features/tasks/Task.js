@@ -36,16 +36,16 @@ export default function Task() {
   );
   return (
     <Container>
-      <Container>
         <Row>
           <Col>
             <h2>{task.name}</h2>
           </Col>
         </Row>
-      </Container>
+        <Row>
+          <Col><p>{task.description}</p></Col>
+        </Row>
       <Row>
         <Col>
-          {' '}
           <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
             <Button variant="success">Delete Task</Button>
           </OverlayTrigger>

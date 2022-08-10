@@ -29,6 +29,7 @@ export const addGoalTask = createAsyncThunk('addGoalTask', async (data) => {
     headers: { 'x-access-token': data.accessToken },
     data: data.goalTask,
   });
+  console.log(res.data)
   return res.data;
 });
 export const deleteGoal = createAsyncThunk('deleteGoal', async (data) => {

@@ -72,6 +72,14 @@ class Model {
     WHERE ${clause}`;
     return this.pool.query(query);
   }
+  
+  async updateOneWithReturn(column, value, clause) {
+    const query = `UPDATE ${this.table}
+    SET ${column} = ${value}
+    WHERE ${clause} 
+    RETURNING *`;
+    return this.pool.query(query);
+  }
 
   async delete(clause) {
     const query = `DELETE FROM ${this.table} WHERE ${clause}`;

@@ -76,7 +76,7 @@ export default function Goal() {
             <h2>{goal.name}</h2>
           </Col>
         </Row>
-        <Row>
+        <Row className="border-bottom border-secondary">
           <Col>Task name:</Col>
           <Col>Progress:</Col>
         </Row>
@@ -85,15 +85,18 @@ export default function Goal() {
             const task = tasks.find((task) => task.id === goalTask.task_id);
             const progress = (goalTask.done / goalTask.times) * 100;
             return (
-              <Row key={goalTask.id}>
+              <Row key={goalTask.id} className="border-bottom border-secondary">
                 <Col>{task.name}</Col>
-                <Col>
-                  <ProgressBar now={progress} label={`${progress}%`} />
+                <Col className="justify">
+                <ProgressBar style={{margin: '3px'}} animated variant={progress === 100 ? 'success' : 'warning'} now={progress} label={`${progress}%`} />
                 </Col>
               </Row>
             );
           })}
       </Container>
+      <Row>
+        <Col><h2>Add</h2></Col>
+      </Row>
       <AddGoalTask tasksArray={tasksArray} setTasksArray={setTasksArray} />
       <p className="text-danger">{goalsData.message}</p>
       <Button variant="success" onClick={handleClick}>
