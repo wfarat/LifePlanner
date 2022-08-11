@@ -15,10 +15,10 @@ export default function Goals() {
   const { goals } = goalsData;
   useEffect(() => {
     const data = {
-      accessToken: user.accessToken
-    }
+      accessToken: user.accessToken,
+    };
     dispatch(getGoals(data));
-  }, [])
+  }, []);
   return (
     <Container>
       <Button variant="success" as={Link} to="add">
@@ -40,8 +40,16 @@ export default function Goals() {
             >
               <Col>{goal.name}</Col>
               <Col>
-                 {goal.times > 0 && <ProgressBar style={{margin: '3px'}} animated variant={progress === 100 ? 'success' : 'warning'} now={progress} label={`${progress}%`} /> }
-                </Col>
+                {goal.times > 0 && (
+                  <ProgressBar
+                    style={{ margin: '3px' }}
+                    animated
+                    variant={progress === 100 ? 'success' : 'warning'}
+                    now={progress}
+                    label={`${progress}%`}
+                  />
+                )}
+              </Col>
             </Row>
           );
         })}

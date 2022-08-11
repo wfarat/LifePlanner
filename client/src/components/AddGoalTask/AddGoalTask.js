@@ -31,8 +31,9 @@ export default function AddGoalTask(props) {
   };
   return (
     <Form className="taskForm">
+      <Form.Label>Add Tasks: (Not Required)</Form.Label>
       <Form.Select onChange={handleChange} aria-label="Select task">
-        <option value={'null'}>Add Task (not required)</option>
+        <option value={'null'}>Select task</option>
         {tasks.map((task) => {
           return (
             <option value={`${task.id}|${task.name}`} key={task.id}>

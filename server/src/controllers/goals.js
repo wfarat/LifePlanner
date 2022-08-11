@@ -14,7 +14,10 @@ const findTasksByGoal = async (goalId) => {
 };
 
 const findTaskByTask = async (taskId, goalId) => {
-  const data = await goalTasksModel.select('*', ` WHERE task_id = ${taskId} AND id = ${goalId}`);
+  const data = await goalTasksModel.select(
+    '*',
+    ` WHERE task_id = ${taskId} AND id = ${goalId}`
+  );
   return data.rows[0];
 };
 const findGoalById = async (goalId, userId) => {
@@ -72,7 +75,11 @@ export const addGoal = async (req, res) => {
         'goal_id, task_id, times',
         `${goal.id}, ${task.id}, ${task.times}`
       );
-      await goalsModel.updateOne('times', `times + ${task.times}`, `id = ${goal.id}`);
+      await goalsModel.updateOne(
+        'times',
+        `times + ${task.times}`,
+        `id = ${goal.id}`
+      );
     });
   }
   res.status(201).send({ goal });
@@ -88,7 +95,11 @@ export const addGoalTask = async (req, res) => {
   const columns = 'goal_id, task_id, times, done';
   const values = `${req.goal.id}, ${taskId}, ${times}, 0`;
   const data = await goalTasksModel.insertWithReturn(columns, values);
-  await goalsModel.updateOne('times', `times + ${times}`, `id = ${req.goal.id}`);
+  await goalsModel.updateOne(
+    'times',
+    `times + ${times}`,
+    `id = ${req.goal.id}`
+  );
   const goalTask = data.rows[0];
   res.status(201).send({ goalTask });
 };
@@ -98,3 +109,10 @@ export const deleteGoal = async (req, res) => {
   await goalsModel.delete(`id = ${req.goal.id}`);
   res.status(200).send({ goalId: req.goal.id });
 };
+
+export const updateGoal = async (req, res) => {
+  const { keyName, val } = req.body;
+  const data = await goalsModel.updateOneWithReturn(keyName, `'${val}'`, `id = ${req.goal.id}`);
+  const goal = data.rows[0];
+  res.status(203).send({goal}); 
+}

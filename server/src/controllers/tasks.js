@@ -1,4 +1,9 @@
-import { tasksModel, goalTasksModel, dayTasksModel, goalsModel } from '../models/models';
+import {
+  tasksModel,
+  goalTasksModel,
+  dayTasksModel,
+  goalsModel,
+} from '../models/models';
 
 const findByUser = async (userId) => {
   const data = await tasksModel.select('*', ` WHERE user_id = ${userId}`);
@@ -64,3 +69,16 @@ export const deleteTask = async (req, res) => {
   await tasksModel.delete(`id = ${req.task.id}`);
   res.status(200).send({ taskId: req.task.id });
 };
+
+export const updateTask = async (req, res) => {
+  const { keyName, val } = req.body;
+  if (keyName === 'repeat') {
+    const data = await tasksModel.updateOneWithReturn(keyName, `'{${val}}'`, `id = ${req.task.id}`);
+    const task = data.rows[0];
+    res.status(203).send({task});
+  } else {
+  const data = await tasksModel.updateOneWithReturn(keyName, `'${val}'`, `id = ${req.task.id}`);
+  const task = data.rows[0];
+  res.status(203).send({task});
+  } 
+}

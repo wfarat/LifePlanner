@@ -97,7 +97,7 @@ export const updateDayTask = async (req, res) => {
     );
     const goalTask = data.rows;
     goalTask.forEach(async (task) => {
-    await goalsModel.updateOne('done', 'done + 1', `id = '${task.goal_id}'`);
+      await goalsModel.updateOne('done', 'done + 1', `id = '${task.goal_id}'`);
     });
   }
   const data = await dayTasksModel.updateWithReturn(pairs, `id = ${dayTaskId}`);

@@ -72,7 +72,7 @@ class Model {
     WHERE ${clause}`;
     return this.pool.query(query);
   }
-  
+
   async updateOneWithReturn(column, value, clause) {
     const query = `UPDATE ${this.table}
     SET ${column} = ${value}

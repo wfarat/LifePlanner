@@ -12,27 +12,22 @@ export default function Tasks() {
 
   return (
     <Container>
-          <Button variant="success" className="m-3" as={Link} to="add">
+      <Button variant="success" className="m-3" as={Link} to="add">
         Add Task
       </Button>
       <Row>
-        <h3>Tasks:</h3>
+        <Col><h3>Tasks:</h3></Col>
       </Row>
       <ListGroup>
-      {tasks.length > 0 &&
-        tasks.map((task) => {
-          return (
-              <ListGroup.Item
-                action
-                as={Link}
-                to={`${task.id}`}
-                key={task.id}
-              >
+        {tasks.length > 0 &&
+          tasks.map((task) => {
+            return (
+              <ListGroup.Item action as={Link} to={`${task.id}`} key={task.id}>
                 {task.name}
               </ListGroup.Item>
             );
           })}
-    </ListGroup>
+      </ListGroup>
     </Container>
   );
 }

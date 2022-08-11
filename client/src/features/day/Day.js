@@ -139,7 +139,7 @@ export default function Day() {
                     >
                       <Modal.Header closeButton>
                         <Modal.Title className="text-dark">
-                          Modal heading
+                          Edit task:
                         </Modal.Title>
                       </Modal.Header>
                       <Modal.Body>

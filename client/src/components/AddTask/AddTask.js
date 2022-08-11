@@ -106,12 +106,16 @@ export default function AddTask() {
           placeholder="Enter description"
         />
       </Form.Group>
+      <Form.Group className="mb-3" controlId="formDuration">
       <Form.Label>Duration: {duration} minutes</Form.Label>
       <Form.Range
         value={duration}
         onChange={(e) => setDuration(e.target.value)}
         max="120"
       />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="fromRepeat">
+      <Form.Label>Days to repeat:</Form.Label>
       {days.map((day, index) => (
         <Form.Check
           inline
@@ -124,6 +128,7 @@ export default function AddTask() {
           id={`inline-checkbox-${index}`}
         />
       ))}
+      </Form.Group>
       <Form.Select onChange={handleGoal} aria-label="Select goal">
         {!linkGoal && <option value="null">Select Goal (not required)</option>}
         {linkGoal && <option value={linkGoal.id}>{linkGoal.name}</option>}

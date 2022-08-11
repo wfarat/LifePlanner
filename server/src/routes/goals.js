@@ -10,6 +10,7 @@ import {
   findGoalTasks,
   sendGoals,
   sendGoalTasks,
+  updateGoal,
 } from '../controllers/goals';
 
 const goalsRouter = express.Router();
@@ -22,4 +23,5 @@ goalsRouter.get('/:goalId', findGoalTasks, sendGoalTasks);
 goalsRouter.post('/', addGoal);
 goalsRouter.post('/:goalId', addGoalTask);
 goalsRouter.delete('/:goalId', deleteGoal);
+goalsRouter.put('/:goalId', updateGoal);
 export default goalsRouter;
