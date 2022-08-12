@@ -7,10 +7,16 @@ import './calendarPage.css';
 export default function CalendarPage() {
   const navigate = useNavigate();
   const onChange = (value) => {
-    const day = value.getDate();
-    const month = value.getMonth() + 1;
+    let day = value.getDate();
+    if (day < 10) { 
+      day = '0' + day;
+    }
+    let month = value.getMonth() + 1;
+    if (month < 10) {
+      month = '0' + month;
+    }
     const year = value.getFullYear();
-    const dateString = `${day}${month}${year}`;
+    const dateString = `${year}${month}${day}`;
     return navigate(`../day/${dateString}`);
   };
   return (
