@@ -13,7 +13,6 @@ import Modal from 'react-bootstrap/Modal';
 import { selectTasks, deleteTask, updateTask } from '../tasks/tasksSlice';
 import { useState } from 'react';
 
-
 export default function Task() {
   const params = useParams();
   const { tasks } = useSelector(selectTasks);
@@ -56,13 +55,13 @@ export default function Task() {
   };
   const handleShow = (name) => {
     setKeyName(name);
-    if (name === "repeat") {
+    if (name === 'repeat') {
       setVal([]);
     }
-    if (name === "duration") {
+    if (name === 'duration') {
       setVal(0);
     }
-    if (name === "name" || name === "description") {
+    if (name === 'name' || name === 'description') {
       setVal('');
     }
     setShow(true);
@@ -74,9 +73,9 @@ export default function Task() {
         accessToken: user.accessToken,
         task: {
           val,
-          keyName
-        }
-      }
+          keyName,
+        },
+      };
       dispatch(updateTask(data));
       setShow(false);
       setVal('');
@@ -99,38 +98,41 @@ export default function Task() {
           <Modal.Title className="text-dark">Edit {keyName}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {(keyName === "name" || keyName === "description") &&
-        <Form.Control
-          onChange={(e) => setVal(e.target.value)}
-          autoComplete="name"
-          value={val}
-          type="text"
-          placeholder={`Enter ${keyName}`}
-        /> }
-        {keyName === "duration" &&
-        <Form.Group>
-              <Form.Label className="text-dark">Duration: {val} minutes</Form.Label>
+          {(keyName === 'name' || keyName === 'description') && (
+            <Form.Control
+              onChange={(e) => setVal(e.target.value)}
+              autoComplete="name"
+              value={val}
+              type="text"
+              placeholder={`Enter ${keyName}`}
+            />
+          )}
+          {keyName === 'duration' && (
+            <Form.Group>
+              <Form.Label className="text-dark">
+                Duration: {val} minutes
+              </Form.Label>
               <Form.Range
                 value={val}
                 onChange={(e) => setVal(e.target.value)}
                 max="120"
               />
-              </Form.Group>
-}
-{keyName === "repeat" && days.map((day, index) => (
-        <Form.Check
-          inline
-          label={day}
-          value={index}
-          onChange={handleChange}
-          className="text-dark"
-          name={day}
-          key={index}
-          type="checkbox"
-          id={`inline-checkbox-${index}`}
-        />
-      ))
-}
+            </Form.Group>
+          )}
+          {keyName === 'repeat' &&
+            days.map((day, index) => (
+              <Form.Check
+                inline
+                label={day}
+                value={index}
+                onChange={handleChange}
+                className="text-dark"
+                name={day}
+                key={index}
+                type="checkbox"
+                id={`inline-checkbox-${index}`}
+              />
+            ))}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
@@ -143,32 +145,52 @@ export default function Task() {
       </Modal>
       <Row>
         <Col>
-        <h4>Edit task:</h4></Col>
+          <h4>Edit task:</h4>
+        </Col>
       </Row>
       <ListGroup className="mb-3">
-        <ListGroup.Item action as={Button} onClick={(e) => handleShow("name")}>        <div className="ms-2 me-auto">
-          <div className="fw-bold">Name:</div>
-          {task.name}
-        </div></ListGroup.Item>
-<ListGroup.Item action as={Button} onClick={(e) => handleShow("description")}>
-<div className="ms-2 me-auto">
-          <div className="fw-bold">Description:</div>
-          {task.description}
-        </div>
-</ListGroup.Item>
-<ListGroup.Item action as={Button} onClick={(e) => handleShow("duration")}>
-<div className="ms-2 me-auto">
-          <div className="fw-bold">Duration:</div>
-          {task.duration} Minutes
-        </div>
-</ListGroup.Item>
-<ListGroup.Item action as={Button} onClick={(e) => handleShow("repeat")}>        <div className="ms-2 me-auto">
-          <div className="fw-bold">Days to repeat:</div>
-          {task.repeat.length > 0 && task.repeat.map(day => {
-            return days[day] + ' '
-          })}    {task.repeat.length === 0 && 'No days selected.'}
-        </div>
-</ListGroup.Item>
+        <ListGroup.Item action as={Button} onClick={(e) => handleShow('name')}>
+          {' '}
+          <div className="ms-2 me-auto">
+            <div className="fw-bold">Name:</div>
+            {task.name}
+          </div>
+        </ListGroup.Item>
+        <ListGroup.Item
+          action
+          as={Button}
+          onClick={(e) => handleShow('description')}
+        >
+          <div className="ms-2 me-auto">
+            <div className="fw-bold">Description:</div>
+            {task.description}
+          </div>
+        </ListGroup.Item>
+        <ListGroup.Item
+          action
+          as={Button}
+          onClick={(e) => handleShow('duration')}
+        >
+          <div className="ms-2 me-auto">
+            <div className="fw-bold">Duration:</div>
+            {task.duration} Minutes
+          </div>
+        </ListGroup.Item>
+        <ListGroup.Item
+          action
+          as={Button}
+          onClick={(e) => handleShow('repeat')}
+        >
+          {' '}
+          <div className="ms-2 me-auto">
+            <div className="fw-bold">Days to repeat:</div>
+            {task.repeat.length > 0 &&
+              task.repeat.map((day) => {
+                return days[day] + ' ';
+              })}{' '}
+            {task.repeat.length === 0 && 'No days selected.'}
+          </div>
+        </ListGroup.Item>
       </ListGroup>
       <Row>
         <Col>

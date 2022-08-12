@@ -15,12 +15,16 @@ import storage from 'redux-persist/lib/storage';
 import daySlice from '../features/day/daySlice';
 import tasksSlice from '../features/tasks/tasksSlice';
 import goalsSlice from '../features/Goals/goalsSlice';
+import dayNotesSlice from '../features/dayNotes/dayNotesSlice';
+import dayTasksSlice from '../features/dayTasks/dayTasksSlice';
 
 const appReducer = combineReducers({
   user: userSlice,
   day: daySlice,
   tasks: tasksSlice,
   goals: goalsSlice,
+  dayNotes: dayNotesSlice,
+  dayTasks: dayTasksSlice,
 });
 
 const rootReducer = (state, action) => {

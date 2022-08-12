@@ -73,12 +73,20 @@ export const deleteTask = async (req, res) => {
 export const updateTask = async (req, res) => {
   const { keyName, val } = req.body;
   if (keyName === 'repeat') {
-    const data = await tasksModel.updateOneWithReturn(keyName, `'{${val}}'`, `id = ${req.task.id}`);
+    const data = await tasksModel.updateOneWithReturn(
+      keyName,
+      `'{${val}}'`,
+      `id = ${req.task.id}`
+    );
     const task = data.rows[0];
-    res.status(203).send({task});
+    res.status(203).send({ task });
   } else {
-  const data = await tasksModel.updateOneWithReturn(keyName, `'${val}'`, `id = ${req.task.id}`);
-  const task = data.rows[0];
-  res.status(203).send({task});
-  } 
-}
+    const data = await tasksModel.updateOneWithReturn(
+      keyName,
+      `'${val}'`,
+      `id = ${req.task.id}`
+    );
+    const task = data.rows[0];
+    res.status(203).send({ task });
+  }
+};

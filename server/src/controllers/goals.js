@@ -112,7 +112,11 @@ export const deleteGoal = async (req, res) => {
 
 export const updateGoal = async (req, res) => {
   const { keyName, val } = req.body;
-  const data = await goalsModel.updateOneWithReturn(keyName, `'${val}'`, `id = ${req.goal.id}`);
+  const data = await goalsModel.updateOneWithReturn(
+    keyName,
+    `'${val}'`,
+    `id = ${req.goal.id}`
+  );
   const goal = data.rows[0];
-  res.status(203).send({goal}); 
-}
+  res.status(203).send({ goal });
+};

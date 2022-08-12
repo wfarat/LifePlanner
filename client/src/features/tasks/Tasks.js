@@ -16,7 +16,9 @@ export default function Tasks() {
         Add Task
       </Button>
       <Row>
-        <Col><h3>Tasks:</h3></Col>
+        <Col>
+          <h3>Tasks:</h3>
+        </Col>
       </Row>
       <ListGroup>
         {tasks.length > 0 &&

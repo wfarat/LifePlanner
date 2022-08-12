@@ -1,16 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Calendar from 'react-calendar';
 import { useNavigate } from 'react-router-dom';
 import 'react-calendar/dist/Calendar.css';
 import './calendarPage.css';
-import { dayClear } from '../../features/day/daySlice';
-import { useDispatch } from 'react-redux';
+
 export default function CalendarPage() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  useEffect(() => {
-    dispatch(dayClear());
-  }, []);
   const onChange = (value) => {
     const day = value.getDate();
     const month = value.getMonth() + 1;

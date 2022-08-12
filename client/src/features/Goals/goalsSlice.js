@@ -46,7 +46,7 @@ export const updateGoal = createAsyncThunk('updateGoal', async (data) => {
     data: data.goal,
   });
   return res.data;
-})
+});
 const goalsSlice = createSlice({
   name: 'goals',
   initialState: {
@@ -126,16 +126,16 @@ const goalsSlice = createSlice({
       .addCase(updateGoal.pending, (state) => {
         state.status = 'pending';
       })
-      .addCase(updateGoal.fulfilled, (state, {payload}) => {
+      .addCase(updateGoal.fulfilled, (state, { payload }) => {
         state.status = 'idle';
         state.data.message = '';
-        state.data.goals = state.data.goals.map(goal => {
+        state.data.goals = state.data.goals.map((goal) => {
           if (goal.id === payload.goal.id) {
             return payload.goal;
           } else {
             return goal;
           }
-        })
+        });
       })
       .addCase(updateGoal.rejected, (state) => {
         state.status = 'rejected';

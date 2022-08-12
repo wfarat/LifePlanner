@@ -22,10 +22,16 @@ import Goals from './features/Goals/Goals';
 import Tasks from './features/tasks/Tasks';
 import Task from './features/tasks/Task';
 import AuthCheck from './components/authCheck/AuthCheck';
+import DayTasks from './features/dayTasks/dayTasks';
+import DayNotes from './features/dayNotes/DayNotes';
 const container = document.getElementById('root');
 const root = createRoot(container);
 let persistor = persistStore(store);
-
+const value = new Date();
+const day = value.getDate();
+const month = value.getMonth() + 1;
+const year = value.getFullYear();
+const dateString = `${day}${month}${year}`;
 root.render(
   <React.StrictMode>
     <GoogleOAuthProvider clientId="460759546213-jq918lrs8fvpg4h3213gdlit96fmlld0.apps.googleusercontent.com">
@@ -44,8 +50,15 @@ root.render(
                   </AuthCheck>
                 }
               >
+                <Route path="/" element={<Day today={dateString} />}>
+                  <Route path="/" element={<DayTasks />} />
+                  <Route path="/notes" element={<DayNotes />} />
+                </Route>
                 <Route path="user" element={<UserPage />} />
-                <Route path="day/:dayRef" element={<Day />} />
+                <Route path="day/:dayRef" element={<Day />}>
+                  <Route path="/day/:dayRef" element={<DayTasks />} />
+                  <Route path="/day/:dayRef/notes" element={<DayNotes />} />
+                </Route>
                 <Route path="user/password" element={<Password />} />
                 <Route path="tasks" element={<Tasks />} />
                 <Route path="tasks/:taskId" element={<Task />} />

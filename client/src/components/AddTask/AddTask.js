@@ -107,27 +107,27 @@ export default function AddTask() {
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="formDuration">
-      <Form.Label>Duration: {duration} minutes</Form.Label>
-      <Form.Range
-        value={duration}
-        onChange={(e) => setDuration(e.target.value)}
-        max="120"
-      />
+        <Form.Label>Duration: {duration} minutes</Form.Label>
+        <Form.Range
+          value={duration}
+          onChange={(e) => setDuration(e.target.value)}
+          max="120"
+        />
       </Form.Group>
       <Form.Group className="mb-3" controlId="fromRepeat">
-      <Form.Label>Days to repeat:</Form.Label>
-      {days.map((day, index) => (
-        <Form.Check
-          inline
-          label={day}
-          value={index}
-          onChange={handleChange}
-          name={day}
-          key={index}
-          type="checkbox"
-          id={`inline-checkbox-${index}`}
-        />
-      ))}
+        <Form.Label>Days to repeat:</Form.Label>
+        {days.map((day, index) => (
+          <Form.Check
+            inline
+            label={day}
+            value={index}
+            onChange={handleChange}
+            name={day}
+            key={index}
+            type="checkbox"
+            id={`inline-checkbox-${index}`}
+          />
+        ))}
       </Form.Group>
       <Form.Select onChange={handleGoal} aria-label="Select goal">
         {!linkGoal && <option value="null">Select Goal (not required)</option>}

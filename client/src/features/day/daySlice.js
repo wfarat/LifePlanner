@@ -1,76 +1,50 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const getDay = createAsyncThunk('getDay', async (data) => {
+export const findDay = createAsyncThunk('findDay', async (data) => {
   const res = await axios(`/api/days/${data.dayRef}`, {
     method: 'GET',
     headers: { 'x-access-token': data.accessToken },
-  }).catch((err) => err.response);
+  });
   return res.data;
 });
-export const addDay = createAsyncThunk('addDay', async (data) => {
-  const res = await axios(`/api/days/${data.dayRef}`, {
+export const createDay = createAsyncThunk('createDay', async (data) => {
+  const res = await axios(`/api/days/`, {
     method: 'POST',
     headers: { 'x-access-token': data.accessToken },
     data: data.day,
   });
   return res.data;
 });
-export const updateDayTask = createAsyncThunk('updateDayTask', async (data) => {
-  const res = await axios('/api/days/task/update', {
-    method: 'POST',
-    headers: { 'x-access-token': data.accessToken },
-    data: data.dayTask,
-  });
-  return res.data;
-});
+
 const daySlice = createSlice({
   name: 'day',
   initialState: {
-    data: { day: {}, dayNotes: [], dayTasks: [], message: '' },
+    data: { day: {}, message: '' },
     status: 'idle',
   },
-  reducers: {
-    dayClear(state) {
-      state.data = { day: {}, dayNotes: [], dayTasks: [], message: '' };
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getDay.pending, (state) => {
+      .addCase(findDay.pending, (state) => {
         state.status = 'pending';
       })
-      .addCase(getDay.fulfilled, (state, { payload }) => {
+      .addCase(findDay.fulfilled, (state, { payload }) => {
         state.status = 'idle';
-        state.data = payload;
+        state.data.day = payload.day;
       })
-      .addCase(getDay.rejected, (state) => {
+      .addCase(findDay.rejected, (state) => {
         state.status = 'rejected';
+        state.data.day = {};
       })
-      .addCase(addDay.pending, (state) => {
+      .addCase(createDay.pending, (state) => {
         state.status = 'pending';
       })
-      .addCase(addDay.fulfilled, (state) => {
+      .addCase(createDay.fulfilled, (state, { payload }) => {
         state.status = 'idle';
+        state.data.day = payload.day;
       })
-      .addCase(addDay.rejected, (state) => {
-        state.status = 'rejected';
-        state.data.message = 'There was a problem with adding day data.';
-      })
-      .addCase(updateDayTask.pending, (state) => {
-        state.status = 'pending';
-      })
-      .addCase(updateDayTask.fulfilled, (state, { payload }) => {
-        state.status = 'idle';
-        state.data.dayTasks = state.data.dayTasks.map((task) => {
-          if (task.id === payload.dayTask.id) {
-            return payload.dayTask;
-          } else {
-            return task;
-          }
-        });
-      })
-      .addCase(updateDayTask.rejected, (state) => {
+      .addCase(createDay.rejected, (state) => {
         state.status = 'rejected';
         state.data.message = 'There was a problem with adding day data.';
       });
@@ -80,4 +54,3 @@ const daySlice = createSlice({
 export const selectDay = (state) => state.day.data;
 export const selectStatus = (state) => state.day.status;
 export default daySlice.reducer;
-export const { dayClear } = daySlice.actions;
