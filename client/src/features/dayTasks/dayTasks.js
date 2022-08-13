@@ -20,9 +20,11 @@ import {
   updateDayTask,
 } from './dayTasksSlice';
 import { selectDay } from '../day/daySlice';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 export default function DayTasks() {
   const user = useSelector(selectUser);
+  const intl = useIntl();
   const tasksStatus = useSelector(selectTasksStatus);
   const { day } = useSelector(selectDay);
   const dayTasksData = useSelector(selectDayTasks);
@@ -48,7 +50,7 @@ export default function DayTasks() {
   };
   const handleAddTask = () => {
     if (task === 0) {
-      setMessage('Pick a task');
+      setMessage(intl.formatMessage({id: "message.task"}));
       return;
     }
     if (time.length === 0) {
@@ -58,6 +60,8 @@ export default function DayTasks() {
         dayTask: { taskId: task },
       };
       dispatch(addDayTask(data));
+    } else if (time[0] === null || time[1] === null) {
+      setMessage(intl.formatMessage({id: "message.picktime"}))
     } else {
       const start = time[0].split(':');
       const startHours = Number(start[0]) * 60;
@@ -68,7 +72,7 @@ export default function DayTasks() {
       const startTotal = startHours + startMinutes;
       const finishTotal = finishHours + finishMinutes;
       if (finishTotal < startTotal) {
-        setMessage('Task finish time must be set after the start time.');
+        setMessage(intl.formatMessage({id: "message.time"}));
         return;
       }
       const data = {
@@ -93,9 +97,9 @@ export default function DayTasks() {
     setShow(0);
   };
   const statuses = [
-    { name: 'Started', style: 'warning' },
-    { name: 'Done', style: 'success' },
-    { name: 'Canceled', style: 'danger' },
+    { name: intl.formatMessage({id: "status.started"}), style: 'warning' },
+    { name: intl.formatMessage({id: "status.done"}), style: 'success' },
+    { name: intl.formatMessage({id: "status.canceled"}), style: 'danger' },
   ];
   const handleChangeStatus = (e) => {
     setStatus(e.target.value);
@@ -134,11 +138,11 @@ export default function DayTasks() {
     </Spinner>} 
     {tasksStatus === 'idle' &&
     <Container>
-              <Button as={Link} className="mt-3" to="../notes">Switch to Notes</Button> 
+              <Button as={Link} variant="success" className="mb-3" to="../notes"><FormattedMessage id="tasks.switch"/></Button> 
       <Row>
-        <Col xs={6}>Task Name:</Col>
-        <Col>Start</Col>
-        <Col>Finish</Col>
+        <Col xs={6}><FormattedMessage id="tasks.name" /></Col>
+        <Col><FormattedMessage id="tasks.start" /></Col>
+        <Col><FormattedMessage id="tasks.finish" /></Col>
       </Row>
       <ListGroup>
         {dayTasks.length > 0 &&
@@ -185,6 +189,10 @@ export default function DayTasks() {
                       {''}
                     </Col>
                   </Row>
+                  {task.comment && 
+                  <Row>
+                    <Col>{task.comment}</Col>
+                    </Row>}
                 </ListGroup.Item>
                 <Modal
                   key={task.task_id}
@@ -192,7 +200,7 @@ export default function DayTasks() {
                   onHide={handleClose}
                 >
                   <Modal.Header closeButton>
-                    <Modal.Title className="text-dark">Edit task:</Modal.Title>
+                    <Modal.Title className="text-dark"><FormattedMessage id="tasks.edit" /></Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
                     <Form.Select
@@ -201,7 +209,7 @@ export default function DayTasks() {
                       onChange={handleChangeStatus}
                       aria-label="Select goal"
                     >
-                      <option value="light">Select status:</option>
+                      <option value="light"><FormattedMessage id="tasks.status" /></option>
                       {statuses.map((status) => {
                         return (
                           <option value={status.style} key={status.name}>
@@ -216,29 +224,32 @@ export default function DayTasks() {
                       controlId="formBasicName"
                     >
                       <Form.Label className="fs-5 text-dark">
-                        Add comment:
+                        <FormattedMessage id="tasks.comment" />
                       </Form.Label>
                       <Form.Control
                         onChange={(e) => setComment(e.target.value)}
                         autoComplete="name"
                         value={comment}
                         type="text"
-                        placeholder="Enter comment"
+                        placeholder={intl.formatMessage({id: "tasks.commentplaceholder"})}
                       />
                     </Form.Group>
                   </Modal.Body>
                   <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                        <FormattedMessage id="button.close" />
+                    </Button>
                     <Button
                       variant="warning"
                       onClick={() => handleDeleteTask(task.id)}
                     >
-                      Delete Task
+                      <FormattedMessage id="button.deletetask" />
                     </Button>
                     <Button
                       variant="primary"
                       onClick={() => handleUpdateTask(task.id, task.task_id)}
                     >
-                      Save Changes
+                      <FormattedMessage id="button.savechanges" />
                     </Button>
                   </Modal.Footer>
                 </Modal>
@@ -247,9 +258,9 @@ export default function DayTasks() {
           })}
       </ListGroup>
       <Form className="taskForm">
-        <Form.Label className="fs-5">Add tasks:</Form.Label>
+        <Form.Label className="fs-5"><FormattedMessage id="tasks.add" /></Form.Label>
         <Form.Select onChange={handleChange} aria-label="Select task">
-          <option value={0}>Add Task</option>
+          <option value={0}><FormattedMessage id="tasks.select" /></option>
           {tasks.map((task) => {
             return (
               <option value={task.id} key={task.id}>
@@ -258,7 +269,7 @@ export default function DayTasks() {
             );
           })}
         </Form.Select>
-        Set time:
+        <FormattedMessage id="tasks.time" />
         <TimeRangePicker
           value={time}
           className="timePicker"
@@ -267,9 +278,9 @@ export default function DayTasks() {
           hourPlaceholder="00"
           minutePlaceholder="00"
         />
-        (not required)
+        <FormattedMessage id="tasks.notrequired" />
         <Button variant="warning" onClick={handleAddTask}>
-          Add Task
+          <FormattedMessage id="button.addtask" />
         </Button>
         <Form.Text className="text-danger">
           {message}

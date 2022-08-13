@@ -4,9 +4,11 @@ import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Form from 'react-bootstrap/Form';
 import { selectTasks } from '../../features/tasks/tasksSlice';
+import { FormattedMessage, useIntl } from 'react-intl';
 export default function AddGoalTask(props) {
   const { tasks } = useSelector(selectTasks);
   const [times, setTimes] = useState(1);
+  const intl = useIntl();
   const [task, setTask] = useState({});
   const [message, setMessage] = useState('');
   const handleChange = (e) => {
@@ -15,7 +17,7 @@ export default function AddGoalTask(props) {
   };
   const handleAddTask = () => {
     if (task.id === 'null') {
-      setMessage('Pick a task');
+      setMessage(intl.formatMessage({id: "message.task"}));
       return;
     }
     const index = props.tasksArray.findIndex((val) => val.id === task.id);
@@ -23,17 +25,17 @@ export default function AddGoalTask(props) {
       const taskObj = { id: task.id, name: task.name, times };
       props.setTasksArray([...props.tasksArray, taskObj]);
     } else {
-      setMessage('This tasks is already added.');
+      setMessage(intl.formatMessage({id: "message.taskadded"}));
     }
   };
   const handleDeleteTask = (task) => {
     props.setTasksArray(props.tasksArray.filter((val) => val.id !== task));
   };
   return (
-    <Form className="taskForm">
-      <Form.Label>Add Tasks: (Not Required)</Form.Label>
+    <Form className="taskForm mt-2">
+      <Form.Label><FormattedMessage id="goals.tasks" /></Form.Label>
       <Form.Select onChange={handleChange} aria-label="Select task">
-        <option value={'null'}>Select task</option>
+        <option value={'null'}><FormattedMessage id="tasks.select" /></option>
         {tasks.map((task) => {
           return (
             <option value={`${task.id}|${task.name}`} key={task.id}>
@@ -42,7 +44,7 @@ export default function AddGoalTask(props) {
           );
         })}
       </Form.Select>
-      <Form.Label>Set Goal: {times} repeats</Form.Label>
+      <Form.Label><FormattedMessage id="goals.times" values={{times}} /></Form.Label>
       <Form.Range
         value={times}
         onChange={(e) => setTimes(e.target.value)}
@@ -66,8 +68,8 @@ export default function AddGoalTask(props) {
           })}
       </ListGroup>
       <Form.Text className="text-danger">{message}</Form.Text>
-      <Button variant="secondary" onClick={handleAddTask}>
-        Add Task
+      <Button variant="warning" onClick={handleAddTask}>
+        <FormattedMessage id="button.addtask" />
       </Button>
     </Form>
   );

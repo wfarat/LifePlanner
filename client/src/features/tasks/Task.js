@@ -12,12 +12,14 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { selectTasks, deleteTask, updateTask } from '../tasks/tasksSlice';
 import { useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 export default function Task() {
   const params = useParams();
   const { tasks } = useSelector(selectTasks);
   const user = useSelector(selectUser);
   const [keyName, setKeyName] = useState('');
+  const intl = useIntl();
   const [val, setVal] = useState('');
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
@@ -31,14 +33,16 @@ export default function Task() {
     dispatch(deleteTask(data));
     navigate('../tasks');
   };
+  const keyNameDisplay = (keyName === "name")? intl.formatMessage({id: "modal.name"}) : (keyName === "description") ?
+  intl.formatMessage({id: "modal.description"}) : (keyName === "duration") ? intl.formatMessage({id: "modal.duration"}) : intl.formatMessage({id: "modal.repeat"});
   const days = [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    'Sunday',
+    intl.formatMessage({id: "days.monday"}),
+    intl.formatMessage({id: "days.tuesday"}),
+    intl.formatMessage({id: "days.wednesday"}),
+    intl.formatMessage({id: "days.thursday"}),
+    intl.formatMessage({id: "days.friday"}),
+    intl.formatMessage({id: "days.saturday"}),
+    intl.formatMessage({id: "days.sunday"}),
   ];
   const handleClose = () => {
     setShow(false);
@@ -83,11 +87,10 @@ export default function Task() {
   };
   const popover = (
     <Popover id="popover-basic">
-      <Popover.Header as="h3">Are you sure?</Popover.Header>
+      <Popover.Header as="h3"><FormattedMessage id="popover.question" /></Popover.Header>
       <Popover.Body>
-        This action is irreversible, it will{' '}
-        <strong>remove all your progress and plans for this task.</strong>
-        If you are sure click: <Button onClick={handleDelete}>Delete</Button>
+        <FormattedMessage id="popover.goal1" /> <strong><FormattedMessage id="popover.goal4" /></strong> <FormattedMessage id="popover.goal3" />
+        <Button variant="danger" onClick={handleDelete}><FormattedMessage id="popover.delete" /></Button>
       </Popover.Body>
     </Popover>
   );
@@ -95,7 +98,7 @@ export default function Task() {
     <Container>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title className="text-dark">Edit {keyName}</Modal.Title>
+          <Modal.Title className="text-dark"><FormattedMessage id="goal.edit" values={{keyNameDisplay}} /></Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {(keyName === 'name' || keyName === 'description') && (
@@ -104,13 +107,13 @@ export default function Task() {
               autoComplete="name"
               value={val}
               type="text"
-              placeholder={`Enter ${keyName}`}
+              placeholder={intl.formatMessage({id: "goal.editplaceholder"}, {keyNameDisplay})}
             />
           )}
           {keyName === 'duration' && (
             <Form.Group>
               <Form.Label className="text-dark">
-                Duration: {val} minutes
+                <FormattedMessage id="modal.setduration" values={{val}} />
               </Form.Label>
               <Form.Range
                 value={val}
@@ -136,23 +139,23 @@ export default function Task() {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            <FormattedMessage id="button.close" />
           </Button>
           <Button variant="primary" onClick={handleUpdateTask}>
-            Save Changes
+            <FormattedMessage id="button.savechanges" />
           </Button>
         </Modal.Footer>
       </Modal>
       <Row>
         <Col>
-          <h4>Edit task:</h4>
+          <h4><FormattedMessage id="task.edit" /></h4>
         </Col>
       </Row>
       <ListGroup className="mb-3">
         <ListGroup.Item action as={Button} onClick={(e) => handleShow('name')}>
           {' '}
           <div className="ms-2 me-auto">
-            <div className="fw-bold">Name:</div>
+            <div className="fw-bold"><FormattedMessage id="tasks.name"/></div>
             {task.name}
           </div>
         </ListGroup.Item>
@@ -162,7 +165,7 @@ export default function Task() {
           onClick={(e) => handleShow('description')}
         >
           <div className="ms-2 me-auto">
-            <div className="fw-bold">Description:</div>
+            <div className="fw-bold"><FormattedMessage id="form.description" /></div>
             {task.description}
           </div>
         </ListGroup.Item>
@@ -172,8 +175,8 @@ export default function Task() {
           onClick={(e) => handleShow('duration')}
         >
           <div className="ms-2 me-auto">
-            <div className="fw-bold">Duration:</div>
-            {task.duration} Minutes
+            <div className="fw-bold"><FormattedMessage id="task.duration" /></div>
+            {task.duration} <FormattedMessage id="task.minutes" />
           </div>
         </ListGroup.Item>
         <ListGroup.Item
@@ -183,7 +186,7 @@ export default function Task() {
         >
           {' '}
           <div className="ms-2 me-auto">
-            <div className="fw-bold">Days to repeat:</div>
+            <div className="fw-bold"><FormattedMessage id="tasks.repeat" /></div>
             {task.repeat.length > 0 &&
               task.repeat.map((day) => {
                 return days[day] + ' ';
@@ -195,7 +198,7 @@ export default function Task() {
       <Row>
         <Col>
           <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-            <Button variant="success">Delete Task</Button>
+            <Button variant="danger"><FormattedMessage id="button.deletetask" /></Button>
           </OverlayTrigger>
         </Col>
       </Row>

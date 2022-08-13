@@ -19,7 +19,7 @@ export const sendDayNotes = async (req, res) => {
 };
 
 export const findDayNote = async (req, res, next, noteId) => {
-    const dayNote = findDayNoteById(noteId);
+    const dayNote = await findDayNoteById(noteId);
     if (!dayNote) {
         res.status(400).send();
     } else {

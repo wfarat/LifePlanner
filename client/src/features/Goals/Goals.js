@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/Container';
 import ProgressBar from 'react-bootstrap/esm/ProgressBar';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { FormattedMessage } from 'react-intl';
 import { selectUser } from '../users/userSlice';
 import { useEffect } from 'react';
 export default function Goals() {
@@ -22,11 +23,11 @@ export default function Goals() {
   return (
     <Container>
       <Button variant="success" as={Link} to="add">
-        Add Goal
+        <FormattedMessage id="button.addgoal"/>
       </Button>
       <Row className="border-bottom border-secondary">
-        <Col>Goal name:</Col>
-        <Col>Progress:</Col>
+        <Col><FormattedMessage id="goals.name" /></Col>
+        <Col><FormattedMessage id="goals.progress" /></Col>
       </Row>
       {goals.length > 0 &&
         goals.map((goal) => {

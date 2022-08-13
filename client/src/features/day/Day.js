@@ -9,12 +9,14 @@ import { Outlet, Link } from 'react-router-dom';
 import { selectUser } from '../users/userSlice';
 import { createDay, findDay, selectDay } from './daySlice';
 import Button from 'react-bootstrap/Button';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 export default function Day(props) {
   const dayData = useSelector(selectDay);
   const { day } = dayData;
   const dispatch = useDispatch();
   const params = useParams();
+  const intl = useIntl();
   const [comment, setComment] = useState('');
   const user = useSelector(selectUser);
   const getDateCompiled = () => {
@@ -99,24 +101,27 @@ return dateCompiled;
   };
   return (
     <Container>
-                <Button as={Link} to={`/day/${previousDay()}`} className="m-3">Previous Day</Button> <Button as={Link} to={`/day/${nextDay()}`} className="m-3">Next Day</Button> 
+      <Row>
+        <Col> <Button as={Link} to={`/day/${previousDay()}`} variant="warning"><FormattedMessage id="button.previous"/></Button></Col>
+        <Col> <Button as={Link} to={`/day/${nextDay()}`} variant="warning"><FormattedMessage id="button.next"/></Button> </Col>
+      </Row>  
       {!day.id && (
         <Container>
           <Form className="taskForm">
             <Form.Group className="mb-3" controlId="formBasicName">
               <Form.Label className="fs-5">
-                Add a quote, write a thought, create a theme for this day.
+                <FormattedMessage id="day.comment" />
               </Form.Label>
               <Form.Control
                 onChange={(e) => setComment(e.target.value)}
                 autoComplete="name"
                 value={comment}
                 type="text"
-                placeholder="Enter comment (not required)"
+                placeholder={intl.formatMessage({id: "day.commentplaceholder"})}
               />
             </Form.Group>
           </Form>
-          <Button onClick={handleClick}>Start Planning</Button>
+          <Button variant="success" onClick={handleClick}><FormattedMessage id="day.create" /></Button>
         </Container>
       )}
       {day.id && (

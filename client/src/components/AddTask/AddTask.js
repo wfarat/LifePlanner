@@ -7,12 +7,14 @@ import './addTask.css';
 import { selectGoals } from '../../features/Goals/goalsSlice';
 import { addTask, selectTasks } from '../../features/tasks/tasksSlice';
 import { useParams, useNavigate } from 'react-router-dom';
+import { FormattedMessage, useIntl } from 'react-intl';
 export default function AddTask() {
   const user = useSelector(selectUser);
   const params = useParams();
   const { goals } = useSelector(selectGoals);
   const tasksData = useSelector(selectTasks);
   const { tasks } = tasksData;
+  const intl = useIntl();
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -24,13 +26,13 @@ export default function AddTask() {
   const [repeat, setRepeat] = useState([]);
   const dispatch = useDispatch();
   const days = [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    'Sunday',
+    intl.formatMessage({id: "days.monday"}),
+    intl.formatMessage({id: "days.tuesday"}),
+    intl.formatMessage({id: "days.wednesday"}),
+    intl.formatMessage({id: "days.thursday"}),
+    intl.formatMessage({id: "days.friday"}),
+    intl.formatMessage({id: "days.saturday"}),
+    intl.formatMessage({id: "days.sunday"}),
   ];
   useEffect(() => {
     if (linkGoal) {
@@ -57,7 +59,7 @@ export default function AddTask() {
     if (tasks.findIndex((task) => task.name === name) === -1) {
       if (name) {
         if (!description) {
-          setDescription('empty');
+          setDescription(intl.formatMessage({id: "description.empty"}));
         }
         setMessage('');
         const data = {
@@ -78,44 +80,45 @@ export default function AddTask() {
           navigate('../tasks/');
         }
       } else {
-        setMessage('Please enter name.');
+        setMessage(intl.formatMessage({id: "message.taskname"}));
       }
     } else {
-      setMessage('Task with this name already exists.');
+      setMessage(intl.formatMessage({id: "message.taskexists"}));
     }
   };
   return (
     <Form className="taskForm">
-      <Form.Group className="mb-3" controlId="formBasicName">
-        <Form.Label>Task Name</Form.Label>
+      <Form.Text className="fs-5 text-light"><FormattedMessage id="tasks.add" /></Form.Text>
+      <Form.Group className="mb-2" controlId="formBasicName">
+        <Form.Label><FormattedMessage id="tasks.name" /></Form.Label>
         <Form.Control
           onChange={(e) => setName(e.target.value)}
           autoComplete="name"
           value={name}
           type="text"
-          placeholder="Enter task name"
+          placeholder={intl.formatMessage({id: "tasks.nameplaceholder"})}
         />
       </Form.Group>
-      <Form.Group className="mb-3" controlId="formDescription">
-        <Form.Label>Description</Form.Label>
+      <Form.Group className="mb-2" controlId="formDescription">
+        <Form.Label><FormattedMessage id="form.description" /></Form.Label>
         <Form.Control
           onChange={(e) => setDescription(e.target.value)}
           value={description}
           as="textarea"
           rows={3}
-          placeholder="Enter description"
+          placeholder={intl.formatMessage({id: "tasks.descriptionplaceholder"})}
         />
       </Form.Group>
-      <Form.Group className="mb-3" controlId="formDuration">
-        <Form.Label>Duration: {duration} minutes</Form.Label>
+      <Form.Group className="mb-2" controlId="formDuration">
+        <Form.Label><FormattedMessage id="tasks.duration" values={{duration}} /></Form.Label>
         <Form.Range
           value={duration}
           onChange={(e) => setDuration(e.target.value)}
           max="120"
         />
       </Form.Group>
-      <Form.Group className="mb-3" controlId="fromRepeat">
-        <Form.Label>Days to repeat:</Form.Label>
+      <Form.Group className="mb-2" controlId="fromRepeat">
+        <Form.Label><FormattedMessage id="tasks.repeat" /></Form.Label>
         {days.map((day, index) => (
           <Form.Check
             inline
@@ -129,8 +132,8 @@ export default function AddTask() {
           />
         ))}
       </Form.Group>
-      <Form.Select onChange={handleGoal} aria-label="Select goal">
-        {!linkGoal && <option value="null">Select Goal (not required)</option>}
+      <Form.Select onChange={handleGoal} className="mb-2" aria-label="Select goal">
+        {!linkGoal && <option value="null"><FormattedMessage id="goals.select" /></option>}
         {linkGoal && <option value={linkGoal.id}>{linkGoal.name}</option>}
         {goals.map((goal) => {
           return (
@@ -140,7 +143,7 @@ export default function AddTask() {
           );
         })}
       </Form.Select>
-      <Form.Label>Set Goal: {times} times</Form.Label>
+      <Form.Label><FormattedMessage id="goals.times" values={{times}} /></Form.Label>
       <Form.Range
         value={times}
         onChange={(e) => setTimes(e.target.value)}
@@ -152,7 +155,7 @@ export default function AddTask() {
         {tasksData.message}
       </Form.Text>
       <Button variant="success" onClick={handleClick}>
-        Submit
+        <FormattedMessage id="button.submit"/>
       </Button>
     </Form>
   );

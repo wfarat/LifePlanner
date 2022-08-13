@@ -21,11 +21,13 @@ import { selectTasks } from '../tasks/tasksSlice';
 import ListGroup from 'react-bootstrap/esm/ListGroup';
 import AddGoalTask from '../../components/AddGoalTask/AddGoalTask';
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import { FormattedMessage, useIntl } from 'react-intl';
 export default function Goal() {
   const params = useParams();
   const goalsData = useSelector(selectGoals);
   const { tasks } = useSelector(selectTasks);
   const [tasksArray, setTasksArray] = useState([]);
+  const intl = useIntl();
   const { goals, goalTasks } = goalsData;
   const user = useSelector(selectUser);
   const [keyName, setKeyName] = useState('');
@@ -33,6 +35,8 @@ export default function Goal() {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const keyNameDisplay = (keyName === "name")? intl.formatMessage({id: "modal.name"}) :
+intl.formatMessage({id: "modal.description"});
   const goal = goals.find((goal) => goal.id === Number(params.goalId));
   useEffect(() => {
     const data = {
@@ -90,11 +94,10 @@ export default function Goal() {
   };
   const popover = (
     <Popover id="popover-basic">
-      <Popover.Header as="h3">Are you sure?</Popover.Header>
+      <Popover.Header as="h3"><FormattedMessage id="popover.question"/></Popover.Header>
       <Popover.Body>
-        This action is irreversible, it will{' '}
-        <strong>remove all your progress for this goal.</strong>
-        If you are sure click: <Button onClick={handleDelete}>Delete</Button>
+        <FormattedMessage id="popover.goal1" /> <strong><FormattedMessage id="popover.goal2" /></strong> <FormattedMessage id="popover.goal3" />
+        <Button variant="danger" onClick={handleDelete}><FormattedMessage id="popover.delete" /></Button>
       </Popover.Body>
     </Popover>
   );
@@ -102,7 +105,7 @@ export default function Goal() {
     <Container>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title className="text-dark">Edit {keyName}</Modal.Title>
+          <Modal.Title className="text-dark"><FormattedMessage id="goal.edit" values={{keyNameDisplay}} /></Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Control
@@ -110,15 +113,15 @@ export default function Goal() {
             autoComplete="name"
             value={val}
             type="text"
-            placeholder={`Enter ${keyName}`}
+            placeholder={intl.formatMessage({id: "goal.editplaceholder"}, {keyNameDisplay})}
           />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            <FormattedMessage id="button.close" />
           </Button>
           <Button variant="primary" onClick={handleUpdateGoal}>
-            Save Changes
+            <FormattedMessage id="button.savechanges" />
           </Button>
         </Modal.Footer>
       </Modal>
@@ -126,7 +129,7 @@ export default function Goal() {
         <ListGroup.Item action as={Button} onClick={(e) => handleShow('name')}>
           {' '}
           <div className="ms-2 me-auto">
-            <div className="fw-bold">Name:</div>
+            <div className="fw-bold"><FormattedMessage id="goals.name" /></div>
             {goal.name}
           </div>
         </ListGroup.Item>
@@ -136,14 +139,14 @@ export default function Goal() {
           onClick={(e) => handleShow('description')}
         >
           <div className="ms-2 me-auto">
-            <div className="fw-bold">Description:</div>
+            <div className="fw-bold"><FormattedMessage id="form.description" /></div>
             {goal.description}
           </div>
         </ListGroup.Item>
       </ListGroup>
       <Row className="border-bottom border-secondary">
-        <Col>Task name:</Col>
-        <Col>Progress:</Col>
+        <Col><FormattedMessage id="tasks.name"/></Col>
+        <Col><FormattedMessage id="goals.progress"/></Col>
       </Row>
       {goalTasks.length > 0 &&
         goalTasks.map((goalTask) => {
@@ -166,8 +169,8 @@ export default function Goal() {
         })}
       <AddGoalTask tasksArray={tasksArray} setTasksArray={setTasksArray} />
       <p className="text-danger">{goalsData.message}</p>
-      <Button variant="success" onClick={handleClick}>
-        Submit Tasks
+      <Button variant="success" className="mb-2" onClick={handleClick}>
+        <FormattedMessage id="button.submittasks" />
       </Button>
       <Row>
         <Col>
@@ -176,13 +179,13 @@ export default function Goal() {
             as={Link}
             to={`../../tasks/add/${params.goalId}`}
           >
-            Add New Task
+            <FormattedMessage id="button.addnewtask"/>
           </Button>
         </Col>
         <Col>
           {' '}
           <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-            <Button variant="success">Delete Goal</Button>
+            <Button variant="danger"><FormattedMessage id="button.deletegoal" /></Button>
           </OverlayTrigger>
         </Col>
       </Row>

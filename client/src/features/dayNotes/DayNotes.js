@@ -17,9 +17,11 @@ import {
 } from '../dayNotes/dayNotesSlice';
 import { selectUser } from '../users/userSlice';
 import { selectDay } from '../day/daySlice';
+import { FormattedMessage, useIntl } from 'react-intl';
 export default function DayNotes() {
   const user = useSelector(selectUser);
   const {day} = useSelector(selectDay);
+  const intl = useIntl();
   const { dayNotes } = useSelector(selectDayNotes);
   const [show, setShow] = useState(0);
   const [title, setTitle] = useState('');
@@ -48,11 +50,11 @@ export default function DayNotes() {
   };
   const handleAddNote = () => {
     if (content === '') {
-      setMessage('Content cannot be empty');
+      setMessage(intl.formatMessage({id: "message.content"}));
       return;
     }
     if (title === '') {
-      setTitle('Untitled')
+      setTitle(intl.formatMessage({id: "note.untitled"}))
     }
       const data = {
         dayRef: day.day_ref,
@@ -68,11 +70,11 @@ export default function DayNotes() {
       };
   const handleUpdateNote = (id) => {
     if (content === '') {
-      setMessage('Content cannot be empty');
+      setMessage(intl.formatMessage({id: "message.content"}));
       return;
     }
     if (title === '') {
-      setTitle('Untitled')
+      setTitle(intl.formatMessage({id: "note.untitled"}))
     }
       const data = {
         dayNoteId: id,
@@ -88,59 +90,56 @@ export default function DayNotes() {
   };
   return (
     <Container>
-            <Button as={Link} className="mt-3" to="../">Switch to Tasks</Button> 
-      <Row>
-        <Col>
-          <p className="fs-5">Notes:</p>
-        </Col>
-      </Row>
+            <Button as={Link} variant="success" className="mb-3" to="../"><FormattedMessage id="notes.switch"/></Button> 
       <ListGroup>
         {dayNotes.length > 0 &&
           dayNotes.map((note) => {
             return (
-              <Container>
+              <Container key={note.id}>
                 <Modal
-                  key={note.id}
                   show={show === note.id}
                   onHide={handleClose}
                 >
                   <Modal.Header closeButton>
-                    <Modal.Title className="text-dark">Edit Note:</Modal.Title>
+                    <Modal.Title className="text-dark"><FormattedMessage id="note.edit" /></Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
                     <Form.Group className="mb-3" controlId="formBasicTitle">
-                      <Form.Label className="text-dark">Title</Form.Label>
+                      <Form.Label className="text-dark"><FormattedMessage id="note.title" /></Form.Label>
                       <Form.Control
                         onChange={(e) => setTitle(e.target.value)}
                         autoComplete="title"
                         value={title}
                         type="text"
-                        placeholder="Enter title"
+                        placeholder={intl.formatMessage({id: "note.titleplaceholder"})}
                       />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formContent">
-                      <Form.Label className="text-dark">Content</Form.Label>
+                      <Form.Label className="text-dark"><FormattedMessage id="note.content" /></Form.Label>
                       <Form.Control
                         onChange={(e) => setContent(e.target.value)}
                         value={content}
                         as="textarea"
                         rows={3}
-                        placeholder="Enter content"
+                        placeholder={intl.formatMessage({id: "note.contentplaceholder"})}
                       />
                     </Form.Group>
                   </Modal.Body>
                   <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        <FormattedMessage id="button.close" />
+                    </Button>
                     <Button
                       variant="warning"
                       onClick={() => handleDeleteNote(note.id)}
                     >
-                      Delete Note
+                      <FormattedMessage id="button.deletenote" />
                     </Button>
                     <Button
                       variant="primary"
                       onClick={() => handleUpdateNote(note.id)}
                     >
-                      Save Changes
+                      <FormattedMessage id="button.savechanges" />
                     </Button>
                   </Modal.Footer>
                 </Modal>
@@ -153,7 +152,10 @@ export default function DayNotes() {
                       }}
                       key={note.id}
                     >
-                     {note.title}
+                               <div className="ms-2 me-auto">
+            <div className="fw-bold">{note.title}</div>
+            {note.content}
+          </div>
                     </ListGroup.Item>
                   </Col>
                 </Row>
@@ -161,29 +163,29 @@ export default function DayNotes() {
             );
           })}
       </ListGroup>
-      <Form.Label className="fs-5">Add notes:</Form.Label>
+      <Form.Label className="fs-5"><FormattedMessage id="notes.add" /></Form.Label>
       <Form.Group className="mb-3" controlId="formBasicTitle">
-        <Form.Label>Title</Form.Label>
+        <Form.Label><FormattedMessage id="note.title" /></Form.Label>
         <Form.Control
           onChange={(e) => setTitle(e.target.value)}
           autoComplete="title"
           value={title}
           type="text"
-          placeholder="Enter title"
+          placeholder={intl.formatMessage({id: "note.titleplaceholder"})}
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="formContent">
-        <Form.Label>Content</Form.Label>
+        <Form.Label><FormattedMessage id="note.content" /></Form.Label>
         <Form.Control
           onChange={(e) => setContent(e.target.value)}
           value={content}
           as="textarea"
           rows={3}
-          placeholder="Enter content"
+          placeholder={intl.formatMessage({id: "note.contentplaceholder"})}
         />
       </Form.Group>
       <Button variant="warning" onClick={handleAddNote}>
-        Add Note
+        <FormattedMessage id="button.addnote" />
       </Button>
       <Form.Text className="text-danger">{message}</Form.Text>
     </Container>

@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/esm/Button';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import User from './features/users/User';
 import { useDispatch, useSelector } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import { getTasks, selectTasks } from './features/tasks/tasksSlice';
 import { selectUser } from './features/users/userSlice';
 import { getGoals, selectGoals } from './features/Goals/goalsSlice';
@@ -43,19 +44,19 @@ function App() {
               Life Planner
             </Navbar.Brand>
             <Button variant="primary" onClick={() => navigate(-1)}>
-              Go back
+              <FormattedMessage id="nav.back" />
             </Button>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto">
                 <Nav.Link as={Link} to="calendar" href="#">
-                  Calendar
+                  <FormattedMessage id='nav.calendar' />
                 </Nav.Link>
                 <Nav.Link as={Link} to="tasks" href="#">
-                  Tasks
+                  <FormattedMessage id="nav.tasks" />
                 </Nav.Link>
                 <Nav.Link as={Link} to="goals" href="#">
-                  Goals
+                  <FormattedMessage id="nav.goals" />
                 </Nav.Link>
                 <User />
               </Nav>

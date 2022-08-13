@@ -6,7 +6,7 @@ import GoogleButton from 'react-google-button';
 import { Navigate, Link } from 'react-router-dom';
 import { selectUser, login, loginGoogle } from '../../features/users/userSlice';
 import Button from 'react-bootstrap/Button';
-import Stack from 'react-bootstrap/Stack';
+import { FormattedMessage, useIntl } from 'react-intl';
 import Form from 'react-bootstrap/Form';
 import './login.css';
 export default function Login() {
@@ -14,6 +14,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const dispatch = useDispatch();
+  const intl = useIntl();
   const user = useSelector(selectUser);
   const googleLogin = useGoogleLogin({
     onSuccess: async ({ code }) => {
@@ -30,9 +31,9 @@ export default function Login() {
   }
   const handleClick = () => {
     if (!email) {
-      setMessage('Please enter correct email.');
+      setMessage(intl.formatMessage({id: "message.email"}));
     } else if (!password) {
-      setMessage('Please enter password.');
+      setMessage(intl.formatMessage({id: "message.password"}));
     } else {
       setMessage('');
       const data = {
@@ -45,32 +46,33 @@ export default function Login() {
 
   return (
     <main className="login">
+              <h2><FormattedMessage id="login.header" /></h2>
       <Form className="signForm">
-        <Form.Text className="text-secondary fs-5">
-          Not registered yet?{' '}
+        <Form.Text className="text-dark fs-5">
+          <FormattedMessage id="login.notregistered" />
           <Button variant="success" as={Link} to="/register">
-            Sign up
+            <FormattedMessage id="button.signup" />
           </Button>
         </Form.Text>
         <Form.Group className="m-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
+          <Form.Label><FormattedMessage id="user.email" /></Form.Label>
           <Form.Control
             onChange={(e) => setEmail(e.target.value)}
             autoComplete="email"
             value={email}
             type="email"
-            placeholder="Enter email"
+            placeholder={intl.formatMessage({id: "user.emailplaceholder"})}
           />
         </Form.Group>
 
         <Form.Group className="m-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
+          <Form.Label><FormattedMessage id="user.password" /></Form.Label>
           <Form.Control
             onChange={(e) => setPassword(e.target.value)}
             autoComplete="current-password"
             value={password}
             type="password"
-            placeholder="Password"
+            placeholder={intl.formatMessage({id: "user.passwordplaceholder"})}
           />
           <Form.Text className="text-danger">
             {message}
@@ -79,10 +81,10 @@ export default function Login() {
         </Form.Group>
         <div className="loginButton">
           <Button variant="success" onClick={handleClick}>
-            Submit
+            <FormattedMessage id="button.submit" />
           </Button>
-          <GoogleButton type="light" onClick={googleLogin}>
-            Login with Google
+          <GoogleButton label={intl.formatMessage({id: "button.google"})} type="light" onClick={googleLogin}>
+            <FormattedMessage id="button.google" />
           </GoogleButton>
         </div>
       </Form>

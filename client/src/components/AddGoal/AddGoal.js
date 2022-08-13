@@ -7,10 +7,12 @@ import { addGoal, selectGoals } from '../../features/Goals/goalsSlice';
 import AddGoalTask from '../AddGoalTask/AddGoalTask';
 import Container from 'react-bootstrap/esm/Container';
 import { useNavigate } from 'react-router-dom';
+import { FormattedMessage, useIntl } from 'react-intl';
 export default function AddGoal() {
   const user = useSelector(selectUser);
   const goalsData = useSelector(selectGoals);
   const { goals } = goalsData;
+  const intl = useIntl();
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -44,24 +46,24 @@ export default function AddGoal() {
   return (
     <Container>
       <Form className="taskForm">
-        <Form.Group className="mb-3" controlId="formBasicName">
-          <Form.Label>Goal Name</Form.Label>
+        <Form.Group className="mb-2" controlId="formBasicName">
+          <Form.Label><FormattedMessage id="goals.name" /></Form.Label>
           <Form.Control
             onChange={(e) => setName(e.target.value)}
             autoComplete="name"
             value={name}
             type="text"
-            placeholder="Enter goal name"
+            placeholder={intl.formatMessage({id: "goals.nameplaceholder"})}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formDescription">
-          <Form.Label>Description</Form.Label>
+        <Form.Group className="mb-2" controlId="formDescription">
+          <Form.Label><FormattedMessage id="form.description" /></Form.Label>
           <Form.Control
             onChange={(e) => setDescription(e.target.value)}
             value={description}
             as="textarea"
             rows={3}
-            placeholder="Enter description"
+            placeholder={intl.formatMessage({id: "goals.descriptionplaceholder"})}
           />
         </Form.Group>
         <Form.Text className="text-danger">
@@ -70,8 +72,8 @@ export default function AddGoal() {
         </Form.Text>
       </Form>
       <AddGoalTask tasksArray={tasksArray} setTasksArray={setTasksArray} />
-      <Button variant="primary" onClick={handleClick}>
-        Submit
+      <Button variant="success" className="mt-2" onClick={handleClick}>
+        <FormattedMessage id="button.submit" />
       </Button>
     </Container>
   );

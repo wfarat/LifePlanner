@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './index.css';
 import Login from './components/Login/Login';
 import { persistStore } from 'redux-persist';
+import {IntlProvider} from 'react-intl';
 import { PersistGate } from 'redux-persist/integration/react';
 import UserPage from './components/UserPage/UserPage';
 import Password from './components/Password/Password';
@@ -19,6 +20,8 @@ import AddTask from './components/AddTask/AddTask';
 import Goal from './features/Goals/Goal';
 import AddGoal from './components/AddGoal/AddGoal';
 import Goals from './features/Goals/Goals';
+import English from './lang/en.json';
+import Polish from './lang/pl.json';
 import Tasks from './features/tasks/Tasks';
 import Task from './features/tasks/Task';
 import AuthCheck from './components/authCheck/AuthCheck';
@@ -38,11 +41,19 @@ if (month < 10) {
 }
 const year = value.getFullYear();
 const dateString = `${year}${month}${day}`;
+const locale = navigator.language;
+let lang;
+if (locale==="en") {
+   lang = English;
+} else {
+   lang = Polish;
+}
 root.render(
   <React.StrictMode>
     <GoogleOAuthProvider clientId="460759546213-jq918lrs8fvpg4h3213gdlit96fmlld0.apps.googleusercontent.com">
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
+        <IntlProvider locale={locale} defaultLocale='en' messages={lang}>
           <Router>
             <Routes>
               <Route path="login" element={<Login />} />
@@ -77,6 +88,7 @@ root.render(
               </Route>
             </Routes>
           </Router>
+          </IntlProvider>
         </PersistGate>
       </Provider>
     </GoogleOAuthProvider>
