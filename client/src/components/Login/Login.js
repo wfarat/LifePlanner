@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
@@ -26,9 +26,9 @@ export default function Login() {
     },
     flow: 'auth-code',
   });
-  if (user.auth === true) {
-    return <Navigate to="/" />;
-  }
+  useEffect(() => {
+    dispatch({ type: 'USER_LOGOUT' });
+  }, [])
   const handleClick = () => {
     if (!email) {
       setMessage(intl.formatMessage({id: "message.email"}));
@@ -43,9 +43,11 @@ export default function Login() {
       dispatch(login(data));
     }
   };
-
   return (
     <main className="login">
+         {user.auth &&
+    <Navigate to="/" />
+  }
               <h2><FormattedMessage id="login.header" /></h2>
       <Form className="signForm">
         <Form.Text className="text-dark fs-5">

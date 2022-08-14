@@ -118,7 +118,15 @@ export default function DayTasks() {
       setDisabled(false);
     }
   };
-  const handleUpdateTask = (dayTaskId, taskId) => {
+  const handleUpdateTask = (dayTaskId, taskId, duration) => {
+    let start, finish;
+    const now = new Date();
+    if (status === "warning") {
+      start = (now.getHours() * 60) + (now.getMinutes() + 1);
+      finish = start + duration; 
+    } else {
+      finish = (now.getHours() * 60) + (now.getMinutes() + 1);
+    }
     const data = {
       accessToken: user.accessToken,
       dayTaskId,
@@ -126,6 +134,8 @@ export default function DayTasks() {
         status,
         comment,
         taskId,
+        start,
+        finish
       },
     };
     dispatch(updateDayTask(data));
@@ -170,12 +180,14 @@ export default function DayTasks() {
             }
             const findTask = tasks.find((t) => t.id === task.task_id);
             return (
-              <div key={task.task_id + task.id}>
+              <div key={task.task_id + '' + task.id}>
+                {findTask &&
+                <div>
                 <ListGroup.Item
                   action
                   variant={task.status}
                   onClick={() => handleShow(task.id)}
-                  key={task.id + task.start}
+                  key={task.id + '' + task.start}
                 >
                   <Row>
                     <Col xs={6}>{findTask.name} </Col>
@@ -195,6 +207,7 @@ export default function DayTasks() {
                   <Row>
                     <Col>{task.comment}</Col>
                     </Row>}
+                    
                 </ListGroup.Item>
                 <Modal
                   key={task.task_id}
@@ -249,12 +262,14 @@ export default function DayTasks() {
                     </Button>
                     <Button
                       variant="primary"
-                      onClick={() => handleUpdateTask(task.id, task.task_id)}
+                      onClick={() => handleUpdateTask(task.id, task.task_id, findTask.duration)}
                     >
                       <FormattedMessage id="button.savechanges" />
                     </Button>
                   </Modal.Footer>
                 </Modal>
+                </div>
+          }
               </div>
             );
           })}

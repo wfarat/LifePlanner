@@ -33,7 +33,7 @@ export const addDay = async (req, res) => {
       `${dayRef}, ${req.userId}, '${comment}'`
     );
     const day = data.rows[0];
-    const tasksData = await tasksModel.select('id', ` WHERE repeat @> '{${weekDay}}'::int[]`);
+    const tasksData = await tasksModel.select('id', ` WHERE repeat @> '{${weekDay}}'::int[] AND user_id = ${req.userId}`);
     const tasks = tasksData.rows;
     tasks.forEach(async (task) => {
       await dayTasksModel.insert('day_id, task_id', `${day.id}, ${task.id}`);

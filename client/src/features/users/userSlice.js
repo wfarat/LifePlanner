@@ -16,13 +16,13 @@ export const update = createAsyncThunk('update', async (data) => {
   });
   return res.data;
 });
-export const getUser = async (data) => {
+export const getUser = createAsyncThunk('getUser', async(data) => {
   const res = await axios(`/api/users/${data.userId}`, {
     method: 'GET',
     headers: { 'x-access-token': data.accessToken },
   });
   return res.data;
-};
+});
 export const registerUser = async (data) => {
   const res = await axios('/api/register', {
     method: 'POST',
@@ -78,6 +78,28 @@ const userSlice = createSlice({
       .addCase(update.rejected, (state) => {
         state.status = 'rejected';
         state.data.message = 'Please enter correct password';
+      })
+      .addCase(getUser.pending, (state) => {
+        state.status = 'pending';
+      })
+      .addCase(getUser.fulfilled, (state, { payload }) => {
+        state.status = 'idle';
+        state.data.user = payload.user;
+        state.data.message = '';
+      })
+      .addCase(getUser.rejected, (state) => {
+        state.status = 'rejected';
+        state.data = {
+          auth: false,
+          accessToken: '',
+          message: '',
+          user: {
+            id: '',
+            firstname: '',
+            lastname: '',
+            email: '',
+          },
+        };
       });
   },
 });

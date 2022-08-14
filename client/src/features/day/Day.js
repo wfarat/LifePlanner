@@ -9,7 +9,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Spinner from 'react-bootstrap/Spinner';
 import Form from 'react-bootstrap/Form';
 import { Outlet, Link } from 'react-router-dom';
-import { selectUser } from '../users/userSlice';
+import { selectUser, getUser } from '../users/userSlice';
 import { createDay, findDay, selectDay, updateDay, selectStatus } from './daySlice';
 import Button from 'react-bootstrap/Button';
 import useRandomQuote from '../../hooks/useRandomQuote';
@@ -196,11 +196,8 @@ return dateCompiled;
       </Modal>
       <ListGroup className="mb-3">
         <ListGroup.Item action as={Button} onClick={handleShow}>
-          {' '}
-          <div className="ms-2 me-auto">
-            <div className="fw-bold">{day.comment}</div>
+           {day.comment}
             {!day.comment && randomQuote}
-          </div>
         </ListGroup.Item>
         </ListGroup>
             <Outlet />{' '}
