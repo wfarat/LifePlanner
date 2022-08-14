@@ -115,5 +115,14 @@
     "user.newpasswordplaceholder": "Enter new password",
     "user.newpassword": "New password",
     "user.repeatplaceholder": "Repeat new password",
-    "user.changepassword": "Change your password"
+    "user.changepassword": "Change your password",
+    "task.nodays": "No days selected",
+    "day.nocomment": "Nothing was written",
+    "quotes.ma1": "When you arise in the morning, think of what a precious privilege it is to be alive – to breathe, to think, to enjoy, to love. - Marcus Aurelius",
+    "quotes.wd1": "The way to get started is to quit talking and begin doing. – Walt Disney",
+    "quotes.sj1": "Your time is limited, so don’t waste it living someone else’s life. Don’t be trapped by dogma – which is living with the results of other people’s thinking. – Steve Jobs",
+    "quotes.ow1": "If you look at what you have in life, you’ll always have more. If you look at what you don’t have in life, you’ll never have enough. – Oprah Winfrey",
+    "quotes.te1": "Many of life’s failures are people who did not realize how close they were to success when they gave up. – Thomas A. Edison",
+    "quotes.q1": "Life is really simple, but we insist on making it complicated. – Confucius",
+    "quotes.hdt1": "Success usually comes to those who are too busy to be looking for it. – Henry David Thoreau"
 }

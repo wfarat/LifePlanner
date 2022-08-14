@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '../../features/users/userSlice';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Spinner from 'react-bootstrap/Spinner';
@@ -25,6 +25,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 export default function DayTasks() {
   const user = useSelector(selectUser);
   const intl = useIntl();
+  const params = useParams();
   const tasksStatus = useSelector(selectTasksStatus);
   const { day } = useSelector(selectDay);
   const dayTasksData = useSelector(selectDayTasks);
@@ -33,6 +34,7 @@ export default function DayTasks() {
   const [time, setTime] = useState([]);
   const [task, setTask] = useState(0);
   const [status, setStatus] = useState('');
+  const newTask = tasks.find(task => task.name === params.taskName);
   const [comment, setComment] = useState('');
   const [show, setShow] = useState(0);
   const [disabled, setDisabled] = useState(false);
@@ -132,7 +134,7 @@ export default function DayTasks() {
     setShow(0);
   };
   return (
-    <Container>
+  <div>
         {tasksStatus === 'pending' &&      <Spinner animation="border" role="status">
       <span className="visually-hidden">Loading...</span>
     </Spinner>} 
@@ -259,8 +261,8 @@ export default function DayTasks() {
       </ListGroup>
       <Form className="taskForm">
         <Form.Label className="fs-5"><FormattedMessage id="tasks.add" /></Form.Label>
-        <Form.Select onChange={handleChange} aria-label="Select task">
-          <option value={0}><FormattedMessage id="tasks.select" /></option>
+        <Form.Select onChange={handleChange} aria-label="Select task">{!newTask && <option value={0}><FormattedMessage id="tasks.select" /></option>}
+        {newTask && <option value={newTask.id}>{newTask.name}</option>}
           {tasks.map((task) => {
             return (
               <option value={task.id} key={task.id}>
@@ -279,14 +281,25 @@ export default function DayTasks() {
           minutePlaceholder="00"
         />
         <FormattedMessage id="tasks.notrequired" />
-        <Button variant="warning" onClick={handleAddTask}>
+        <Button variant="success" onClick={handleAddTask}>
           <FormattedMessage id="button.addtask" />
         </Button>
         <Form.Text className="text-danger">
           {message}
           {dayTasksData.message}
         </Form.Text>
-      </Form> </Container>}
-    </Container>
+      </Form> 
+      <Row>
+        <Col>
+        <Button
+            variant="warning"
+            as={Link}
+            to={`../../tasks/add/day/${day.day_ref}`}
+            className="mt-2"
+          >
+            <FormattedMessage id="button.addnewtask"/>
+          </Button>
+        </Col></Row></Container>}
+    </div>
   );
 }

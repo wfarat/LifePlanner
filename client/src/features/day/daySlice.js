@@ -16,7 +16,14 @@ export const createDay = createAsyncThunk('createDay', async (data) => {
   });
   return res.data;
 });
-
+export const updateDay = createAsyncThunk('updateDay', async (data) => {
+  const res = await axios(`/api/days/`, {
+    method: 'PUT',
+    headers: { 'x-access-token': data.accessToken },
+    data: data.day,
+  });
+  return res.data;
+});
 const daySlice = createSlice({
   name: 'day',
   initialState: {
@@ -47,6 +54,17 @@ const daySlice = createSlice({
       .addCase(createDay.rejected, (state) => {
         state.status = 'rejected';
         state.data.message = 'There was a problem with adding day data.';
+      })
+      .addCase(updateDay.pending, (state) => {
+        state.status = 'pending';
+      })
+      .addCase(updateDay.fulfilled, (state, { payload }) => {
+        state.status = 'idle';
+        state.data.day = payload.day;
+      })
+      .addCase(updateDay.rejected, (state) => {
+        state.status = 'rejected';
+        state.data.message = 'There was a problem with updating day data.';
       });
   },
 });

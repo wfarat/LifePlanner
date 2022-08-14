@@ -36,13 +36,13 @@ export default function Task() {
   const keyNameDisplay = (keyName === "name")? intl.formatMessage({id: "modal.name"}) : (keyName === "description") ?
   intl.formatMessage({id: "modal.description"}) : (keyName === "duration") ? intl.formatMessage({id: "modal.duration"}) : intl.formatMessage({id: "modal.repeat"});
   const days = [
+    intl.formatMessage({id: "days.sunday"}),
     intl.formatMessage({id: "days.monday"}),
     intl.formatMessage({id: "days.tuesday"}),
     intl.formatMessage({id: "days.wednesday"}),
     intl.formatMessage({id: "days.thursday"}),
     intl.formatMessage({id: "days.friday"}),
     intl.formatMessage({id: "days.saturday"}),
-    intl.formatMessage({id: "days.sunday"}),
   ];
   const handleClose = () => {
     setShow(false);
@@ -191,7 +191,7 @@ export default function Task() {
               task.repeat.map((day) => {
                 return days[day] + ' ';
               })}{' '}
-            {task.repeat.length === 0 && 'No days selected.'}
+            {task.repeat.length === 0 && intl.formatMessage({id: "task.nodays"})}
           </div>
         </ListGroup.Item>
       </ListGroup>

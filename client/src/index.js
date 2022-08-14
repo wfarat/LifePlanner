@@ -74,6 +74,7 @@ root.render(
                 <Route path="user" element={<UserPage />} />
                 <Route path="day/:dayRef" element={<Day />}>
                   <Route path="/day/:dayRef" element={<DayTasks />} />
+                  <Route path="/day/:dayRef/:taskName" element={<DayTasks />} />
                   <Route path="/day/:dayRef/notes" element={<DayNotes />} />
                 </Route>
                 <Route path="user/password" element={<Password />} />
@@ -81,6 +82,7 @@ root.render(
                 <Route path="tasks/:taskId" element={<Task />} />
                 <Route path="tasks/add" element={<AddTask />} />
                 <Route path="tasks/add/:goalId" element={<AddTask />} />
+                <Route path="tasks/add/day/:dayRef" element={<AddTask />} />
                 <Route path="goals" element={<Goals />} />
                 <Route path="goals/add" element={<AddGoal />} />
                 <Route path="goals/:goalId" element={<Goal />} />

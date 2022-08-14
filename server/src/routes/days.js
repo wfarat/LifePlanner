@@ -1,6 +1,6 @@
 import express from 'express';
 import { checkAuth } from './auth';
-import { sendDay, addDay, findDay } from '../controllers/days';
+import { sendDay, addDay, findDay, updateDay } from '../controllers/days';
 import {
   addDayTask,
   deleteDayTask,
@@ -24,6 +24,7 @@ daysRouter.param('taskId', findDayTask);
 
 daysRouter.get('/:dayRef', sendDay);
 daysRouter.post('/', addDay);
+daysRouter.put('/', updateDay);
 
 daysRouter.get('/:dayRef/tasks', sendDayTasks);
 daysRouter.post('/:dayRef/tasks', addDayTask);

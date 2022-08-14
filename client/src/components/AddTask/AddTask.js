@@ -8,6 +8,7 @@ import { selectGoals } from '../../features/Goals/goalsSlice';
 import { addTask, selectTasks } from '../../features/tasks/tasksSlice';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FormattedMessage, useIntl } from 'react-intl';
+import Container from 'react-bootstrap/esm/Container';
 export default function AddTask() {
   const user = useSelector(selectUser);
   const params = useParams();
@@ -26,13 +27,13 @@ export default function AddTask() {
   const [repeat, setRepeat] = useState([]);
   const dispatch = useDispatch();
   const days = [
+    intl.formatMessage({id: "days.sunday"}),
     intl.formatMessage({id: "days.monday"}),
     intl.formatMessage({id: "days.tuesday"}),
     intl.formatMessage({id: "days.wednesday"}),
     intl.formatMessage({id: "days.thursday"}),
     intl.formatMessage({id: "days.friday"}),
     intl.formatMessage({id: "days.saturday"}),
-    intl.formatMessage({id: "days.sunday"}),
   ];
   useEffect(() => {
     if (linkGoal) {
@@ -76,7 +77,9 @@ export default function AddTask() {
         dispatch(addTask(data));
         if (linkGoal) {
           navigate(`../../goals/${linkGoal.id}`);
-        } else {
+        } else if (params.dayRef) {
+          navigate(`../../../day/${params.dayRef}/${name}`);
+      } else {
           navigate('../tasks/');
         }
       } else {
@@ -87,6 +90,7 @@ export default function AddTask() {
     }
   };
   return (
+    <Container>
     <Form className="taskForm">
       <Form.Text className="fs-5 text-light"><FormattedMessage id="tasks.add" /></Form.Text>
       <Form.Group className="mb-2" controlId="formBasicName">
@@ -158,5 +162,6 @@ export default function AddTask() {
         <FormattedMessage id="button.submit"/>
       </Button>
     </Form>
+    </Container>
   );
 }

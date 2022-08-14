@@ -184,7 +184,7 @@ export default function DayNotes() {
           placeholder={intl.formatMessage({id: "note.contentplaceholder"})}
         />
       </Form.Group>
-      <Button variant="warning" onClick={handleAddNote}>
+      <Button variant="success" onClick={handleAddNote}>
         <FormattedMessage id="button.addnote" />
       </Button>
       <Form.Text className="text-danger">{message}</Form.Text>

@@ -1,4 +1,4 @@
-import { daysModel } from '../models/models';
+import { daysModel, dayTasksModel, tasksModel } from '../models/models';
 
 const findDayByDayRef = async (userId, dayRef) => {
   const data = await daysModel.select(
@@ -23,7 +23,7 @@ export const sendDay = async (req, res) => {
 };
 
 export const addDay = async (req, res) => {
-  const { comment, dayRef } = req.body;
+  const { comment, dayRef, weekDay } = req.body;
   const dayCheck = await findDayByDayRef(req.userId, dayRef);
   if (dayCheck) {
     res.status(400).send();
@@ -33,6 +33,19 @@ export const addDay = async (req, res) => {
       `${dayRef}, ${req.userId}, '${comment}'`
     );
     const day = data.rows[0];
+    const tasksData = await tasksModel.select('id', ` WHERE repeat @> '{${weekDay}}'::int[]`);
+    const tasks = tasksData.rows;
+    tasks.forEach(async (task) => {
+      await dayTasksModel.insert('day_id, task_id', `${day.id}, ${task.id}`);
+    });
     res.status(201).send({ day });
   }
 };
+
+export const updateDay = async (req, res) => {
+  const { comment, dayRef } = req.body;
+    const data = await daysModel.updateOneWithReturn('comment', `'${comment}'`, `day_ref = ${dayRef}`);
+    const day = data.rows[0];
+    res.status(201).send({ day });
+};
+

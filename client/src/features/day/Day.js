@@ -3,22 +3,31 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+import Modal from 'react-bootstrap/Modal'
 import Col from 'react-bootstrap/Col';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Spinner from 'react-bootstrap/Spinner';
 import Form from 'react-bootstrap/Form';
 import { Outlet, Link } from 'react-router-dom';
 import { selectUser } from '../users/userSlice';
-import { createDay, findDay, selectDay } from './daySlice';
+import { createDay, findDay, selectDay, updateDay, selectStatus } from './daySlice';
 import Button from 'react-bootstrap/Button';
-import { FormattedMessage, useIntl } from 'react-intl';
+import useRandomQuote from '../../hooks/useRandomQuote';
+import { FormattedMessage, useIntl, FormattedDate } from 'react-intl';
 
 export default function Day(props) {
   const dayData = useSelector(selectDay);
   const { day } = dayData;
   const dispatch = useDispatch();
   const params = useParams();
+  const status = useSelector(selectStatus);
   const intl = useIntl();
   const [comment, setComment] = useState('');
   const user = useSelector(selectUser);
+  const [show, setShow] = useState(false);
+  const randomQuote = useRandomQuote();
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const getDateCompiled = () => {
     let dateYear, dateMonth, dateDay;
     if (params.dayRef) {
@@ -33,6 +42,7 @@ export default function Day(props) {
 const      dateCompiled = new Date(`${dateYear}-${dateMonth}-${dateDay}`);
 return dateCompiled;
   }
+  const weekDay = getDateCompiled().getDay();
   const nextDay = () => {
     let nextDay = new Date(getDateCompiled());
     nextDay.setDate(getDateCompiled().getDate()+1);
@@ -78,7 +88,7 @@ return dateCompiled;
       dispatch(findDay(data));
     }
   }, [params.dayRef, props.today]);
-  const handleClick = () => {
+  const handleUpdateDay = () => {
     if (props.today) {
       const data = {
         accessToken: user.accessToken,
@@ -87,7 +97,7 @@ return dateCompiled;
           comment
         }
       };
-      dispatch(createDay(data));
+      dispatch(updateDay(data));
     } else {
       const data = {
         accessToken: user.accessToken,
@@ -96,11 +106,48 @@ return dateCompiled;
           comment
         }
       };
+      dispatch(updateDay(data));
+    }
+  }
+  const handleClick = () => {
+    if (props.today) {
+      const data = {
+        accessToken: user.accessToken,
+        day: {
+          dayRef: props.today,
+          comment,
+          weekDay
+        }
+      };
+      dispatch(createDay(data));
+    } else {
+      const data = {
+        accessToken: user.accessToken,
+        day: {
+          dayRef: params.dayRef,
+          comment,
+          weekDay
+        }
+      };
       dispatch(createDay(data));
     }
   };
   return (
+    <div>
+    {status === 'pending' &&      <Spinner animation="border" role="status">
+  <span className="visually-hidden">Loading...</span>
+</Spinner>} 
+{(status === 'idle' || status === 'rejected') &&
     <Container>
+      <Row>
+        <Col>    <FormattedDate
+      value={getDateCompiled()}
+      year="numeric"
+      month="long"
+      day="numeric"
+      weekday="long"
+    /></Col>
+      </Row>
       <Row>
         <Col> <Button as={Link} to={`/day/${previousDay()}`} variant="warning"><FormattedMessage id="button.previous"/></Button></Col>
         <Col> <Button as={Link} to={`/day/${nextDay()}`} variant="warning"><FormattedMessage id="button.next"/></Button> </Col>
@@ -126,14 +173,41 @@ return dateCompiled;
       )}
       {day.id && (
         <Container>
-          <Row>
-            <Col>
-              <p className="fs-5"> {day.comment} </p>
-            </Col>
-          </Row>       
+                <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title className="text-dark"><FormattedMessage id="day.comment" /></Modal.Title>
+        </Modal.Header>
+        <Modal.Body>              <Form.Control
+                onChange={(e) => setComment(e.target.value)}
+                autoComplete="name"
+                value={comment}
+                type="text"
+                placeholder={intl.formatMessage({id: "day.commentplaceholder"})}
+              />
+          </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+          <FormattedMessage id="button.close" />
+          </Button>
+          <Button variant="primary" onClick={handleUpdateDay}>
+          <FormattedMessage id="button.savechanges" />
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <ListGroup className="mb-3">
+        <ListGroup.Item action as={Button} onClick={handleShow}>
+          {' '}
+          <div className="ms-2 me-auto">
+            <div className="fw-bold">{day.comment}</div>
+            {!day.comment && randomQuote}
+          </div>
+        </ListGroup.Item>
+        </ListGroup>
             <Outlet />{' '}
         </Container>
       )}
     </Container>
+      }
+      </div>
   );
 }
