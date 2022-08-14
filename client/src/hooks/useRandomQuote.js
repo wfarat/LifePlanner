@@ -25,6 +25,10 @@ export default function useRandomQuote() {
     intl.formatMessage({ id: 'quotes.wsc2' }),
     intl.formatMessage({ id: 'quotes.fn1' }),
     intl.formatMessage({ id: 'quotes.fn2' }),
+    intl.formatMessage({ id: 'quotes.er2' }),
+    intl.formatMessage({ id: 'quotes.er3' }),
+    intl.formatMessage({ id: 'quotes.er4' }),
+    intl.formatMessage({ id: 'quotes.mt1' }),
   ];
   const random = Math.floor(Math.random() * Quotes.length);
 

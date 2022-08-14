@@ -143,7 +143,12 @@
   "quotes.wsc2": "Success consists of going from failure to failure without loss of enthusiasm. - Winston S. Churchill",
   "quotes.fn1": "That which does not kill us makes us stronger. - Friedrich Nietzsche",
   "quotes.fn2": "We should consider every day lost on which we have not danced at least once. - Friedrich Nietzsche",
+  "quotes.er2": "Life was meant to be lived, and curiosity must be kept alive. One must never, for whatever reason, turn his back on life. - Eleanor Roosevelt",
+  "quotes.er3": "No one can make you feel inferior without your consent. - Eleanor Roosevelt",
   "nav.notes": "Notes",
   "popover.note": "This action is irreversible, continue?",
-  "message.addnote": "Content and title cannot be empty."
+  "message.addnote": "Content and title cannot be empty.",
+  "quotes.er4": "Do one thing every day that scares you. - Eleanor Roosevelt",
+  "quotes.mt1": "The secret of getting ahead is getting started. The secret of getting started is breaking your complex, overwhelming tasks into small manageable tasks, and then starting on the first one. - Mark Twain",
+  "contact.me": "Contact me:"
 }

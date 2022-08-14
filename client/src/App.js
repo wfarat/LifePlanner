@@ -70,6 +70,7 @@ function App() {
       <main>
         <Outlet />
       </main>
+      <footer className="fixed-bottom bg-light text-dark"><FormattedMessage id="contact.me" /> Władysław Farat <a className="link-primary" href="https://github.com/wfarat">Github</a> <a className="link-primary" href="mailto:wfarat@gmail.com">E-mail</a> </footer>
     </div>
   );
 }
