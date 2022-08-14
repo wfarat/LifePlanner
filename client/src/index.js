@@ -44,7 +44,7 @@ if (month < 10) {
 }
 const year = value.getFullYear();
 const dateString = `${year}${month}${day}`;
-const locale = navigator.language;
+const locale = navigator.language === "pl" ? "pl" : "en";
 let lang;
 if (locale === 'en') {
   lang = English;
