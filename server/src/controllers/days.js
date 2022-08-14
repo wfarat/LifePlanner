@@ -33,7 +33,10 @@ export const addDay = async (req, res) => {
       `${dayRef}, ${req.userId}, '${comment}'`
     );
     const day = data.rows[0];
-    const tasksData = await tasksModel.select('id', ` WHERE repeat @> '{${weekDay}}'::int[] AND user_id = ${req.userId}`);
+    const tasksData = await tasksModel.select(
+      'id',
+      ` WHERE repeat @> '{${weekDay}}'::int[] AND user_id = ${req.userId}`
+    );
     const tasks = tasksData.rows;
     tasks.forEach(async (task) => {
       await dayTasksModel.insert('day_id, task_id', `${day.id}, ${task.id}`);
@@ -44,8 +47,11 @@ export const addDay = async (req, res) => {
 
 export const updateDay = async (req, res) => {
   const { comment, dayRef } = req.body;
-    const data = await daysModel.updateOneWithReturn('comment', `'${comment}'`, `day_ref = ${dayRef}`);
-    const day = data.rows[0];
-    res.status(201).send({ day });
+  const data = await daysModel.updateOneWithReturn(
+    'comment',
+    `'${comment}'`,
+    `day_ref = ${dayRef}`
+  );
+  const day = data.rows[0];
+  res.status(201).send({ day });
 };
-

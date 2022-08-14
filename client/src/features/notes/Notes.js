@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import {FormattedMessage} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import ListGroup from 'react-bootstrap/esm/ListGroup';
 import { selectNotes } from './notesSlice';
 export default function Notes() {
@@ -18,7 +18,9 @@ export default function Notes() {
       </Button>
       <Row>
         <Col>
-          <h3><FormattedMessage id="notes.header" /></h3>
+          <h3>
+            <FormattedMessage id="notes.header" />
+          </h3>
         </Col>
       </Row>
       <ListGroup>

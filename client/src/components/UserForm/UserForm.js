@@ -48,41 +48,49 @@ export default function UserForm() {
   return (
     <Form className="signForm">
       <Form.Group className="mb-2" controlId="formBasicEmail">
-        <Form.Label><FormattedMessage id="user.email"/></Form.Label>
+        <Form.Label>
+          <FormattedMessage id="user.email" />
+        </Form.Label>
         <Form.Control
           onChange={(e) => setEmail(e.target.value)}
           autoComplete="email"
           value={email}
           type="email"
-          placeholder={intl.formatMessage({id: "user.emailplaceholder"})}
+          placeholder={intl.formatMessage({ id: 'user.emailplaceholder' })}
         />
       </Form.Group>
       <Form.Group className="mb-2" controlId="formFirstname">
-        <Form.Label><FormattedMessage id="user.firstname"/></Form.Label>
+        <Form.Label>
+          <FormattedMessage id="user.firstname" />
+        </Form.Label>
         <Form.Control
           onChange={(e) => setFirstname(e.target.value)}
           value={firstname}
           type="text"
-          placeholder={intl.formatMessage({id: "user.firstnameplaceholder"})}
+          placeholder={intl.formatMessage({ id: 'user.firstnameplaceholder' })}
         />
       </Form.Group>
       <Form.Group className="mb-2" controlId="formLastname">
-        <Form.Label><FormattedMessage id="user.lastname"/></Form.Label>
+        <Form.Label>
+          <FormattedMessage id="user.lastname" />
+        </Form.Label>
         <Form.Control
           onChange={(e) => setLastname(e.target.value)}
           value={lastname}
           type="text"
-          placeholder={intl.formatMessage({id: "user.lastnameplaceholder"})}
+          placeholder={intl.formatMessage({ id: 'user.lastnameplaceholder' })}
         />
       </Form.Group>
       <Form.Group className="mb-2" controlId="formBasicPassword">
-        <Form.Label><FormattedMessage id="user.password"/></Form.Label>
+        <Form.Label>
+          <FormattedMessage id="user.password" />
+        </Form.Label>
         <Form.Control
           onChange={(e) => setPassword(e.target.value)}
           autoComplete="new-password"
           value={password}
           type="password"
-          placeholder={intl.formatMessage({id: "user.passwordplaceholder"})}
+          placeholder={intl.formatMessage({ id: 'user.passwordplaceholder' })}
         />
         {user.auth && (
           <Form.Text className="text-danger">{user.message}</Form.Text>
@@ -90,13 +98,15 @@ export default function UserForm() {
       </Form.Group>
       {!user.auth && (
         <Form.Group className="mb-2" controlId="formRepeatPassword">
-          <Form.Label><FormattedMessage id="user.repeatpassword"/></Form.Label>
+          <Form.Label>
+            <FormattedMessage id="user.repeatpassword" />
+          </Form.Label>
           <Form.Control
             onChange={(e) => setRepeat(e.target.value)}
             autoComplete="new-password"
             value={repeat}
             type="password"
-            placeholder={intl.formatMessage({id: "user.passwordplaceholder"})}
+            placeholder={intl.formatMessage({ id: 'user.passwordplaceholder' })}
           />
           <Form.Text className="text-danger">
             {!same && (

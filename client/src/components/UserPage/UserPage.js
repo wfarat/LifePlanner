@@ -11,11 +11,21 @@ export default function UserPage() {
   }
   return (
     <div className="user-container">
-      <h3><FormattedMessage id="user.info" /></h3>
-      <h5><FormattedMessage id="user.firstname" />: {user.user.firstname}</h5>
-      <h5><FormattedMessage id="user.lastname" />: {user.user.lastname}</h5>
-      <h5><FormattedMessage id="user.email" />: {user.user.email}</h5>
-      <h4><FormattedMessage id="user.update" /></h4>
+      <h3>
+        <FormattedMessage id="user.info" />
+      </h3>
+      <h5>
+        <FormattedMessage id="user.firstname" />: {user.user.firstname}
+      </h5>
+      <h5>
+        <FormattedMessage id="user.lastname" />: {user.user.lastname}
+      </h5>
+      <h5>
+        <FormattedMessage id="user.email" />: {user.user.email}
+      </h5>
+      <h4>
+        <FormattedMessage id="user.update" />
+      </h4>
       <UserForm />
       <Button variant="warning" className="mt-3" as={Link} to="password">
         <FormattedMessage id="button.changepassword" />

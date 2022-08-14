@@ -8,7 +8,7 @@ export default function CalendarPage() {
   const navigate = useNavigate();
   const onChange = (value) => {
     let day = value.getDate();
-    if (day < 10) { 
+    if (day < 10) {
       day = '0' + day;
     }
     let month = value.getMonth() + 1;

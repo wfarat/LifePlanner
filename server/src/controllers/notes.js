@@ -58,11 +58,11 @@ export const deleteNote = async (req, res) => {
 
 export const updateNote = async (req, res) => {
   const { keyName, val } = req.body;
-    const data = await notesModel.updateOneWithReturn(
-      keyName,
-      `'${val}'`,
-      `id = ${req.note.id}`
-    );
-    const note = data.rows[0];
-    res.status(203).send({ note });
+  const data = await notesModel.updateOneWithReturn(
+    keyName,
+    `'${val}'`,
+    `id = ${req.note.id}`
+  );
+  const note = data.rows[0];
+  res.status(203).send({ note });
 };

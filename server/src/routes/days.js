@@ -1,12 +1,14 @@
 import express from 'express';
 import { checkAuth } from './auth';
-import { sendDay, addDay, findDay, updateDay } from '../controllers/days';
+import {
+  sendDay, addDay, findDay, updateDay
+} from '../controllers/days';
 import {
   addDayTask,
   deleteDayTask,
   sendDayTasks,
   updateDayTask,
-  findDayTask
+  findDayTask,
 } from '../controllers/dayTasks';
 import {
   addDayNote,

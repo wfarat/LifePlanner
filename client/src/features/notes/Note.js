@@ -22,8 +22,10 @@ export default function Goal() {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const keyNameDisplay = (keyName === "title")? intl.formatMessage({id: "note.title"}) :
-intl.formatMessage({id: "note.content"});
+  const keyNameDisplay =
+    keyName === 'title'
+      ? intl.formatMessage({ id: 'note.title' })
+      : intl.formatMessage({ id: 'note.content' });
   const note = notes.find((note) => note.id === Number(params.noteId));
   const handleShow = (name) => {
     setKeyName(name);
@@ -58,18 +60,25 @@ intl.formatMessage({id: "note.content"});
   };
   const popover = (
     <Popover id="popover-basic">
-      <Popover.Header as="h3"><FormattedMessage id="popover.question"/></Popover.Header>
+      <Popover.Header as="h3">
+        <FormattedMessage id="popover.question" />
+      </Popover.Header>
       <Popover.Body>
         <FormattedMessage id="popover.note1" />
-        <Button variant="danger" onClick={handleDelete}><FormattedMessage id="popover.delete" /></Button>
+        <Button variant="danger" onClick={handleDelete}>
+          <FormattedMessage id="popover.delete" />
+        </Button>
       </Popover.Body>
     </Popover>
   );
   return (
     <Container>
+        <h3><FormattedMessage id="note.edit"/></h3>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title className="text-dark"><FormattedMessage id="goal.edit" values={{keyNameDisplay}} /></Modal.Title>
+          <Modal.Title className="text-dark">
+            <FormattedMessage id="goal.edit" values={{ keyNameDisplay }} />
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Control
@@ -77,7 +86,10 @@ intl.formatMessage({id: "note.content"});
             autoComplete="name"
             value={val}
             type="text"
-            placeholder={intl.formatMessage({id: "goal.editplaceholder"}, {keyNameDisplay})}
+            placeholder={intl.formatMessage(
+              { id: 'goal.editplaceholder' },
+              { keyNameDisplay }
+            )}
           />
         </Modal.Body>
         <Modal.Footer>
@@ -93,7 +105,9 @@ intl.formatMessage({id: "note.content"});
         <ListGroup.Item action as={Button} onClick={(e) => handleShow('title')}>
           {' '}
           <div className="ms-2 me-auto">
-            <div className="fw-bold"><FormattedMessage id="note.title" /></div>
+            <div className="fw-bold">
+              <FormattedMessage id="note.title" />
+            </div>
             {note.title}
           </div>
         </ListGroup.Item>
@@ -103,14 +117,18 @@ intl.formatMessage({id: "note.content"});
           onClick={(e) => handleShow('content')}
         >
           <div className="ms-2 me-auto">
-            <div className="fw-bold"><FormattedMessage id="note.content" /></div>
+            <div className="fw-bold">
+              <FormattedMessage id="note.content" />
+            </div>
             {note.content}
           </div>
         </ListGroup.Item>
       </ListGroup>
-          <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-            <Button variant="danger"><FormattedMessage id="button.deletenote" /></Button>
-          </OverlayTrigger>
+      <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+        <Button variant="danger">
+          <FormattedMessage id="button.deletenote" />
+        </Button>
+      </OverlayTrigger>
     </Container>
   );
 }

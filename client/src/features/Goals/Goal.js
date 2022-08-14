@@ -35,8 +35,10 @@ export default function Goal() {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const keyNameDisplay = (keyName === "name")? intl.formatMessage({id: "modal.name"}) :
-intl.formatMessage({id: "modal.description"});
+  const keyNameDisplay =
+    keyName === 'name'
+      ? intl.formatMessage({ id: 'modal.name' })
+      : intl.formatMessage({ id: 'modal.description' });
   const goal = goals.find((goal) => goal.id === Number(params.goalId));
   useEffect(() => {
     const data = {
@@ -94,10 +96,18 @@ intl.formatMessage({id: "modal.description"});
   };
   const popover = (
     <Popover id="popover-basic">
-      <Popover.Header as="h3"><FormattedMessage id="popover.question"/></Popover.Header>
+      <Popover.Header as="h3">
+        <FormattedMessage id="popover.question" />
+      </Popover.Header>
       <Popover.Body>
-        <FormattedMessage id="popover.goal1" /> <strong><FormattedMessage id="popover.goal2" /></strong> <FormattedMessage id="popover.goal3" />
-        <Button variant="danger" onClick={handleDelete}><FormattedMessage id="popover.delete" /></Button>
+        <FormattedMessage id="popover.goal1" />{' '}
+        <strong>
+          <FormattedMessage id="popover.goal2" />
+        </strong>{' '}
+        <FormattedMessage id="popover.goal3" />
+        <Button variant="danger" onClick={handleDelete}>
+          <FormattedMessage id="popover.delete" />
+        </Button>
       </Popover.Body>
     </Popover>
   );
@@ -105,7 +115,9 @@ intl.formatMessage({id: "modal.description"});
     <Container>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title className="text-dark"><FormattedMessage id="goal.edit" values={{keyNameDisplay}} /></Modal.Title>
+          <Modal.Title className="text-dark">
+            <FormattedMessage id="goal.edit" values={{ keyNameDisplay }} />
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Control
@@ -113,7 +125,10 @@ intl.formatMessage({id: "modal.description"});
             autoComplete="name"
             value={val}
             type="text"
-            placeholder={intl.formatMessage({id: "goal.editplaceholder"}, {keyNameDisplay})}
+            placeholder={intl.formatMessage(
+              { id: 'goal.editplaceholder' },
+              { keyNameDisplay }
+            )}
           />
         </Modal.Body>
         <Modal.Footer>
@@ -129,7 +144,9 @@ intl.formatMessage({id: "modal.description"});
         <ListGroup.Item action as={Button} onClick={(e) => handleShow('name')}>
           {' '}
           <div className="ms-2 me-auto">
-            <div className="fw-bold"><FormattedMessage id="goals.name" /></div>
+            <div className="fw-bold">
+              <FormattedMessage id="goals.name" />
+            </div>
             {goal.name}
           </div>
         </ListGroup.Item>
@@ -139,14 +156,20 @@ intl.formatMessage({id: "modal.description"});
           onClick={(e) => handleShow('description')}
         >
           <div className="ms-2 me-auto">
-            <div className="fw-bold"><FormattedMessage id="form.description" /></div>
+            <div className="fw-bold">
+              <FormattedMessage id="form.description" />
+            </div>
             {goal.description}
           </div>
         </ListGroup.Item>
       </ListGroup>
       <Row className="border-bottom border-secondary">
-        <Col><FormattedMessage id="tasks.name"/></Col>
-        <Col><FormattedMessage id="goals.progress"/></Col>
+        <Col>
+          <FormattedMessage id="tasks.name" />
+        </Col>
+        <Col>
+          <FormattedMessage id="goals.progress" />
+        </Col>
       </Row>
       {goalTasks.length > 0 &&
         goalTasks.map((goalTask) => {
@@ -179,13 +202,15 @@ intl.formatMessage({id: "modal.description"});
             as={Link}
             to={`../../tasks/add/${params.goalId}`}
           >
-            <FormattedMessage id="button.addnewtask"/>
+            <FormattedMessage id="button.addnewtask" />
           </Button>
         </Col>
         <Col>
           {' '}
           <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-            <Button variant="danger"><FormattedMessage id="button.deletegoal" /></Button>
+            <Button variant="danger">
+              <FormattedMessage id="button.deletegoal" />
+            </Button>
           </OverlayTrigger>
         </Col>
       </Row>

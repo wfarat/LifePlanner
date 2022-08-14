@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './index.css';
 import Login from './components/Login/Login';
 import { persistStore } from 'redux-persist';
-import {IntlProvider} from 'react-intl';
+import { IntlProvider } from 'react-intl';
 import { PersistGate } from 'redux-persist/integration/react';
 import UserPage from './components/UserPage/UserPage';
 import Password from './components/Password/Password';
@@ -35,7 +35,7 @@ const root = createRoot(container);
 let persistor = persistStore(store);
 const value = new Date();
 let day = value.getDate();
-if (day < 10) { 
+if (day < 10) {
   day = '0' + day;
 }
 let month = value.getMonth() + 1;
@@ -46,56 +46,59 @@ const year = value.getFullYear();
 const dateString = `${year}${month}${day}`;
 const locale = navigator.language;
 let lang;
-if (locale==="en") {
-   lang = English;
+if (locale === 'en') {
+  lang = English;
 } else {
-   lang = Polish;
+  lang = Polish;
 }
 root.render(
   <React.StrictMode>
     <GoogleOAuthProvider clientId="460759546213-jq918lrs8fvpg4h3213gdlit96fmlld0.apps.googleusercontent.com">
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-        <IntlProvider locale={locale} defaultLocale='en' messages={lang}>
-          <Router>
-            <Routes>
-              <Route path="login" element={<Login />} />
-              <Route path="register" element={<Register />} />
+          <IntlProvider locale={locale} defaultLocale="en" messages={lang}>
+            <Router>
+              <Routes>
+                <Route path="login" element={<Login />} />
+                <Route path="register" element={<Register />} />
 
-              <Route
-                path="/"
-                element={
-                  <AuthCheck>
-                    <App />
-                  </AuthCheck>
-                }
-              >
-                <Route path="/" element={<Day today={dateString} />}>
-                  <Route path="/" element={<DayTasks />} />
-                  <Route path="/notes" element={<DayNotes />} />
+                <Route
+                  path="/"
+                  element={
+                    <AuthCheck>
+                      <App />
+                    </AuthCheck>
+                  }
+                >
+                  <Route path="/" element={<Day today={dateString} />}>
+                    <Route path="/" element={<DayTasks />} />
+                    <Route path="/notes" element={<DayNotes />} />
+                  </Route>
+                  <Route path="user" element={<UserPage />} />
+                  <Route path="day/:dayRef" element={<Day />}>
+                    <Route path="/day/:dayRef" element={<DayTasks />} />
+                    <Route
+                      path="/day/:dayRef/:taskName"
+                      element={<DayTasks />}
+                    />
+                    <Route path="/day/:dayRef/notes" element={<DayNotes />} />
+                  </Route>
+                  <Route path="user/password" element={<Password />} />
+                  <Route path="tasks" element={<Tasks />} />
+                  <Route path="tasks/:taskId" element={<Task />} />
+                  <Route path="tasks/add" element={<AddTask />} />
+                  <Route path="tasks/add/:goalId" element={<AddTask />} />
+                  <Route path="tasks/add/day/:dayRef" element={<AddTask />} />
+                  <Route path="goals" element={<Goals />} />
+                  <Route path="goals/add" element={<AddGoal />} />
+                  <Route path="goals/:goalId" element={<Goal />} />
+                  <Route path="user/notes" element={<Notes />} />
+                  <Route path="user/notes/add" element={<AddNote />} />
+                  <Route path="user/notes/:noteId" element={<Note />} />
+                  <Route path="calendar" element={<CalendarPage />} />
                 </Route>
-                <Route path="user" element={<UserPage />} />
-                <Route path="day/:dayRef" element={<Day />}>
-                  <Route path="/day/:dayRef" element={<DayTasks />} />
-                  <Route path="/day/:dayRef/:taskName" element={<DayTasks />} />
-                  <Route path="/day/:dayRef/notes" element={<DayNotes />} />
-                </Route>
-                <Route path="user/password" element={<Password />} />
-                <Route path="tasks" element={<Tasks />} />
-                <Route path="tasks/:taskId" element={<Task />} />
-                <Route path="tasks/add" element={<AddTask />} />
-                <Route path="tasks/add/:goalId" element={<AddTask />} />
-                <Route path="tasks/add/day/:dayRef" element={<AddTask />} />
-                <Route path="goals" element={<Goals />} />
-                <Route path="goals/add" element={<AddGoal />} />
-                <Route path="goals/:goalId" element={<Goal />} />
-                <Route path="user/notes" element={<Notes />} />
-                <Route path="user/notes/add" element={<AddNote />}/>
-                <Route path="user/notes/:noteId" element={<Note />}/>
-                <Route path="calendar" element={<CalendarPage />} />
-              </Route>
-            </Routes>
-          </Router>
+              </Routes>
+            </Router>
           </IntlProvider>
         </PersistGate>
       </Provider>

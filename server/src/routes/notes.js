@@ -1,6 +1,13 @@
 import express from 'express';
 import { checkAuth } from './auth';
-import { addNote, findAllNotes, sendNotes, findNote, deleteNote, updateNote } from '../controllers/notes';
+import {
+  addNote,
+  findAllNotes,
+  sendNotes,
+  findNote,
+  deleteNote,
+  updateNote,
+} from '../controllers/notes';
 
 const notesRouter = express.Router();
 notesRouter.use(checkAuth);

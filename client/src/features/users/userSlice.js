@@ -16,7 +16,7 @@ export const update = createAsyncThunk('update', async (data) => {
   });
   return res.data;
 });
-export const getUser = createAsyncThunk('getUser', async(data) => {
+export const getUser = createAsyncThunk('getUser', async (data) => {
   const res = await axios(`/api/users/${data.userId}`, {
     method: 'GET',
     headers: { 'x-access-token': data.accessToken },

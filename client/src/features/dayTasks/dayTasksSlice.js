@@ -56,7 +56,7 @@ const dayTasksSlice = createSlice({
       .addCase(addDayTask.pending, (state) => {
         state.status = 'pending';
       })
-      .addCase(addDayTask.fulfilled, (state, {payload}) => {
+      .addCase(addDayTask.fulfilled, (state, { payload }) => {
         state.status = 'idle';
         state.data.dayTasks.push(payload.dayTask);
       })

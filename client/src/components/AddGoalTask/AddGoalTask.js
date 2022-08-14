@@ -9,15 +9,16 @@ export default function AddGoalTask(props) {
   const { tasks } = useSelector(selectTasks);
   const [times, setTimes] = useState(1);
   const intl = useIntl();
-  const [task, setTask] = useState({});
+  const [task, setTask] = useState({id:"null"});
   const [message, setMessage] = useState('');
   const handleChange = (e) => {
     const newTask = e.target.value.split('|');
     setTask({ id: newTask[0], name: newTask[1] });
   };
   const handleAddTask = () => {
+    console.log(task)
     if (task.id === 'null') {
-      setMessage(intl.formatMessage({id: "message.task"}));
+      setMessage(intl.formatMessage({ id: 'message.task' }));
       return;
     }
     const index = props.tasksArray.findIndex((val) => val.id === task.id);
@@ -25,7 +26,7 @@ export default function AddGoalTask(props) {
       const taskObj = { id: task.id, name: task.name, times };
       props.setTasksArray([...props.tasksArray, taskObj]);
     } else {
-      setMessage(intl.formatMessage({id: "message.taskadded"}));
+      setMessage(intl.formatMessage({ id: 'message.taskadded' }));
     }
   };
   const handleDeleteTask = (task) => {
@@ -33,9 +34,13 @@ export default function AddGoalTask(props) {
   };
   return (
     <Form className="taskForm mt-2">
-      <Form.Label><FormattedMessage id="goals.tasks" /></Form.Label>
+      <Form.Label>
+        <FormattedMessage id="goals.tasks" />
+      </Form.Label>
       <Form.Select onChange={handleChange} aria-label="Select task">
-        <option value={'null'}><FormattedMessage id="tasks.select" /></option>
+        <option value="null">
+          <FormattedMessage id="tasks.select" />
+        </option>
         {tasks.map((task) => {
           return (
             <option value={`${task.id}|${task.name}`} key={task.id}>
@@ -44,7 +49,9 @@ export default function AddGoalTask(props) {
           );
         })}
       </Form.Select>
-      <Form.Label><FormattedMessage id="goals.times" values={{times}} /></Form.Label>
+      <Form.Label>
+        <FormattedMessage id="goals.times" values={{ times }} />
+      </Form.Label>
       <Form.Range
         value={times}
         onChange={(e) => setTimes(e.target.value)}

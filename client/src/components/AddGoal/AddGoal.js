@@ -47,23 +47,29 @@ export default function AddGoal() {
     <Container>
       <Form className="taskForm">
         <Form.Group className="mb-2" controlId="formBasicName">
-          <Form.Label><FormattedMessage id="goals.name" /></Form.Label>
+          <Form.Label>
+            <FormattedMessage id="goals.name" />
+          </Form.Label>
           <Form.Control
             onChange={(e) => setName(e.target.value)}
             autoComplete="name"
             value={name}
             type="text"
-            placeholder={intl.formatMessage({id: "goals.nameplaceholder"})}
+            placeholder={intl.formatMessage({ id: 'goals.nameplaceholder' })}
           />
         </Form.Group>
         <Form.Group className="mb-2" controlId="formDescription">
-          <Form.Label><FormattedMessage id="form.description" /></Form.Label>
+          <Form.Label>
+            <FormattedMessage id="form.description" />
+          </Form.Label>
           <Form.Control
             onChange={(e) => setDescription(e.target.value)}
             value={description}
             as="textarea"
             rows={3}
-            placeholder={intl.formatMessage({id: "goals.descriptionplaceholder"})}
+            placeholder={intl.formatMessage({
+              id: 'goals.descriptionplaceholder',
+            })}
           />
         </Form.Group>
         <Form.Text className="text-danger">

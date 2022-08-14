@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import {FormattedMessage} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import ListGroup from 'react-bootstrap/esm/ListGroup';
 import { selectTasks } from './tasksSlice';
 export default function Tasks() {
@@ -18,7 +18,9 @@ export default function Tasks() {
       </Button>
       <Row>
         <Col>
-          <h3><FormattedMessage id="tasks.header" /></h3>
+          <h3>
+            <FormattedMessage id="tasks.header" />
+          </h3>
         </Col>
       </Row>
       <ListGroup>

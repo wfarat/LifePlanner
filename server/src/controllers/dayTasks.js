@@ -27,40 +27,47 @@ export const findDayTask = async (req, res, next, taskId) => {
   }
 };
 export const updateDayTask = async (req, res) => {
-  const { taskId, status, comment, start, finish } = req.body;
+  const {
+    taskId, status, comment, start, finish
+  } = req.body;
   let data;
   if (start) {
-  const pairs = [
-    { column: 'status', value: `'${status}'` },
-    { column: 'comment', value: `'${comment}'` },
-    { column: 'start', value: `${start}`},
-    { column: 'finish', value: `${finish}`}
-  ];
-   data = await dayTasksModel.updateWithReturn(
-    pairs,
-    `id = ${req.dayTask.id}`
-  );
-} else {
-  const pairs = [
-    { column: 'status', value: `'${status}'` },
-    { column: 'comment', value: `'${comment}'` },
-    { column: 'finish', value: `${finish}`}
-  ];
-  if (status === 'success') {
-    const goalData = await goalTasksModel.updateOneWithReturn(
-      'done',
-      'done + 1',
-      `task_id = '${taskId}' AND times > done`
+    const pairs = [
+      { column: 'status', value: `'${status}'` },
+      { column: 'comment', value: `'${comment}'` },
+      { column: 'start', value: `${start}` },
+      { column: 'finish', value: `${finish}` },
+    ];
+    data = await dayTasksModel.updateWithReturn(
+      pairs,
+      `id = ${req.dayTask.id}`
     );
-    const goalTask = goalData.rows;
-    goalTask.forEach(async (task) => {
-      await goalsModel.updateOne('done', 'done + 1', `id = '${task.goal_id}'`);
-    });
+  } else {
+    const pairs = [
+      { column: 'status', value: `'${status}'` },
+      { column: 'comment', value: `'${comment}'` },
+      { column: 'finish', value: `${finish}` },
+    ];
+    if (status === 'success') {
+      const goalData = await goalTasksModel.updateOneWithReturn(
+        'done',
+        'done + 1',
+        `task_id = '${taskId}' AND times > done`
+      );
+      const goalTask = goalData.rows;
+      goalTask.forEach(async (task) => {
+        await goalsModel.updateOne(
+          'done',
+          'done + 1',
+          `id = '${task.goal_id}'`
+        );
+      });
+    }
+    data = await dayTasksModel.updateWithReturn(
+      pairs,
+      `id = ${req.dayTask.id}`
+    );
   }
-   data = await dayTasksModel.updateWithReturn(
-    pairs,
-    `id = ${req.dayTask.id}`
-  ); }
   const dayTask = data.rows[0];
   res.status(203).send({ dayTask });
 };

@@ -33,16 +33,22 @@ export default function Task() {
     dispatch(deleteTask(data));
     navigate('../tasks');
   };
-  const keyNameDisplay = (keyName === "name")? intl.formatMessage({id: "modal.name"}) : (keyName === "description") ?
-  intl.formatMessage({id: "modal.description"}) : (keyName === "duration") ? intl.formatMessage({id: "modal.duration"}) : intl.formatMessage({id: "modal.repeat"});
+  const keyNameDisplay =
+    keyName === 'name'
+      ? intl.formatMessage({ id: 'modal.name' })
+      : keyName === 'description'
+      ? intl.formatMessage({ id: 'modal.description' })
+      : keyName === 'duration'
+      ? intl.formatMessage({ id: 'modal.duration' })
+      : intl.formatMessage({ id: 'modal.repeat' });
   const days = [
-    intl.formatMessage({id: "days.sunday"}),
-    intl.formatMessage({id: "days.monday"}),
-    intl.formatMessage({id: "days.tuesday"}),
-    intl.formatMessage({id: "days.wednesday"}),
-    intl.formatMessage({id: "days.thursday"}),
-    intl.formatMessage({id: "days.friday"}),
-    intl.formatMessage({id: "days.saturday"}),
+    intl.formatMessage({ id: 'days.sunday' }),
+    intl.formatMessage({ id: 'days.monday' }),
+    intl.formatMessage({ id: 'days.tuesday' }),
+    intl.formatMessage({ id: 'days.wednesday' }),
+    intl.formatMessage({ id: 'days.thursday' }),
+    intl.formatMessage({ id: 'days.friday' }),
+    intl.formatMessage({ id: 'days.saturday' }),
   ];
   const handleClose = () => {
     setShow(false);
@@ -87,10 +93,18 @@ export default function Task() {
   };
   const popover = (
     <Popover id="popover-basic">
-      <Popover.Header as="h3"><FormattedMessage id="popover.question" /></Popover.Header>
+      <Popover.Header as="h3">
+        <FormattedMessage id="popover.question" />
+      </Popover.Header>
       <Popover.Body>
-        <FormattedMessage id="popover.goal1" /> <strong><FormattedMessage id="popover.goal4" /></strong> <FormattedMessage id="popover.goal3" />
-        <Button variant="danger" onClick={handleDelete}><FormattedMessage id="popover.delete" /></Button>
+        <FormattedMessage id="popover.goal1" />{' '}
+        <strong>
+          <FormattedMessage id="popover.goal4" />
+        </strong>{' '}
+        <FormattedMessage id="popover.goal3" />
+        <Button variant="danger" onClick={handleDelete}>
+          <FormattedMessage id="popover.delete" />
+        </Button>
       </Popover.Body>
     </Popover>
   );
@@ -98,7 +112,9 @@ export default function Task() {
     <Container>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title className="text-dark"><FormattedMessage id="goal.edit" values={{keyNameDisplay}} /></Modal.Title>
+          <Modal.Title className="text-dark">
+            <FormattedMessage id="goal.edit" values={{ keyNameDisplay }} />
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {(keyName === 'name' || keyName === 'description') && (
@@ -107,13 +123,16 @@ export default function Task() {
               autoComplete="name"
               value={val}
               type="text"
-              placeholder={intl.formatMessage({id: "goal.editplaceholder"}, {keyNameDisplay})}
+              placeholder={intl.formatMessage(
+                { id: 'goal.editplaceholder' },
+                { keyNameDisplay }
+              )}
             />
           )}
           {keyName === 'duration' && (
             <Form.Group>
               <Form.Label className="text-dark">
-                <FormattedMessage id="modal.setduration" values={{val}} />
+                <FormattedMessage id="modal.setduration" values={{ val }} />
               </Form.Label>
               <Form.Range
                 value={val}
@@ -148,14 +167,18 @@ export default function Task() {
       </Modal>
       <Row>
         <Col>
-          <h4><FormattedMessage id="task.edit" /></h4>
+          <h4>
+            <FormattedMessage id="task.edit" />
+          </h4>
         </Col>
       </Row>
       <ListGroup className="mb-3">
         <ListGroup.Item action as={Button} onClick={(e) => handleShow('name')}>
           {' '}
           <div className="ms-2 me-auto">
-            <div className="fw-bold"><FormattedMessage id="tasks.name"/></div>
+            <div className="fw-bold">
+              <FormattedMessage id="tasks.name" />
+            </div>
             {task.name}
           </div>
         </ListGroup.Item>
@@ -165,7 +188,9 @@ export default function Task() {
           onClick={(e) => handleShow('description')}
         >
           <div className="ms-2 me-auto">
-            <div className="fw-bold"><FormattedMessage id="form.description" /></div>
+            <div className="fw-bold">
+              <FormattedMessage id="form.description" />
+            </div>
             {task.description}
           </div>
         </ListGroup.Item>
@@ -175,7 +200,9 @@ export default function Task() {
           onClick={(e) => handleShow('duration')}
         >
           <div className="ms-2 me-auto">
-            <div className="fw-bold"><FormattedMessage id="task.duration" /></div>
+            <div className="fw-bold">
+              <FormattedMessage id="task.duration" />
+            </div>
             {task.duration} <FormattedMessage id="task.minutes" />
           </div>
         </ListGroup.Item>
@@ -186,19 +213,24 @@ export default function Task() {
         >
           {' '}
           <div className="ms-2 me-auto">
-            <div className="fw-bold"><FormattedMessage id="tasks.repeat" /></div>
+            <div className="fw-bold">
+              <FormattedMessage id="tasks.repeat" />
+            </div>
             {task.repeat.length > 0 &&
               task.repeat.map((day) => {
                 return days[day] + ' ';
               })}{' '}
-            {task.repeat.length === 0 && intl.formatMessage({id: "task.nodays"})}
+            {task.repeat.length === 0 &&
+              intl.formatMessage({ id: 'task.nodays' })}
           </div>
         </ListGroup.Item>
       </ListGroup>
       <Row>
         <Col>
           <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-            <Button variant="danger"><FormattedMessage id="button.deletetask" /></Button>
+            <Button variant="danger">
+              <FormattedMessage id="button.deletetask" />
+            </Button>
           </OverlayTrigger>
         </Col>
       </Row>

@@ -50,7 +50,7 @@ function App() {
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto">
                 <Nav.Link as={Link} to="calendar" href="#">
-                  <FormattedMessage id='nav.calendar' />
+                  <FormattedMessage id="nav.calendar" />
                 </Nav.Link>
                 <Nav.Link as={Link} to="tasks" href="#">
                   <FormattedMessage id="nav.tasks" />

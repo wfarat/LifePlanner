@@ -100,7 +100,7 @@ const notesSlice = createSlice({
       .addCase(updateNote.rejected, (state) => {
         state.status = 'rejected';
         state.data.message = 'There was a problem with updating a note.';
-      });;
+      });
   },
 });
 

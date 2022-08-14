@@ -56,7 +56,7 @@ const dayNotesSlice = createSlice({
       .addCase(addDayNote.pending, (state) => {
         state.status = 'pending';
       })
-      .addCase(addDayNote.fulfilled, (state, {payload}) => {
+      .addCase(addDayNote.fulfilled, (state, { payload }) => {
         state.status = 'idle';
         state.data.dayNotes.push(payload.dayNote);
       })

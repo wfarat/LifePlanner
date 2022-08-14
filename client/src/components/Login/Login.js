@@ -28,12 +28,12 @@ export default function Login() {
   });
   useEffect(() => {
     dispatch({ type: 'USER_LOGOUT' });
-  }, [])
+  }, []);
   const handleClick = () => {
     if (!email) {
-      setMessage(intl.formatMessage({id: "message.email"}));
+      setMessage(intl.formatMessage({ id: 'message.email' }));
     } else if (!password) {
-      setMessage(intl.formatMessage({id: "message.password"}));
+      setMessage(intl.formatMessage({ id: 'message.password' }));
     } else {
       setMessage('');
       const data = {
@@ -45,10 +45,10 @@ export default function Login() {
   };
   return (
     <main className="login">
-         {user.auth &&
-    <Navigate to="/" />
-  }
-              <h2><FormattedMessage id="login.header" /></h2>
+      {user.auth && <Navigate to="/" />}
+      <h2>
+        <FormattedMessage id="login.header" />
+      </h2>
       <Form className="signForm">
         <Form.Text className="text-dark fs-5">
           <FormattedMessage id="login.notregistered" />
@@ -57,24 +57,28 @@ export default function Login() {
           </Button>
         </Form.Text>
         <Form.Group className="m-3" controlId="formBasicEmail">
-          <Form.Label><FormattedMessage id="user.email" /></Form.Label>
+          <Form.Label>
+            <FormattedMessage id="user.email" />
+          </Form.Label>
           <Form.Control
             onChange={(e) => setEmail(e.target.value)}
             autoComplete="email"
             value={email}
             type="email"
-            placeholder={intl.formatMessage({id: "user.emailplaceholder"})}
+            placeholder={intl.formatMessage({ id: 'user.emailplaceholder' })}
           />
         </Form.Group>
 
         <Form.Group className="m-3" controlId="formBasicPassword">
-          <Form.Label><FormattedMessage id="user.password" /></Form.Label>
+          <Form.Label>
+            <FormattedMessage id="user.password" />
+          </Form.Label>
           <Form.Control
             onChange={(e) => setPassword(e.target.value)}
             autoComplete="current-password"
             value={password}
             type="password"
-            placeholder={intl.formatMessage({id: "user.passwordplaceholder"})}
+            placeholder={intl.formatMessage({ id: 'user.passwordplaceholder' })}
           />
           <Form.Text className="text-danger">
             {message}
@@ -85,7 +89,11 @@ export default function Login() {
           <Button variant="success" onClick={handleClick}>
             <FormattedMessage id="button.submit" />
           </Button>
-          <GoogleButton label={intl.formatMessage({id: "button.google"})} type="light" onClick={googleLogin}>
+          <GoogleButton
+            label={intl.formatMessage({ id: 'button.google' })}
+            type="light"
+            onClick={googleLogin}
+          >
             <FormattedMessage id="button.google" />
           </GoogleButton>
         </div>

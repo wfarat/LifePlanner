@@ -23,11 +23,15 @@ export default function Goals() {
   return (
     <Container>
       <Button variant="success" as={Link} to="add">
-        <FormattedMessage id="button.addgoal"/>
+        <FormattedMessage id="button.addgoal" />
       </Button>
       <Row className="border-bottom border-secondary">
-        <Col><FormattedMessage id="goals.name" /></Col>
-        <Col><FormattedMessage id="goals.progress" /></Col>
+        <Col>
+          <FormattedMessage id="goals.name" />
+        </Col>
+        <Col>
+          <FormattedMessage id="goals.progress" />
+        </Col>
       </Row>
       {goals.length > 0 &&
         goals.map((goal) => {

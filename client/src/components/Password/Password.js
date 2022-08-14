@@ -47,36 +47,46 @@ export default function Password() {
   };
   return (
     <div className="password-change">
-      <h2><FormattedMessage id="user.changepassword"/></h2>
+      <h2>
+        <FormattedMessage id="user.changepassword" />
+      </h2>
       <Form className="signForm">
         <Form.Group className="mb-2" controlId="formBasicPassword">
-          <Form.Label><FormattedMessage id="user.password" /></Form.Label>
+          <Form.Label>
+            <FormattedMessage id="user.password" />
+          </Form.Label>
           <Form.Control
             onChange={(e) => setOldPassword(e.target.value)}
             autoComplete="new-password"
             value={oldPassword}
             type="password"
-            placeholder={intl.formatMessage({id: "user.passwordplaceholder"})}
+            placeholder={intl.formatMessage({ id: 'user.passwordplaceholder' })}
           />
         </Form.Group>
         <Form.Group className="mb-2" controlId="formLastname">
-          <Form.Label><FormattedMessage id="user.newpassword" /></Form.Label>
+          <Form.Label>
+            <FormattedMessage id="user.newpassword" />
+          </Form.Label>
           <Form.Control
             onChange={(e) => setNewPassword(e.target.value)}
             autoComplete="current-password"
             value={newPassword}
             type="password"
-            placeholder={intl.formatMessage({id: "user.newpasswordplaceholder"})}
+            placeholder={intl.formatMessage({
+              id: 'user.newpasswordplaceholder',
+            })}
           />
         </Form.Group>
         <Form.Group className="mb-2" controlId="formRepeatPassword">
-          <Form.Label><FormattedMessage id="user.repeatpassword" /></Form.Label>
+          <Form.Label>
+            <FormattedMessage id="user.repeatpassword" />
+          </Form.Label>
           <Form.Control
             onChange={(e) => setRepeat(e.target.value)}
             autoComplete="new-password"
             value={repeat}
             type="password"
-            placeholder={intl.formatMessage({id: "user.repeatplaceholder"})}
+            placeholder={intl.formatMessage({ id: 'user.repeatplaceholder' })}
           />
           <Form.Text className="text-danger">
             <Form.Text className="text-danger">{message}</Form.Text>
