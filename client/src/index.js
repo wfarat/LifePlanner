@@ -24,6 +24,9 @@ import English from './lang/en.json';
 import Polish from './lang/pl.json';
 import Tasks from './features/tasks/Tasks';
 import Task from './features/tasks/Task';
+import Note from './features/notes/Note';
+import Notes from './features/notes/Notes';
+import AddNote from './components/AddNote/AddNote';
 import AuthCheck from './components/authCheck/AuthCheck';
 import DayTasks from './features/dayTasks/dayTasks';
 import DayNotes from './features/dayNotes/DayNotes';
@@ -86,6 +89,9 @@ root.render(
                 <Route path="goals" element={<Goals />} />
                 <Route path="goals/add" element={<AddGoal />} />
                 <Route path="goals/:goalId" element={<Goal />} />
+                <Route path="user/notes" element={<Notes />} />
+                <Route path="user/notes/add" element={<AddNote />}/>
+                <Route path="user/notes/:noteId" element={<Note />}/>
                 <Route path="calendar" element={<CalendarPage />} />
               </Route>
             </Routes>

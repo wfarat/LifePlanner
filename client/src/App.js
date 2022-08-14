@@ -58,6 +58,9 @@ function App() {
                 <Nav.Link as={Link} to="goals" href="#">
                   <FormattedMessage id="nav.goals" />
                 </Nav.Link>
+                <Nav.Link as={Link} to="user/notes" href="#">
+                  <FormattedMessage id="nav.notes" />
+                </Nav.Link>
                 <User />
               </Nav>
             </Navbar.Collapse>

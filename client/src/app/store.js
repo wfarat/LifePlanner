@@ -17,12 +17,14 @@ import tasksSlice from '../features/tasks/tasksSlice';
 import goalsSlice from '../features/Goals/goalsSlice';
 import dayNotesSlice from '../features/dayNotes/dayNotesSlice';
 import dayTasksSlice from '../features/dayTasks/dayTasksSlice';
+import notesSlice from '../features/notes/notesSlice';
 
 const appReducer = combineReducers({
   user: userSlice,
   day: daySlice,
   tasks: tasksSlice,
   goals: goalsSlice,
+  notes: notesSlice,
   dayNotes: dayNotesSlice,
   dayTasks: dayTasksSlice,
 });
