@@ -27,14 +27,18 @@ export const findUser = async (req, res, next, userId) => {
 };
 
 export const updateLanguage = async (req, res) => {
-  const {lang} = req.user;
-  const {newLang} = req.body;
+  const { lang } = req.user;
+  const { newLang } = req.body;
   if (lang === newLang) {
     res.status(400).send();
   } else {
-    const data = await usersModel.updateOneWithReturn('lang', `'${newLang}'`, `id = ${req.userId}`);
+    const data = await usersModel.updateOneWithReturn(
+      'lang',
+      `'${newLang}'`,
+      `id = ${req.userId}`
+    );
     const user = data.rows[0];
-    res.status(203).send({lang: user.lang});
+    res.status(203).send({ lang: user.lang });
   }
 };
 
@@ -44,7 +48,7 @@ export const checkUser = async (req, res, next) => {
   } else {
     next();
   }
-}
+};
 export const selectAllUsers = async (req, res) => {
   const columns = 'id, firstname, lastname, email';
   const data = await usersModel.select(columns);
@@ -57,23 +61,23 @@ export const checkAdmin = async (req, res, next) => {
   } else {
     next();
   }
-}
+};
 export const addUser = async (req, res, next) => {
   const {
-    email, password, firstname, lastname
+    email, password, firstname, lastname, lang
   } = req.body;
   const checkIfExists = await findByEmail(email);
   if (checkIfExists) {
     res.status(400).send({ message: 'User with this email already exists.' });
   } else {
-    const columns = 'email, password, firstname, lastname';
+    const columns = 'email, password, firstname, lastname, lang';
     const saltRounds = 10;
     bcrypt.genSalt(saltRounds, (err, salt) => {
       bcrypt.hash(password, salt, async (err, hash) => {
         if (err) {
           return next(err);
         }
-        const values = `'${email}', '${hash}','${firstname}', '${lastname}'`;
+        const values = `'${email}', '${hash}','${firstname}', '${lastname}', '${lang}'`;
         const user = await usersModel.insertWithReturn(columns, values);
         res.status(201).send({ user: user.rows[0].firstname });
       });
@@ -89,7 +93,7 @@ export const selectUser = async (req, res) => {
     firstname,
     lastname,
     email,
-    lang
+    lang,
   };
   res.status(200).send({ user });
 };
@@ -123,7 +127,7 @@ export const updateUser = async (req, res) => {
         firstname: fn,
         lastname: ln,
         email: e,
-        lang
+        lang,
       };
       res.status(203).send({ user });
     }

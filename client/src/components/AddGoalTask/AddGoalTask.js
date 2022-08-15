@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/esm/Row';
+import Col from 'react-bootstrap/esm/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Form from 'react-bootstrap/Form';
 import { selectTasks } from '../../features/tasks/tasksSlice';
@@ -9,28 +11,10 @@ export default function AddGoalTask(props) {
   const { tasks } = useSelector(selectTasks);
   const [times, setTimes] = useState(1);
   const intl = useIntl();
-  const [task, setTask] = useState({id:"null"});
-  const [message, setMessage] = useState('');
+  const [task, setTask] = useState({ id: 'null' });
   const handleChange = (e) => {
     const newTask = e.target.value.split('|');
     setTask({ id: newTask[0], name: newTask[1] });
-  };
-  const handleAddTask = () => {
-    console.log(task)
-    if (task.id === 'null') {
-      setMessage(intl.formatMessage({ id: 'message.task' }));
-      return;
-    }
-    const index = props.tasksArray.findIndex((val) => val.id === task.id);
-    if (index === -1) {
-      const taskObj = { id: task.id, name: task.name, times };
-      props.setTasksArray([...props.tasksArray, taskObj]);
-    } else {
-      setMessage(intl.formatMessage({ id: 'message.taskadded' }));
-    }
-  };
-  const handleDeleteTask = (task) => {
-    props.setTasksArray(props.tasksArray.filter((val) => val.id !== task));
   };
   return (
     <Form className="taskForm mt-2">
@@ -49,15 +33,20 @@ export default function AddGoalTask(props) {
           );
         })}
       </Form.Select>
-      <Form.Label>
-        <FormattedMessage id="goals.times" values={{ times }} />
-      </Form.Label>
-      <Form.Range
-        value={times}
-        onChange={(e) => setTimes(e.target.value)}
-        max="100"
-        min="1"
-      />
+      <Form.Group as={Row}>
+        <Form.Label column xs="8">
+          <FormattedMessage id="goals.times" values={{ times }} />
+        </Form.Label>
+        <Col xs="4">
+          <Form.Control
+            onChange={(e) => setTimes(e.target.value)}
+            value={times}
+            type="number"
+            min="1"
+          />
+        </Col>
+      </Form.Group>
+
       <ListGroup>
         {props.tasksArray.length > 0 &&
           props.tasksArray.map((task) => {
@@ -65,17 +54,24 @@ export default function AddGoalTask(props) {
               <ListGroup.Item
                 action
                 onClick={() => {
-                  handleDeleteTask(task.id);
+                  props.handleDeleteTask(task.id);
                 }}
                 key={task.id}
               >
-                {task.name} {task.times > 0 && '/ Repeats:' + task.times}
+                {task.name}{' '}
+                {task.times > 0 &&
+                  intl.formatMessage({ id: 'goaltask.repeats' }) + task.times}
               </ListGroup.Item>
             );
           })}
       </ListGroup>
-      <Form.Text className="text-danger">{message}</Form.Text>
-      <Button variant="warning" onClick={handleAddTask}>
+
+      <Button
+        variant="warning"
+        onClick={() => {
+          props.handleAddTask(task, times);
+        }}
+      >
         <FormattedMessage id="button.addtask" />
       </Button>
     </Form>

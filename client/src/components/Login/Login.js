@@ -46,70 +46,77 @@ export default function Login() {
   };
   const testLogin = () => {
     const data = {
-      email: "test@gmail.com",
-      password: "password"
-    }
+      email: 'test@gmail.com',
+      password: 'password',
+    };
     dispatch(login(data));
-  }
+  };
   return (
     <>
-    <main className="login">
-    <div className="switch">      <LangaugeSwitch /> </div>
-      {user.auth && <Navigate to="../" />}
-      <h2>
-        <FormattedMessage id="login.header" />
-      </h2>
-      <Form className="signForm">
-        <Form.Text className="text-dark fs-5">
-          <FormattedMessage id="login.notregistered" />
-          <Button variant="success" as={Link} to="/register">
-            <FormattedMessage id="button.signup" />
-          </Button>
-        </Form.Text>
-        <Form.Group className="m-3" controlId="formBasicEmail">
-          <Form.Label>
-            <FormattedMessage id="user.email" />
-          </Form.Label>
-          <Form.Control
-            onChange={(e) => setEmail(e.target.value)}
-            autoComplete="email"
-            value={email}
-            type="email"
-            placeholder={intl.formatMessage({ id: 'user.emailplaceholder' })}
-          />
-        </Form.Group>
-
-        <Form.Group className="m-3" controlId="formBasicPassword">
-          <Form.Label>
-            <FormattedMessage id="user.password" />
-          </Form.Label>
-          <Form.Control
-            onChange={(e) => setPassword(e.target.value)}
-            autoComplete="current-password"
-            value={password}
-            type="password"
-            placeholder={intl.formatMessage({ id: 'user.passwordplaceholder' })}
-          />
-          <Form.Text className="text-danger">
-            {message}
-            {user.message}
-          </Form.Text>
-        </Form.Group>
-        <div className="loginButton">
-          <Button variant="success" onClick={handleClick}>
-            <FormattedMessage id="button.submit" />
-          </Button>
-          <GoogleButton
-            label={intl.formatMessage({ id: 'button.google' })}
-            type="light"
-            onClick={googleLogin}
-          >
-            <FormattedMessage id="button.google" />
-          </GoogleButton>
-          <Button onClick={testLogin}><FormattedMessage id="button.testlogin" /></Button>
+      <main className="login">
+        <div className="switch">
+          {' '}
+          <LangaugeSwitch />{' '}
         </div>
-      </Form>
-    </main>
+        {user.auth && <Navigate to="../" />}
+        <h2>
+          <FormattedMessage id="login.header" />
+        </h2>
+        <Form className="signForm">
+          <Form.Text className="text-dark fs-5">
+            <FormattedMessage id="login.notregistered" />
+            <Button variant="success" as={Link} to="/register">
+              <FormattedMessage id="button.signup" />
+            </Button>
+          </Form.Text>
+          <Form.Group className="m-3" controlId="formBasicEmail">
+            <Form.Label>
+              <FormattedMessage id="user.email" />
+            </Form.Label>
+            <Form.Control
+              onChange={(e) => setEmail(e.target.value)}
+              autoComplete="email"
+              value={email}
+              type="email"
+              placeholder={intl.formatMessage({ id: 'user.emailplaceholder' })}
+            />
+          </Form.Group>
+
+          <Form.Group className="m-3" controlId="formBasicPassword">
+            <Form.Label>
+              <FormattedMessage id="user.password" />
+            </Form.Label>
+            <Form.Control
+              onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"
+              value={password}
+              type="password"
+              placeholder={intl.formatMessage({
+                id: 'user.passwordplaceholder',
+              })}
+            />
+            <Form.Text className="text-danger">
+              {message}
+              {user.message}
+            </Form.Text>
+          </Form.Group>
+          <div className="loginButton">
+            <Button variant="success" onClick={handleClick}>
+              <FormattedMessage id="button.submit" />
+            </Button>
+            <GoogleButton
+              label={intl.formatMessage({ id: 'button.google' })}
+              type="light"
+              onClick={googleLogin}
+            >
+              <FormattedMessage id="button.google" />
+            </GoogleButton>
+            <Button onClick={testLogin}>
+              <FormattedMessage id="button.testlogin" />
+            </Button>
+          </div>
+        </Form>
+      </main>
     </>
   );
 }

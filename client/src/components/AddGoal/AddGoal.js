@@ -16,8 +16,8 @@ export default function AddGoal() {
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [tasksArray, setTasksArray] = useState([]);
   const [message, setMessage] = useState('');
+  const [tasksArray, setTasksArray] = useState([]);
   const dispatch = useDispatch();
   const handleClick = async () => {
     if (goals.findIndex((goal) => goal.name === name) === -1) {
@@ -42,6 +42,22 @@ export default function AddGoal() {
     } else {
       setMessage('Goal with this name already exists.');
     }
+  };
+  const handleAddTask = (task, times) => {
+    if (task.id === 'null') {
+      setMessage(intl.formatMessage({ id: 'message.task' }));
+      return;
+    }
+    const index = tasksArray.findIndex((val) => val.id === task.id);
+    if (index === -1) {
+      const taskObj = { id: task.id, name: task.name, times };
+      setTasksArray([...tasksArray, taskObj]);
+    } else {
+      setMessage(intl.formatMessage({ id: 'message.taskadded' }));
+    }
+  };
+  const handleDeleteTask = (task) => {
+    setTasksArray(tasksArray.filter((val) => val.id !== task));
   };
   return (
     <Container>
@@ -77,7 +93,11 @@ export default function AddGoal() {
           {goalsData.message}
         </Form.Text>
       </Form>
-      <AddGoalTask tasksArray={tasksArray} setTasksArray={setTasksArray} />
+      <AddGoalTask
+        handleAddTask={handleAddTask}
+        handleDeleteTask={handleDeleteTask}
+        tasksArray={tasksArray}
+      />
       <Button variant="success" className="mt-2" onClick={handleClick}>
         <FormattedMessage id="button.submit" />
       </Button>

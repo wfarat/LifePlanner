@@ -8,7 +8,7 @@ import {
   updateUser,
   checkUser,
   checkAdmin,
-  updateLanguage
+  updateLanguage,
 } from '../controllers/users';
 import { checkAuth } from './auth';
 

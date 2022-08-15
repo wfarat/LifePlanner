@@ -73,7 +73,9 @@ export default function Goal() {
   );
   return (
     <Container>
-        <h3><FormattedMessage id="note.edit"/></h3>
+      <h3>
+        <FormattedMessage id="note.edit" />
+      </h3>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title className="text-dark">

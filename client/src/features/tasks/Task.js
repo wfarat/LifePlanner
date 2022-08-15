@@ -134,10 +134,10 @@ export default function Task() {
               <Form.Label className="text-dark">
                 <FormattedMessage id="modal.setduration" values={{ val }} />
               </Form.Label>
-              <Form.Range
-                value={val}
+              <Form.Control
                 onChange={(e) => setVal(e.target.value)}
-                max="120"
+                value={val}
+                type="number"
               />
             </Form.Group>
           )}

@@ -9,13 +9,16 @@ export const getAdminUsers = createAsyncThunk('getAdminUsers', async (data) => {
   return res.data;
 });
 
-export const deleteAdminUser = createAsyncThunk('deleteAdminUser', async (data) => {
-  const res = await axios(`/api/users/admin/${data.userId}`, {
-    method: 'DELETE',
-    headers: { 'x-access-token': data.accessToken },
-  });
-  return res.data;
-});
+export const deleteAdminUser = createAsyncThunk(
+  'deleteAdminUser',
+  async (data) => {
+    const res = await axios(`/api/users/admin/${data.userId}`, {
+      method: 'DELETE',
+      headers: { 'x-access-token': data.accessToken },
+    });
+    return res.data;
+  }
+);
 
 const adminSlice = createSlice({
   name: 'admin',
@@ -36,7 +39,7 @@ const adminSlice = createSlice({
       })
       .addCase(getAdminUsers.rejected, (state) => {
         state.status = 'rejected';
-        state.data = {redirect: true}
+        state.data = { redirect: true };
       })
       .addCase(deleteAdminUser.pending, (state) => {
         state.status = 'pending';

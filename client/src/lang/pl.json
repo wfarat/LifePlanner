@@ -69,7 +69,7 @@
   "form.description": "Opis",
   "tasks.nameplaceholder": "Wpisz nazwę zadania",
   "tasks.descriptionplaceholder": "Opisz zadanie (niewymagane)",
-  "tasks.duration": "Ustaw czas trwania: {duration} minut (niewymagane)",
+  "tasks.duration": "Ustaw czas trwania (niewymagane)",
   "days.monday": "Poniedziałek",
   "days.tuesday": "Wtorek",
   "days.wednesday": "Środa",
@@ -82,7 +82,7 @@
   "message.taskexists": "Zadanie z tą nazwą już istnieje.",
   "tasks.repeat": "Dni do powtarzania zadania:",
   "goals.select": "Wybierz cel (niewymagane)",
-  "goals.times": "Ustal ilość powtórzeń: {times} razy",
+  "goals.times": "Ustal ilość powtórzeń:",
   "button.addgoal": "Dodaj cel",
   "goals.name": "Nazwa celu",
   "goals.progress": "Postęp",
@@ -102,7 +102,7 @@
   "button.submittasks": "Zatwierdź zadania",
   "button.addnewtask": "Dodaj nowe zadanie",
   "button.deletegoal": "Usuń cel",
-  "modal.setduration": "Ustaw czas trwania: {val} minut",
+  "modal.setduration": "Ustaw czas trwania",
   "popover.goal4": "usunięte zostaną wszystkie postępy celów  oraz zadania dnia dla tego zadania,",
   "modal.duration": "czas trwania zadania",
   "modal.repeat": "dni powtarzania zadania",
@@ -152,5 +152,7 @@
   "quotes.mt1": "Sekret wychodzenia do przodu tkwi w rozpoczęciu. Sekret rozpoczęcia pracy polega na podzieleniu złożonych, przytłaczających zadań na małe, łatwe do wykonania zadania i rozpoczęcie od pierwszego. - Mark Twain",
   "contact.me": "Skontaktuj się:",
   "button.testlogin": "Przetestuj aplikacje",
-  "option.language": "Język"
+  "option.language": "Język",
+  "register.success": "Gratulacje, {userName} twoje konto zostało utworzone.",
+  "goaltask.repeats": "/Powtórzeń :"
 }

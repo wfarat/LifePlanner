@@ -29,7 +29,7 @@ import AuthCheck from './components/authCheck/AuthCheck';
 import DayTasks from './features/dayTasks/dayTasks';
 import DayNotes from './features/dayNotes/DayNotes';
 import AdminUser from './features/admin/AdminUser';
-import IntlProviderWrapper from "./context/IntlProviderWrapper";
+import IntlProviderWrapper from './context/IntlProviderWrapper';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -92,10 +92,10 @@ root.render(
                   <Route path="calendar" element={<CalendarPage />} />
                   <Route path="admin" element={<Admin />} />
                   <Route path="admin/:userId" element={<AdminUser />} />
-                 </Route>
+                </Route>
               </Routes>
             </Router>
-            </IntlProviderWrapper>
+          </IntlProviderWrapper>
         </PersistGate>
       </Provider>
     </GoogleOAuthProvider>

@@ -7,14 +7,11 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { FormattedMessage, useIntl } from 'react-intl';
 export const updatePassword = async (data, userId) => {
-  const res = await axios(
-    `/api/users/${userId}/password`,
-    {
-      method: 'PUT',
-      headers: { 'x-access-token': data.accessToken },
-      data: data.info,
-    }
-  ).catch((err) => err.response);
+  const res = await axios(`/api/users/${userId}/password`, {
+    method: 'PUT',
+    headers: { 'x-access-token': data.accessToken },
+    data: data.info,
+  }).catch((err) => err.response);
   return res.data.message;
 };
 

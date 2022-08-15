@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '../../features/users/userSlice';
 import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/esm/Row';
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import './addTask.css';
 import { selectGoals } from '../../features/Goals/goalsSlice';
@@ -9,6 +11,7 @@ import { addTask, selectTasks } from '../../features/tasks/tasksSlice';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FormattedMessage, useIntl } from 'react-intl';
 import Container from 'react-bootstrap/esm/Container';
+
 export default function AddTask() {
   const user = useSelector(selectUser);
   const params = useParams();
@@ -123,15 +126,15 @@ export default function AddTask() {
         </Form.Group>
         <Form.Group className="mb-2" controlId="formDuration">
           <Form.Label>
-            <FormattedMessage id="tasks.duration" values={{ duration }} />
+            <FormattedMessage id="tasks.duration" />
           </Form.Label>
-          <Form.Range
-            value={duration}
+          <Form.Control
             onChange={(e) => setDuration(e.target.value)}
-            max="120"
+            value={duration}
+            type="number"
           />
         </Form.Group>
-        <Form.Group className="mb-2" controlId="fromRepeat">
+        <Form.Group className="mb-2" controlId="formRepeat">
           <Form.Label>
             <FormattedMessage id="tasks.repeat" />
           </Form.Label>
@@ -167,15 +170,19 @@ export default function AddTask() {
             );
           })}
         </Form.Select>
-        <Form.Label>
-          <FormattedMessage id="goals.times" values={{ times }} />
-        </Form.Label>
-        <Form.Range
-          value={times}
-          onChange={(e) => setTimes(e.target.value)}
-          min="1"
-          max="100"
-        />
+        <Form.Group as={Row} className="mb-2" controlId="formRepeats">
+          <Form.Label column xs="8">
+            <FormattedMessage id="goals.times" />
+          </Form.Label>
+          <Col xs="4">
+            <Form.Control
+              onChange={(e) => setTimes(e.target.value)}
+              value={times}
+              type="number"
+              min="1"
+            />
+          </Col>
+        </Form.Group>
         <Form.Text className="text-danger">
           {message}
           {tasksData.message}

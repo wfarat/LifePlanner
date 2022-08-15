@@ -120,6 +120,7 @@ export default function DayTasks() {
     } else {
       setDisabled(false);
     }
+    setStatus(task.status);
   };
   const handleUpdateTask = (dayTaskId, taskId, duration) => {
     let start, finish;
@@ -173,7 +174,7 @@ export default function DayTasks() {
             {dayTasks.length > 0 &&
               dayTasks.map((task) => {
                 let startHours, startMinutes, finishHours, finishMinutes;
-                if (task.start > 0) {
+                if (task.finish > 0) {
                   startHours =
                     Math.floor(task.start / 60) < 10
                       ? '0' + Math.floor(task.start / 60)

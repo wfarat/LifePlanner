@@ -23,14 +23,17 @@ export const getUser = createAsyncThunk('getUser', async (data) => {
   });
   return res.data;
 });
-export const updateLanguage = createAsyncThunk('updateLanguage', async (data) => {
-  const res = await axios(`/api/users/${data.userId}/lang`, {
-    method: 'PUT',
-    headers: { 'x-access-token': data.accessToken },
-    data: data.lang,
-  });
-  return res.data;
-})
+export const updateLanguage = createAsyncThunk(
+  'updateLanguage',
+  async (data) => {
+    const res = await axios(`/api/users/${data.userId}/lang`, {
+      method: 'PUT',
+      headers: { 'x-access-token': data.accessToken },
+      data: data.lang,
+    });
+    return res.data;
+  }
+);
 export const registerUser = async (data) => {
   const res = await axios('/api/register', {
     method: 'POST',
@@ -110,7 +113,7 @@ const userSlice = createSlice({
             email: '',
           },
         };
-      })      
+      })
       .addCase(updateLanguage.pending, (state) => {
         state.status = 'pending';
       })

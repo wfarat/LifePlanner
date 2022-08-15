@@ -28,7 +28,7 @@ const appReducer = combineReducers({
   notes: notesSlice,
   dayNotes: dayNotesSlice,
   dayTasks: dayTasksSlice,
-  admin: adminSlice
+  admin: adminSlice,
 });
 
 const rootReducer = (state, action) => {

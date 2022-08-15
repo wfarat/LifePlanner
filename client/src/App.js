@@ -9,6 +9,7 @@ import User from './features/users/User';
 import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { getTasks, selectTasks } from './features/tasks/tasksSlice';
+import { HouseDoorFill } from 'react-bootstrap-icons';
 import { selectUser } from './features/users/userSlice';
 import { getGoals, selectGoals } from './features/Goals/goalsSlice';
 import LangaugeSwitch from './components/LanguageSwitch/LanguageSwitch';
@@ -42,7 +43,7 @@ function App() {
         >
           <Container>
             <Navbar.Brand as={Link} to="/" href="#">
-              Home
+              <HouseDoorFill size={30} />
             </Navbar.Brand>
             <Button variant="primary" onClick={() => navigate(-1)}>
               <FormattedMessage id="nav.back" />
@@ -72,7 +73,15 @@ function App() {
       <main>
         <Outlet />
       </main>
-      <footer className="fixed-bottom bg-light text-dark"><FormattedMessage id="contact.me" /> Władysław Farat <a className="link-primary" href="https://github.com/wfarat">Github</a> <a className="link-primary" href="mailto:wfarat@gmail.com">E-mail</a> </footer>
+      <footer className="fixed-bottom bg-light text-dark">
+        <FormattedMessage id="contact.me" /> Władysław Farat{' '}
+        <a className="link-primary" href="https://github.com/wfarat">
+          Github
+        </a>{' '}
+        <a className="link-primary" href="mailto:wfarat@gmail.com">
+          E-mail
+        </a>{' '}
+      </footer>
     </div>
   );
 }

@@ -19,16 +19,24 @@ export default function Admin() {
   }, []);
   return (
     <Container>
-        {adminData.redirect && <Navigate to="/" />}
-        {adminData.adminUsers &&
+      {adminData.redirect && <Navigate to="/" />}
+      {adminData.adminUsers && (
         <ListGroup>
-        {adminUsers.length > 0 && adminUsers.map(user => {
-                        return ( <ListGroup.Item action as={Link} to={`${user.id}`} key={user.id}>
-                         {user.email}
-                       </ListGroup.Item>  )
-        })}
+          {adminUsers.length > 0 &&
+            adminUsers.map((user) => {
+              return (
+                <ListGroup.Item
+                  action
+                  as={Link}
+                  to={`${user.id}`}
+                  key={user.id}
+                >
+                  {user.email}
+                </ListGroup.Item>
+              );
+            })}
         </ListGroup>
-}
+      )}
     </Container>
   );
 }

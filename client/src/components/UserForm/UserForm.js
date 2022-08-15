@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '../../features/users/userSlice';
 import { registerUser } from '../../features/users/userSlice';
 import { update } from '../../features/users/userSlice';
+import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { FormattedMessage, useIntl } from 'react-intl';
-
+import Alert from 'react-bootstrap/Alert';
 export default function UserForm() {
   const user = useSelector(selectUser);
   const [email, setEmail] = useState('');
@@ -24,6 +25,7 @@ export default function UserForm() {
       firstname,
       lastname,
       password,
+      lang: intl.locale,
     };
     if (!user.auth) {
       if (password !== repeat) {
@@ -114,8 +116,16 @@ export default function UserForm() {
                 <FormattedMessage id="user.notmatch" />
               </Form.Text>
             )}
-            {userName && `Welcome ${userName}, your account has been created.`}
           </Form.Text>
+
+          {userName && (
+            <Alert variant="success">
+              <FormattedMessage id="register.success" values={{ userName }} />
+              <Alert.Link as={Link} to="/login" href="#">
+                <FormattedMessage id="button.signin" />
+              </Alert.Link>
+            </Alert>
+          )}
         </Form.Group>
       )}
       <Button variant="success" onClick={handleClick}>

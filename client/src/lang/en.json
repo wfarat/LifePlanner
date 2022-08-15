@@ -69,7 +69,7 @@
   "form.description": "Description",
   "tasks.nameplaceholder": "Enter task name",
   "tasks.descriptionplaceholder": "Enter task description (not required)",
-  "tasks.duration": "Set duration: {duration} minutes (not required)",
+  "tasks.duration": "Set duration: (not required)",
   "days.monday": "Monday",
   "days.tuesday": "Tuesday",
   "days.wednesday": "Wednesday",
@@ -82,7 +82,7 @@
   "message.taskexists": "Task with this name already exists.",
   "tasks.repeat": "Days to repeat:",
   "goals.select": "Select Goal (not required)",
-  "goals.times": "Set repeats quantity: {times} times",
+  "goals.times": "Set repeats quantity:",
   "button.addgoal": "Add goal",
   "goals.name": "Goal name",
   "goals.progress": "Progress",
@@ -102,7 +102,7 @@
   "button.submittasks": "Submit tasks",
   "button.addnewtask": "Add new task",
   "button.deletegoal": "Delete goal",
-  "modal.setduration": "Set duration: {val} minutes",
+  "modal.setduration": "Set duration:",
   "popover.goal4": "remove all your goal progress and day tasks for this task,",
   "modal.duration": "task duration",
   "modal.repeat": "task repeat days",
@@ -152,5 +152,7 @@
   "quotes.mt1": "The secret of getting ahead is getting started. The secret of getting started is breaking your complex, overwhelming tasks into small manageable tasks, and then starting on the first one. - Mark Twain",
   "contact.me": "Contact me:",
   "button.testlogin": "Test the app",
-  "option.language": "Lang"
+  "option.language": "Lang",
+  "register.success": "Congratulations {userName}, your account has been created.",
+  "goaltask.repeats": "/Repeats :"
 }

@@ -24,20 +24,24 @@ authRouter.post('/auth/google', async (req, res) => {
   const lastname = profile.payload.family_name;
   const firstname = profile.payload.given_name;
   let user;
+  let { locale } = profile.payload;
+  locale = locale === 'pl' ? 'pl' : 'en';
   user = await findByEmail(email);
   if (!user) {
-    const columns = 'email, firstname, lastname';
-    const values = `'${email}', '${firstname}', '${lastname}'`;
+    const columns = 'email, firstname, lastname, lang';
+    const values = `'${email}', '${firstname}', '${lastname}', '${locale}'`;
     const data = await usersModel.insertWithReturn(columns, values);
     [ user ] = data.rows;
   }
   const token = jwt.sign({ id: user.id }, jwtSecret);
   res.send({
+    profile,
     user: {
       id: user.id,
       firstname: user.firstname,
       lastname: user.lastname,
       email: user.email,
+      lang: user.lang,
     },
     accessToken: token,
     auth: true,
@@ -97,6 +101,7 @@ authRouter.post('/login', async (req, res) => {
         firstname: user.firstname,
         lastname: user.lastname,
         email: user.email,
+        lang: user.lang,
       },
       accessToken: token,
       auth: true,

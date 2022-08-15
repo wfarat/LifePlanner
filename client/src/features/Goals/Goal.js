@@ -26,7 +26,6 @@ export default function Goal() {
   const params = useParams();
   const goalsData = useSelector(selectGoals);
   const { tasks } = useSelector(selectTasks);
-  const [tasksArray, setTasksArray] = useState([]);
   const intl = useIntl();
   const { goals, goalTasks } = goalsData;
   const user = useSelector(selectUser);
@@ -55,21 +54,16 @@ export default function Goal() {
     setShow(false);
     setVal('');
   };
-  const handleClick = () => {
-    if (tasksArray.length > 0) {
-      tasksArray.forEach((task) => {
-        const data = {
-          goalId: params.goalId,
-          accessToken: user.accessToken,
-          goalTask: {
-            taskId: task.id,
-            times: task.times,
-          },
-        };
-        dispatch(addGoalTask(data));
-      });
-      setTasksArray([]);
-    }
+  const handleAddTask = (task, times) => {
+    const data = {
+      goalId: params.goalId,
+      accessToken: user.accessToken,
+      goalTask: {
+        taskId: task.id,
+        times: times,
+      },
+    };
+    dispatch(addGoalTask(data));
   };
   const handleUpdateGoal = () => {
     if (val && keyName) {
@@ -190,11 +184,8 @@ export default function Goal() {
             </Row>
           );
         })}
-      <AddGoalTask tasksArray={tasksArray} setTasksArray={setTasksArray} />
+      <AddGoalTask tasksArray={[]} handleAddTask={handleAddTask} />
       <p className="text-danger">{goalsData.message}</p>
-      <Button variant="success" className="mb-2" onClick={handleClick}>
-        <FormattedMessage id="button.submittasks" />
-      </Button>
       <Row>
         <Col>
           <Button
