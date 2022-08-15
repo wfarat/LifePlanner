@@ -88,7 +88,7 @@ DROP TABLE users;
 `;
 
 export const insertIntoAllTables = `
-INSERT INTO users (email, password, firstname, lastname) VALUES ('test user', 'testpassword', 'test', 'user');
+INSERT INTO users (email, password, firstname, lastname) VALUES ('test@test.com', 'testpassword', 'test', 'user');
 INSERT INTO days (day_ref, user_id, comment) VALUES (111990, 1, 'this day was cool');
 INSERT INTO tasks (name, repeat, description, user_id) VALUES ('unga bunga', ARRAY[1, 2, 3, 4], 'good task', 1);
 INSERT INTO day_tasks (day_id, task_id) VALUES (1, 1);

@@ -43,6 +43,13 @@ export default function Login() {
       dispatch(login(data));
     }
   };
+  const testLogin = () => {
+    const data = {
+      email: "test@test.com",
+      password: "password"
+    }
+    dispatch(login(data));
+  }
   return (
     <main className="login">
       {user.auth && <Navigate to="/" />}
@@ -96,6 +103,7 @@ export default function Login() {
           >
             <FormattedMessage id="button.google" />
           </GoogleButton>
+          <Button onClick={testLogin}><FormattedMessage id="button.testlogin" /></Button>
         </div>
       </Form>
     </main>

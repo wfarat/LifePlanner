@@ -12,7 +12,7 @@
 
 .loginButton {
     display: grid;
-    height: 120px;
+    height: 150px;
     justify-content: center;
     align-content: space-around;
 }

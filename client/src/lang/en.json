@@ -150,5 +150,6 @@
   "message.addnote": "Content and title cannot be empty.",
   "quotes.er4": "Do one thing every day that scares you. - Eleanor Roosevelt",
   "quotes.mt1": "The secret of getting ahead is getting started. The secret of getting started is breaking your complex, overwhelming tasks into small manageable tasks, and then starting on the first one. - Mark Twain",
-  "contact.me": "Contact me:"
+  "contact.me": "Contact me:",
+  "button.testlogin": "Test the app"
 }
