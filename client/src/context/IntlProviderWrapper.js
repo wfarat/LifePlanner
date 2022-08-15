@@ -19,7 +19,7 @@ export default function IntlProviderWrapper({children}) {
     const handleChange = (e) => {
         const lang = e.target.value;
         setLangs(languages[lang])
-        if (user.user.lang !== lang) {
+        if (user.user.lang !== lang && user.auth) {
             const data = {
                 userId: user.user.id,
                 accessToken: user.accessToken,
