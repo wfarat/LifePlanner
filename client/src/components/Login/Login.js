@@ -55,7 +55,7 @@ export default function Login() {
     <>
     <main className="login">
     <div className="switch">      <LangaugeSwitch /> </div>
-      {user.auth && <Navigate to="/" />}
+      {user.auth && <Navigate to="../" />}
       <h2>
         <FormattedMessage id="login.header" />
       </h2>
