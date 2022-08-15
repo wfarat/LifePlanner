@@ -13,7 +13,8 @@ export default function IntlProviderWrapper({children}) {
         };
         dispatch(getUser(data));
       }, []);
-    const defaultValue = user.auth ? languages[user.user.lang] : languages[navigator.language];
+      const defaultLocale = navigator.language === "pl" ? "pl" : "en";
+    const defaultValue = user.auth ? languages[user.user.lang] : languages[defaultLocale];
     const [langs, setLangs] = useState(defaultValue);
     const dispatch = useDispatch();
     const handleChange = (e) => {
