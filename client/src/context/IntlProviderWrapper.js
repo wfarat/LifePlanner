@@ -30,8 +30,6 @@ export default function IntlProviderWrapper({children}) {
         }
     }
 return (
-    <>
-    {langs && 
     <IntlContext.Provider value={{langs, handleChange}}>
     <IntlProvider
       key={langs.locale}
@@ -42,8 +40,6 @@ return (
       {children}
     </IntlProvider>
   </IntlContext.Provider>
-    }
-    </>
 )
 }
   
