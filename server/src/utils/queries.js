@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
   email VARCHAR(50) UNIQUE NOT NULL,
   firstname VARCHAR(50) DEFAULT '',
   lastname VARCHAR(50) DEFAULT '',
+  lang VARCHAR(10) DEFAULT 'en',
   password VARCHAR DEFAULT ''
 );
 CREATE TABLE IF NOT EXISTS days (
@@ -88,7 +89,7 @@ DROP TABLE users;
 `;
 
 export const insertIntoAllTables = `
-INSERT INTO users (email, password, firstname, lastname) VALUES ('test@test.com', 'testpassword', 'test', 'user');
+INSERT INTO users (email, password, lang, firstname, lastname) VALUES ('test@test.com', 'password', 'en', 'test', 'user');
 INSERT INTO days (day_ref, user_id, comment) VALUES (111990, 1, 'this day was cool');
 INSERT INTO tasks (name, repeat, description, user_id) VALUES ('unga bunga', ARRAY[1, 2, 3, 4], 'good task', 1);
 INSERT INTO day_tasks (day_id, task_id) VALUES (1, 1);

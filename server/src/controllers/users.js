@@ -26,6 +26,18 @@ export const findUser = async (req, res, next, userId) => {
   }
 };
 
+export const updateLanguage = async (req, res) => {
+  const {lang} = req.user;
+  const {newLang} = req.body;
+  if (lang === newLang) {
+    res.status(400).send();
+  } else {
+    const data = await usersModel.updateOneWithReturn('lang', `'${newLang}'`, `id = ${req.userId}`);
+    const user = data.rows[0];
+    res.status(203).send({lang: user.lang});
+  }
+};
+
 export const checkUser = async (req, res, next) => {
   if (req.user.id !== req.userId) {
     res.status(400).send();
@@ -70,13 +82,14 @@ export const addUser = async (req, res, next) => {
 };
 export const selectUser = async (req, res) => {
   const {
-    id, firstname, lastname, email
+    id, firstname, lastname, email, lang
   } = req.user;
   const user = {
     id,
     firstname,
     lastname,
     email,
+    lang
   };
   res.status(200).send({ user });
 };
@@ -101,7 +114,19 @@ export const updateUser = async (req, res) => {
       await usersModel.updateOne('lastname', lastname, clause);
     }
     const updatedUser = await findById(req.user.id);
-    res.status(203).send({ user: updatedUser });
+    if (updatedUser) {
+      const {
+        id, fn, ln, e, lang
+      } = updatedUser;
+      const user = {
+        id,
+        firstname: fn,
+        lastname: ln,
+        email: e,
+        lang
+      };
+      res.status(203).send({ user });
+    }
   });
 };
 

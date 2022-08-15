@@ -23,6 +23,14 @@ export const getUser = createAsyncThunk('getUser', async (data) => {
   });
   return res.data;
 });
+export const updateLanguage = createAsyncThunk('updateLanguage', async (data) => {
+  const res = await axios(`/api/users/${data.userId}/lang`, {
+    method: 'PUT',
+    headers: { 'x-access-token': data.accessToken },
+    data: data.lang,
+  });
+  return res.data;
+})
 export const registerUser = async (data) => {
   const res = await axios('/api/register', {
     method: 'POST',
@@ -43,6 +51,7 @@ const userSlice = createSlice({
       user: {
         id: '',
         firstname: '',
+        lang: '',
         lastname: '',
         email: '',
       },
@@ -95,11 +104,24 @@ const userSlice = createSlice({
           message: '',
           user: {
             id: '',
+            lang: '',
             firstname: '',
             lastname: '',
             email: '',
           },
         };
+      })      
+      .addCase(updateLanguage.pending, (state) => {
+        state.status = 'pending';
+      })
+      .addCase(updateLanguage.fulfilled, (state, { payload }) => {
+        state.status = 'idle';
+        state.data.user.lang = payload.lang;
+        state.data.message = '';
+      })
+      .addCase(updateLanguage.rejected, (state) => {
+        state.status = 'rejected';
+        state.data.message = 'Please choose different language';
       });
   },
 });

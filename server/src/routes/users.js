@@ -7,7 +7,8 @@ import {
   updatePassword,
   updateUser,
   checkUser,
-  checkAdmin
+  checkAdmin,
+  updateLanguage
 } from '../controllers/users';
 import { checkAuth } from './auth';
 
@@ -50,6 +51,7 @@ usersRouter.get('/', checkAdmin, selectAllUsers);
  *       200:
  *         description: users
  */
+usersRouter.put('/:userId/lang', checkUser, updateLanguage);
 usersRouter.get('/:userId', checkUser, selectUser);
 /**
  * @swagger

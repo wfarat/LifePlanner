@@ -11,6 +11,7 @@ import { FormattedMessage } from 'react-intl';
 import { getTasks, selectTasks } from './features/tasks/tasksSlice';
 import { selectUser } from './features/users/userSlice';
 import { getGoals, selectGoals } from './features/Goals/goalsSlice';
+import LangaugeSwitch from './components/LanguageSwitch/LanguageSwitch';
 
 function App() {
   const navigate = useNavigate();
@@ -41,11 +42,12 @@ function App() {
         >
           <Container>
             <Navbar.Brand as={Link} to="/" href="#">
-              Life Planner
+              Home
             </Navbar.Brand>
             <Button variant="primary" onClick={() => navigate(-1)}>
               <FormattedMessage id="nav.back" />
             </Button>
+            <LangaugeSwitch />
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto">

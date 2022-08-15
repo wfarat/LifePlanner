@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 import { FormattedMessage, useIntl } from 'react-intl';
 import Form from 'react-bootstrap/Form';
 import './login.css';
+import LangaugeSwitch from '../LanguageSwitch/LanguageSwitch';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -51,6 +52,10 @@ export default function Login() {
     dispatch(login(data));
   }
   return (
+    <>
+    <header className="fixed-top">
+      <div className="right">      <LangaugeSwitch /> </div>
+      </header>
     <main className="login">
       {user.auth && <Navigate to="/" />}
       <h2>
@@ -107,5 +112,6 @@ export default function Login() {
         </div>
       </Form>
     </main>
+    </>
   );
 }
