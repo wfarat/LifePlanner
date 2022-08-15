@@ -46,7 +46,7 @@ export default function Login() {
   };
   const testLogin = () => {
     const data = {
-      email: "test@test.com",
+      email: "test@gmail.com",
       password: "password"
     }
     dispatch(login(data));
