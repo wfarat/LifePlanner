@@ -25,11 +25,13 @@ import Polish from './lang/pl.json';
 import Tasks from './features/tasks/Tasks';
 import Task from './features/tasks/Task';
 import Note from './features/notes/Note';
+import Admin from './features/admin/Admin';
 import Notes from './features/notes/Notes';
 import AddNote from './components/AddNote/AddNote';
 import AuthCheck from './components/authCheck/AuthCheck';
 import DayTasks from './features/dayTasks/dayTasks';
 import DayNotes from './features/dayNotes/DayNotes';
+import AdminUser from './features/admin/AdminUser';
 const container = document.getElementById('root');
 const root = createRoot(container);
 let persistor = persistStore(store);
@@ -96,7 +98,9 @@ root.render(
                   <Route path="user/notes/add" element={<AddNote />} />
                   <Route path="user/notes/:noteId" element={<Note />} />
                   <Route path="calendar" element={<CalendarPage />} />
-                </Route>
+                  <Route path="admin" element={<Admin />} />
+                  <Route path="admin/:userId" element={<AdminUser />} />
+                 </Route>
               </Routes>
             </Router>
           </IntlProvider>

@@ -18,6 +18,7 @@ import goalsSlice from '../features/Goals/goalsSlice';
 import dayNotesSlice from '../features/dayNotes/dayNotesSlice';
 import dayTasksSlice from '../features/dayTasks/dayTasksSlice';
 import notesSlice from '../features/notes/notesSlice';
+import adminSlice from '../features/admin/adminSlice';
 
 const appReducer = combineReducers({
   user: userSlice,
@@ -27,6 +28,7 @@ const appReducer = combineReducers({
   notes: notesSlice,
   dayNotes: dayNotesSlice,
   dayTasks: dayTasksSlice,
+  admin: adminSlice
 });
 
 const rootReducer = (state, action) => {

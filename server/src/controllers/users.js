@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 import bcrypt from 'bcrypt';
 import { usersModel } from '../models/models';
+import { adminEmail } from '../settings';
 
 const findById = async (id) => {
   const clause = ` WHERE id='${id}'`;
@@ -24,12 +25,27 @@ export const findUser = async (req, res, next, userId) => {
     next();
   }
 };
+
+export const checkUser = async (req, res, next) => {
+  if (req.user.id !== req.userId) {
+    res.status(400).send();
+  } else {
+    next();
+  }
+}
 export const selectAllUsers = async (req, res) => {
   const columns = 'id, firstname, lastname, email';
   const data = await usersModel.select(columns);
   res.status(200).send({ users: data.rows });
 };
-
+export const checkAdmin = async (req, res, next) => {
+  const user = await findById(req.userId);
+  if (user.email !== adminEmail) {
+    res.status(400).send();
+  } else {
+    next();
+  }
+}
 export const addUser = async (req, res, next) => {
   const {
     email, password, firstname, lastname

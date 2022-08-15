@@ -28,7 +28,7 @@ export default function Goals() {
       <Row className="border-bottom border-secondary">
         <Col>
           <FormattedMessage id="goals.name" />
-        </Col>
+        </Col>a
         <Col>
           <FormattedMessage id="goals.progress" />
         </Col>

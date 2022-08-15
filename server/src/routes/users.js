@@ -6,6 +6,8 @@ import {
   selectUser,
   updatePassword,
   updateUser,
+  checkUser,
+  checkAdmin
 } from '../controllers/users';
 import { checkAuth } from './auth';
 
@@ -26,7 +28,7 @@ usersRouter.param('userId', findUser);
  *       200:
  *         description: users
  */
-usersRouter.get('/', selectAllUsers);
+usersRouter.get('/', checkAdmin, selectAllUsers);
 /**
  * @swagger
  * /users/{userId}:
@@ -48,7 +50,7 @@ usersRouter.get('/', selectAllUsers);
  *       200:
  *         description: users
  */
-usersRouter.get('/:userId', selectUser);
+usersRouter.get('/:userId', checkUser, selectUser);
 /**
  * @swagger
  * /users/{userId}:
@@ -83,7 +85,7 @@ usersRouter.get('/:userId', selectUser);
  *       203:
  *         description: users
  */
-usersRouter.put('/:userId', updateUser);
+usersRouter.put('/:userId', checkUser, updateUser);
 /**
  * @swagger
  * /users/{userId}/password:
@@ -118,7 +120,7 @@ usersRouter.put('/:userId', updateUser);
  *       203:
  *         description: users
  */
-usersRouter.put('/:userId/password', updatePassword);
+usersRouter.put('/:userId/password', checkUser, updatePassword);
 /**
  * @swagger
  * /users/{userId}:
@@ -140,6 +142,6 @@ usersRouter.put('/:userId/password', updatePassword);
  *       200:
  *         description: users
  */
-usersRouter.delete('/:userId', deleteUser);
+usersRouter.delete('/:userId', checkUser, deleteUser);
 
 export default usersRouter;
