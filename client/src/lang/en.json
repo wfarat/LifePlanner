@@ -154,5 +154,7 @@
   "button.testlogin": "Test the app",
   "option.language": "Lang",
   "register.success": "Congratulations {userName}, your account has been created.",
-  "goaltask.repeats": "/Repeats :"
+  "goaltask.repeats": "/Repeats :",
+  "message.goalname": "Please enter goal name.",
+  "message.goalexists": "Goal with this name already exists."
 }

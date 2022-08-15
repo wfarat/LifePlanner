@@ -154,5 +154,7 @@
   "button.testlogin": "Przetestuj aplikacje",
   "option.language": "Język",
   "register.success": "Gratulacje, {userName} twoje konto zostało utworzone.",
-  "goaltask.repeats": "/Powtórzeń :"
+  "goaltask.repeats": "/Powtórzeń :",
+  "message.goalname": "Proszę wpisz nazwę celu.",
+  "message.goalexits": "Cel o tej nazwie już istnieje."
 }

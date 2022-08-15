@@ -29,7 +29,6 @@ export default function Goals() {
         <Col>
           <FormattedMessage id="goals.name" />
         </Col>
-        a
         <Col>
           <FormattedMessage id="goals.progress" />
         </Col>

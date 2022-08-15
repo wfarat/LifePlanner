@@ -37,10 +37,10 @@ export default function AddGoal() {
         dispatch(addGoal(data));
         navigate('../../goals');
       } else {
-        setMessage('Please enter name.');
+        setMessage(intl.formatMessage({id: "message.goalname"}));
       }
     } else {
-      setMessage('Goal with this name already exists.');
+      setMessage(intl.formatMessage({id: "message.goalexists"}));
     }
   };
   const handleAddTask = (task, times) => {

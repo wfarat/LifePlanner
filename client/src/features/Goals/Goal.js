@@ -31,6 +31,7 @@ export default function Goal() {
   const user = useSelector(selectUser);
   const [keyName, setKeyName] = useState('');
   const [val, setVal] = useState('');
+  const [message, setMessage] = useState('');
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -55,6 +56,10 @@ export default function Goal() {
     setVal('');
   };
   const handleAddTask = (task, times) => {
+    if (task.id === 'null') {
+      setMessage(intl.formatMessage({ id: 'message.task' }));
+      return;
+    }
     const data = {
       goalId: params.goalId,
       accessToken: user.accessToken,
@@ -185,7 +190,7 @@ export default function Goal() {
           );
         })}
       <AddGoalTask tasksArray={[]} handleAddTask={handleAddTask} />
-      <p className="text-danger">{goalsData.message}</p>
+      <p className="text-danger">{goalsData.message} {message}</p>
       <Row>
         <Col>
           <Button
