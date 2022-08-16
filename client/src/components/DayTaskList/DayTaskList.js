@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Modal from 'react-bootstrap/Modal';
 import { useDispatch, useSelector } from 'react-redux';
-import Form from 'react-bootstrap/form';
+import Form from 'react-bootstrap/Form';
 import { selectTasks } from '../../features/tasks/tasksSlice';
 import Row from 'react-bootstrap/esm/Row';
 import Button from 'react-bootstrap/esm/Button';
