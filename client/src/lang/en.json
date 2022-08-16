@@ -156,5 +156,7 @@
   "register.success": "Congratulations {userName}, your account has been created.",
   "goaltask.repeats": "/Repeats :",
   "message.goalname": "Please enter goal name.",
-  "message.goalexists": "Goal with this name already exists."
+  "message.goalexists": "Goal with this name already exists.",
+  "button.addone": "Task",
+  "message.addtasksuccess": "Successfully added task:"
 }

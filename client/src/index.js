@@ -30,6 +30,7 @@ import DayTasks from './features/dayTasks/dayTasks';
 import DayNotes from './features/dayNotes/DayNotes';
 import AdminUser from './features/admin/AdminUser';
 import IntlProviderWrapper from './context/IntlProviderWrapper';
+import AddOneTimeTask from './components/AddOneTimeTask/AddOneTimeTask';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -80,6 +81,7 @@ root.render(
                   <Route path="user/password" element={<Password />} />
                   <Route path="tasks" element={<Tasks />} />
                   <Route path="tasks/:taskId" element={<Task />} />
+                  <Route path="/one" element={<AddOneTimeTask />} />
                   <Route path="tasks/add" element={<AddTask />} />
                   <Route path="tasks/add/:goalId" element={<AddTask />} />
                   <Route path="tasks/add/day/:dayRef" element={<AddTask />} />

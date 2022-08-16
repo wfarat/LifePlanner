@@ -1,12 +1,4 @@
 export const createAllTables = `
-DROP TABLE IF EXISTS notes;
-DROP TABLE IF EXISTS day_tasks;
-DROP TABLE IF EXISTS day_notes;
-DROP TABLE IF EXISTS goal_tasks;
-DROP TABLE IF EXISTS tasks;
-DROP TABLE IF EXISTS goals;
-DROP TABLE IF EXISTS days;
-DROP TABLE IF EXISTS users;
 CREATE TABLE IF NOT EXISTS users (
   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
   email VARCHAR(50) UNIQUE NOT NULL,
@@ -60,12 +52,23 @@ CREATE TABLE IF NOT EXISTS day_tasks (
   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
   day_id INT NOT NULL,
   task_id INT NOT NULL,
-  start INT,
-  finish INT,
+  start INT DEFAULT 0,
+  finish INT DEFAULT 0,
   status VARCHAR(50) DEFAULT '',
   comment VARCHAR(100) DEFAULT '',
   FOREIGN KEY (day_id) REFERENCES days(id),
   FOREIGN KEY (task_id) REFERENCES tasks(id)
+);
+CREATE TABLE IF NOT EXISTS one_time_tasks (
+  id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
+  day_id INT NOT NULL,
+  name VARCHAR(100) NOT NULL,
+  description VARCHAR(200) DEFAULT '',
+  start INT DEFAULT 0,
+  finish INT DEFAULT 0,
+  status VARCHAR(50) DEFAULT '',
+  comment VARCHAR(100) DEFAULT '',
+  FOREIGN KEY (day_id) REFERENCES days(id)
 );
 CREATE TABLE IF NOT EXISTS notes (
   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
@@ -79,6 +82,7 @@ CREATE TABLE IF NOT EXISTS notes (
 `;
 export const dropAllTables = `
 DROP TABLE notes;
+DROP TABLE one_time_tasks;
 DROP TABLE day_tasks;
 DROP TABLE day_notes;
 DROP TABLE goal_tasks;

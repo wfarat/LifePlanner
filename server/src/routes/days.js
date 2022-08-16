@@ -9,6 +9,7 @@ import {
   sendDayTasks,
   updateDayTask,
   findDayTask,
+  addOneTimeTask,
 } from '../controllers/dayTasks';
 import {
   addDayNote,
@@ -37,4 +38,6 @@ daysRouter.get('/:dayRef/notes', sendDayNotes);
 daysRouter.post('/:dayRef/notes', addDayNote);
 daysRouter.put('/notes/:noteId', updateDayNote);
 daysRouter.delete('/notes/:noteId', deleteDayNote);
+
+daysRouter.post('/:dayRef/tasks/one', addOneTimeTask);
 export default daysRouter;

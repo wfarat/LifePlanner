@@ -8,3 +8,4 @@ export const goalTasksModel = new Model('goal_tasks');
 export const notesModel = new Model('notes');
 export const tasksModel = new Model('tasks');
 export const usersModel = new Model('users');
+export const oneTimeTasksModel = new Model('one_time_tasks');

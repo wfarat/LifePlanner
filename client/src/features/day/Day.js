@@ -9,7 +9,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Spinner from 'react-bootstrap/Spinner';
 import Form from 'react-bootstrap/Form';
 import { Outlet, Link } from 'react-router-dom';
-import { selectUser, getUser } from '../users/userSlice';
+import { selectUser } from '../users/userSlice';
 import {
   createDay,
   findDay,
@@ -18,6 +18,7 @@ import {
   selectStatus,
 } from './daySlice';
 import Button from 'react-bootstrap/Button';
+import { Plus } from 'react-bootstrap-icons';
 import useRandomQuote from '../../hooks/useRandomQuote';
 import { FormattedMessage, useIntl, FormattedDate } from 'react-intl';
 
@@ -164,6 +165,11 @@ export default function Day(props) {
               {' '}
               <Button as={Link} to={`/day/${previousDay()}`} variant="warning">
                 <FormattedMessage id="button.previous" />
+              </Button>
+            </Col>
+              <Col>
+              <Button as={Link} to={`/one`} variant="warning">
+                <Plus size={20}/><FormattedMessage id="button.addone" />
               </Button>
             </Col>
             <Col>

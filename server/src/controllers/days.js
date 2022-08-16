@@ -9,13 +9,13 @@ const findDayByDayRef = async (userId, dayRef) => {
 };
 
 export const findDay = async (req, res, next) => {
-  const day = await findDayByDayRef(req.userId, req.params.dayRef);
+  let day = await findDayByDayRef(req.userId, req.params.dayRef);
   if (!day) {
-    res.status(400).send();
-  } else {
+    const data = await daysModel.insertWithReturn('day_ref, user_id', `${req.params.dayRef}, ${req.userId}`);
+    [ day ] = data.rows;
+    }
     req.day = day;
     next();
-  }
 };
 
 export const sendDay = async (req, res) => {
