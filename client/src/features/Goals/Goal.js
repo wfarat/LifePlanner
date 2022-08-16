@@ -176,7 +176,7 @@ export default function Goal() {
           const progress = (goalTask.done / goalTask.times) * 100;
           return (
             <Row key={goalTask.id} className="border-bottom border-secondary">
-              <Col>{task.name}</Col>
+            {task &&  <Col>{task.name}</Col> }
               <Col className="justify">
                 <ProgressBar
                   style={{ margin: '3px' }}
