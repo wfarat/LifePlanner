@@ -7,8 +7,11 @@ import Alert from 'react-bootstrap/Alert';
 import Form from 'react-bootstrap/Form';
 import { FormattedMessage, useIntl } from 'react-intl';
 import Container from 'react-bootstrap/esm/Container';
-import 'react-datepicker/dist/react-datepicker.min.css';
-import { addOneTimeTask, selectDayTasks } from '../../features/dayTasks/dayTasksSlice';
+
+import {
+  addOneTimeTask,
+  selectDayTasks,
+} from '../../features/dayTasks/dayTasksSlice';
 export default function AddOneTimeTask() {
   const user = useSelector(selectUser);
   const intl = useIntl();
@@ -19,35 +22,35 @@ export default function AddOneTimeTask() {
   const [message, setMessage] = useState('');
   const dispatch = useDispatch();
   const handleClick = async () => {
-      if (name) {
-        if (!description) {
-          setDescription(intl.formatMessage({ id: 'description.empty' }));
-        }
-        setMessage('');
-        let day = startDate.getDate();
-if (day < 10) {
-  day = '0' + day;
-}
-let month = startDate.getMonth() + 1;
-if (month < 10) {
-  month = '0' + month;
-}
-const year = startDate.getFullYear();
-const dateString = `${year}${month}${day}`;
-const start = startDate.getHours() * 60 + (startDate.getMinutes() + 1);
-        const data = {
-          accessToken: user.accessToken,
-          dayRef: dateString,
-          dayTask: {
-            name,
-            description,
-            start
-          },
-        };
-        dispatch(addOneTimeTask(data));
-      } else {
-        setMessage(intl.formatMessage({ id: 'message.taskname' }));
+    if (name) {
+      if (!description) {
+        setDescription(intl.formatMessage({ id: 'description.empty' }));
       }
+      setMessage('');
+      let day = startDate.getDate();
+      if (day < 10) {
+        day = '0' + day;
+      }
+      let month = startDate.getMonth() + 1;
+      if (month < 10) {
+        month = '0' + month;
+      }
+      const year = startDate.getFullYear();
+      const dateString = `${year}${month}${day}`;
+      const start = startDate.getHours() * 60 + (startDate.getMinutes() + 1);
+      const data = {
+        accessToken: user.accessToken,
+        dayRef: dateString,
+        dayTask: {
+          name,
+          description,
+          start,
+        },
+      };
+      dispatch(addOneTimeTask(data));
+    } else {
+      setMessage(intl.formatMessage({ id: 'message.taskname' }));
+    }
   };
   return (
     <Container>
@@ -82,23 +85,21 @@ const start = startDate.getHours() * 60 + (startDate.getMinutes() + 1);
           />
         </Form.Group>
         <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
-      showTimeSelect
-      timeFormat="HH:mm"
-      timeIntervals={15}
-      timeCaption="time"
-      dateFormat="MMMM d, yyyy h:mm aa"
-      withPortal
-    />
-        <Form.Text className="text-danger">
-          {message}
-        </Form.Text>
-        {dayTasksData.name &&
-        <Alert variant="success">
-           <FormattedMessage id="message.addtasksuccess" />   {dayTasksData.name}
-            </Alert>
-}
+          selected={startDate}
+          onChange={(date) => setStartDate(date)}
+          showTimeSelect
+          timeFormat="HH:mm"
+          timeIntervals={15}
+          timeCaption="time"
+          dateFormat="MMMM d, yyyy h:mm aa"
+          withPortal
+        />
+        <Form.Text className="text-danger">{message}</Form.Text>
+        {dayTasksData.name && (
+          <Alert variant="success">
+            <FormattedMessage id="message.addtasksuccess" /> {dayTasksData.name}
+          </Alert>
+        )}
         <Button variant="success" onClick={handleClick}>
           <FormattedMessage id="button.submit" />
         </Button>

@@ -28,6 +28,8 @@ CREATE TABLE IF NOT EXISTS goals (
   name VARCHAR(100) NOT NULL,
   description VARCHAR NOT NULL,
   user_id INT NOT NULL,
+  start TIMESTAMPTZ,
+  finish TIMESTAMPTZ, 
   times INT DEFAULT 0,
   done INT DEFAULT 0,
   FOREIGN KEY (user_id) REFERENCES users(id)
@@ -108,3 +110,9 @@ INSERT INTO tasks (name, repeat, description, user_id) VALUES ('unga bunga', ARR
 INSERT INTO day_tasks (day_id, task_id) VALUES (1, 1);
 INSERT INTO day_notes (day_id, content) VALUES (1, 'blah blah');
 `;
+
+export const alterAllTables = `
+ALTER TABLE goals
+ADD start TIMESTAMPTZ;
+ALTER TABLE goals
+ADD finish TIMESTAMPTZ;`;

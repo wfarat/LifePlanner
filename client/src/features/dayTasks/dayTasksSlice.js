@@ -31,19 +31,22 @@ export const deleteDayTask = createAsyncThunk('deleteDayTask', async (data) => {
   const res = await axios(`/api/days/tasks/${data.dayTaskId}`, {
     method: 'DELETE',
     headers: { 'x-access-token': data.accessToken },
-    data: data.dayTask
-  });
-  return res.data;
-});
-
-export const addOneTimeTask = createAsyncThunk('addOneTimeTask', async (data) => {
-  const res = await axios(`/api/days/${data.dayRef}/tasks/one`, {
-    method: 'POST',
-    headers: { 'x-access-token': data.accessToken },
     data: data.dayTask,
   });
   return res.data;
 });
+
+export const addOneTimeTask = createAsyncThunk(
+  'addOneTimeTask',
+  async (data) => {
+    const res = await axios(`/api/days/${data.dayRef}/tasks/one`, {
+      method: 'POST',
+      headers: { 'x-access-token': data.accessToken },
+      data: data.dayTask,
+    });
+    return res.data;
+  }
+);
 const dayTasksSlice = createSlice({
   name: 'dayTasks',
   initialState: {
@@ -58,6 +61,7 @@ const dayTasksSlice = createSlice({
       })
       .addCase(getDayTasks.fulfilled, (state, { payload }) => {
         state.status = 'idle';
+        state.data.message = '';
         state.data.dayTasks = payload.dayTasks;
         state.data.oneTimeTasks = payload.oneTimeTasks;
       })
@@ -69,6 +73,7 @@ const dayTasksSlice = createSlice({
       })
       .addCase(addDayTask.fulfilled, (state, { payload }) => {
         state.status = 'idle';
+        state.data.message = '';
         state.data.dayTasks.push(payload.dayTask);
       })
       .addCase(addDayTask.rejected, (state) => {
@@ -80,6 +85,7 @@ const dayTasksSlice = createSlice({
       })
       .addCase(updateDayTask.fulfilled, (state, { payload }) => {
         state.status = 'idle';
+        state.data.message = '';
         if (payload.oneTime) {
           state.data.oneTimeTasks = state.data.oneTimeTasks.map((task) => {
             if (task.id === payload.dayTask.id) {
@@ -89,14 +95,14 @@ const dayTasksSlice = createSlice({
             }
           });
         } else {
-        state.data.dayTasks = state.data.dayTasks.map((task) => {
-          if (task.id === payload.dayTask.id) {
-            return payload.dayTask;
-          } else {
-            return task;
-          }
-        });
-      }
+          state.data.dayTasks = state.data.dayTasks.map((task) => {
+            if (task.id === payload.dayTask.id) {
+              return payload.dayTask;
+            } else {
+              return task;
+            }
+          });
+        }
       })
       .addCase(updateDayTask.rejected, (state) => {
         state.status = 'rejected';
@@ -107,6 +113,7 @@ const dayTasksSlice = createSlice({
       })
       .addCase(deleteDayTask.fulfilled, (state, { payload }) => {
         state.status = 'idle';
+        state.data.message = '';
         if (payload.oneTime) {
           const index = state.data.oneTimeTasks.findIndex(
             (dayTask) => dayTask.id === payload.id
@@ -128,7 +135,7 @@ const dayTasksSlice = createSlice({
       .addCase(addOneTimeTask.pending, (state) => {
         state.status = 'pending';
       })
-      .addCase(addOneTimeTask.fulfilled, (state, {payload}) => {
+      .addCase(addOneTimeTask.fulfilled, (state, { payload }) => {
         state.status = 'idle';
         state.data.name = payload.name;
       })

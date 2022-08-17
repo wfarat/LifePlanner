@@ -157,6 +157,7 @@
   "goaltask.repeats": "/Repeats :",
   "message.goalname": "Please enter goal name.",
   "message.goalexists": "Goal with this name already exists.",
-  "button.addone": "Task",
-  "message.addtasksuccess": "Successfully added task:"
+  "button.addone": "Plan one time tasks",
+  "message.addtasksuccess": "Successfully added task:",
+  "goal.picktimes": "Start and finish dates (not required)"
 }

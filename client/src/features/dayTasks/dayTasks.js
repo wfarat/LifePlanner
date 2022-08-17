@@ -15,11 +15,7 @@ import {
   selectTasks,
   selectTasksStatus,
 } from '../../features/tasks/tasksSlice';
-import {
-  addDayTask,
-  getDayTasks,
-  selectDayTasks,
-} from './dayTasksSlice';
+import { addDayTask, getDayTasks, selectDayTasks } from './dayTasksSlice';
 import { selectDay } from '../day/daySlice';
 import { FormattedMessage, useIntl } from 'react-intl';
 import DayTaskList from '../../components/DayTaskList/DayTaskList';
@@ -103,10 +99,10 @@ export default function DayTasks() {
             <Col xs={6}>
               <FormattedMessage id="tasks.name" />
             </Col>
-            <Col>
+            <Col xs={3}>
               <FormattedMessage id="tasks.start" />
             </Col>
-            <Col>
+            <Col xs={3}>
               <FormattedMessage id="tasks.finish" />
             </Col>
           </Row>

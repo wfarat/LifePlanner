@@ -64,11 +64,21 @@ export const sendGoals = async (req, res) => {
 };
 
 export const addGoal = async (req, res) => {
-  const { description, name, tasksArray } = req.body;
+  const { description, name, tasksArray, startDate, endDate } = req.body;
+  let goal;
+  if (startDate && endDate) {
+  const start = dayjs.utc(startDate).toISOString();
+  const finish = dayjs.utc(endDate).toISOString();
+  const columns = 'name, description, user_id, start, finish';
+  const values = `'${name}', '${description}', ${req.userId}, '${start}', '${finish}'`;
+  const data = await goalsModel.insertWithReturn(columns, values);
+  [ goal ] = data.rows;
+  } else {
   const columns = 'name, description, user_id';
   const values = `'${name}', '${description}', ${req.userId}`;
   const data = await goalsModel.insertWithReturn(columns, values);
-  const goal = data.rows[0];
+  [ goal ] = data.rows;
+  }
   if (tasksArray.length > 0) {
     tasksArray.forEach(async (task) => {
       await goalTasksModel.insert(

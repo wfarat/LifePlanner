@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import DatePicker from 'react-datepicker';
 import { selectUser } from '../../features/users/userSlice';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -14,6 +15,8 @@ export default function AddGoal() {
   const { goals } = goalsData;
   const intl = useIntl();
   const navigate = useNavigate();
+  const [dateRange, setDateRange] = useState([null, null]);
+  const [startDate, endDate] = dateRange;
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [message, setMessage] = useState('');
@@ -32,15 +35,17 @@ export default function AddGoal() {
             name,
             description,
             tasksArray,
+            startDate,
+            endDate
           },
         };
         dispatch(addGoal(data));
         navigate('../../goals');
       } else {
-        setMessage(intl.formatMessage({id: "message.goalname"}));
+        setMessage(intl.formatMessage({ id: 'message.goalname' }));
       }
     } else {
-      setMessage(intl.formatMessage({id: "message.goalexists"}));
+      setMessage(intl.formatMessage({ id: 'message.goalexists' }));
     }
   };
   const handleAddTask = (task, times) => {
@@ -88,11 +93,21 @@ export default function AddGoal() {
             })}
           />
         </Form.Group>
-        <Form.Text className="text-danger">
+        <FormattedMessage id="goal.pickdates" />
+        <DatePicker
+      selectsRange={true}
+      startDate={startDate}
+      endDate={endDate}
+      onChange={(update) => {
+        setDateRange(update);
+      }}
+      withPortal
+    />
+      <Form.Text className="text-danger">
           {message}
           {goalsData.message}
         </Form.Text>
-      </Form>
+        </Form>
       <AddGoalTask
         handleAddTask={handleAddTask}
         handleDeleteTask={handleDeleteTask}

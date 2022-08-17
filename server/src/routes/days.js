@@ -26,7 +26,6 @@ daysRouter.param('noteId', findDayNote);
 daysRouter.param('taskId', findDayTask);
 
 daysRouter.get('/:dayRef', sendDay);
-daysRouter.post('/', addDay);
 daysRouter.put('/', updateDay);
 
 daysRouter.get('/:dayRef/tasks', sendDayTasks);

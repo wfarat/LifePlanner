@@ -7,6 +7,7 @@ import Modal from 'react-bootstrap/Modal';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Spinner from 'react-bootstrap/Spinner';
+import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
 import Form from 'react-bootstrap/Form';
 import { Outlet, Link } from 'react-router-dom';
 import { selectUser } from '../users/userSlice';
@@ -49,7 +50,6 @@ export default function Day(props) {
     const dateCompiled = new Date(`${dateYear}-${dateMonth}-${dateDay}`);
     return dateCompiled;
   };
-  const weekDay = getDateCompiled().getDay();
   const nextDay = () => {
     let nextDay = new Date(getDateCompiled());
     nextDay.setDate(getDateCompiled().getDate() + 1);
@@ -116,29 +116,6 @@ export default function Day(props) {
       dispatch(updateDay(data));
     }
   };
-  const handleClick = () => {
-    if (props.today) {
-      const data = {
-        accessToken: user.accessToken,
-        day: {
-          dayRef: props.today,
-          comment,
-          weekDay,
-        },
-      };
-      dispatch(createDay(data));
-    } else {
-      const data = {
-        accessToken: user.accessToken,
-        day: {
-          dayRef: params.dayRef,
-          comment,
-          weekDay,
-        },
-      };
-      dispatch(createDay(data));
-    }
-  };
   return (
     <div>
       {status === 'pending' && (
@@ -149,7 +126,13 @@ export default function Day(props) {
       {(status === 'idle' || status === 'rejected') && (
         <Container>
           <Row>
-            <Col>
+            <Col xs="3">
+              {' '}
+              <Button as={Link} to={`/day/${previousDay()}`} variant="light">
+                <ArrowLeft size={25} />
+              </Button>
+            </Col>
+            <Col xs="6">
               {' '}
               <FormattedDate
                 value={getDateCompiled()}
@@ -159,49 +142,20 @@ export default function Day(props) {
                 weekday="long"
               />
             </Col>
-          </Row>
-          <Row>
-            <Col>
+            <Col xs="3">
               {' '}
-              <Button as={Link} to={`/day/${previousDay()}`} variant="warning">
-                <FormattedMessage id="button.previous" />
-              </Button>
-            </Col>
-              <Col>
-              <Button as={Link} to={`/one`} variant="warning">
-                <Plus size={20}/><FormattedMessage id="button.addone" />
-              </Button>
-            </Col>
-            <Col>
-              {' '}
-              <Button as={Link} to={`/day/${nextDay()}`} variant="warning">
-                <FormattedMessage id="button.next" />
+              <Button as={Link} to={`/day/${nextDay()}`} variant="light">
+                <ArrowRight size={25} />
               </Button>{' '}
             </Col>
           </Row>
-          {!day.id && (
-            <Container>
-              <Form className="taskForm">
-                <Form.Group className="mb-3" controlId="formBasicName">
-                  <Form.Label className="fs-5">
-                    <FormattedMessage id="day.comment" />
-                  </Form.Label>
-                  <Form.Control
-                    onChange={(e) => setComment(e.target.value)}
-                    autoComplete="name"
-                    value={comment}
-                    type="text"
-                    placeholder={intl.formatMessage({
-                      id: 'day.commentplaceholder',
-                    })}
-                  />
-                </Form.Group>
-              </Form>
-              <Button variant="success" onClick={handleClick}>
-                <FormattedMessage id="day.create" />
+          <Row>
+            <Col>
+              <Button as={Link} to="/one" className="mb-2" variant="warning">
+                <FormattedMessage id="button.addone" />
               </Button>
-            </Container>
-          )}
+            </Col>
+          </Row>
           {day.id && (
             <Container>
               <Modal show={show} onHide={handleClose}>

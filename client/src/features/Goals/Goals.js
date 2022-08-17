@@ -6,9 +6,10 @@ import Container from 'react-bootstrap/Container';
 import ProgressBar from 'react-bootstrap/esm/ProgressBar';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, FormattedDate } from 'react-intl';
 import { selectUser } from '../users/userSlice';
 import { useEffect } from 'react';
+import ListGroup from 'react-bootstrap/ListGroup';
 export default function Goals() {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
@@ -25,27 +26,45 @@ export default function Goals() {
       <Button variant="success" as={Link} to="add">
         <FormattedMessage id="button.addgoal" />
       </Button>
-      <Row className="border-bottom border-secondary">
+      <Row>
         <Col>
           <FormattedMessage id="goals.name" />
         </Col>
         <Col>
-          <FormattedMessage id="goals.progress" />
+          <FormattedMessage id="tasks.start" />
+        </Col>
+        <Col>
+        <FormattedMessage id="tasks.finish" />
         </Col>
       </Row>
+      <ListGroup>
       {goals.length > 0 &&
         goals.map((goal) => {
           const progress = (goal.done / goal.times) * 100;
           return (
-            <Row
-              as={Link}
-              className="listLink border-bottom border-secondary"
-              key={goal.id}
-              to={`${goal.id}`}
-            >
+            <ListGroup.Item action as={Link} key={goal.id} to={`${goal.id}`}>
+            <Row>
               <Col>{goal.name}</Col>
               <Col>
-                {goal.times > 0 && (
+              <FormattedDate
+                value={goal.start}
+                year="numeric"
+                month="long"
+                day="numeric"
+              />
+              </Col>
+              <Col>
+              <FormattedDate
+                value={goal.finish}
+                year="numeric"
+                month="long"
+                day="numeric"
+              />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+              {goal.times > 0 && (
                   <ProgressBar
                     style={{ margin: '3px' }}
                     animated
@@ -53,11 +72,12 @@ export default function Goals() {
                     now={progress}
                     label={`${progress}%`}
                   />
-                )}
-              </Col>
+                )}</Col>
             </Row>
+            </ListGroup.Item>
           );
         })}
+        </ListGroup>
     </Container>
   );
 }

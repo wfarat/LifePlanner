@@ -5,6 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/esm/Button';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import 'react-datepicker/dist/react-datepicker.min.css';
 import User from './features/users/User';
 import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';

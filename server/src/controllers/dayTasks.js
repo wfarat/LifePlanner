@@ -1,4 +1,9 @@
-import { dayTasksModel, goalTasksModel, goalsModel, oneTimeTasksModel } from '../models/models';
+import {
+  dayTasksModel,
+  goalTasksModel,
+  goalsModel,
+  oneTimeTasksModel,
+} from '../models/models';
 
 const findDayTasks = async (dayId) => {
   const data = await dayTasksModel.select('*', ` WHERE day_id = ${dayId}`);
@@ -8,7 +13,7 @@ const findDayTasks = async (dayId) => {
 const findOneTimeTasks = async (dayId) => {
   const data = await oneTimeTasksModel.select('*', ` WHERE day_id = ${dayId}`);
   return data.rows;
-}
+};
 const findDayTaskById = async (taskId) => {
   const data = await dayTasksModel.select('*', ` WHERE id = ${taskId}`);
   return data.rows[0];
@@ -17,7 +22,7 @@ const findDayTaskById = async (taskId) => {
 const findOneTimeTaskById = async (taskId) => {
   const data = await oneTimeTasksModel.select('*', ` WHERE id = ${taskId}`);
   return data.rows[0];
-}
+};
 export const sendDayTasks = async (req, res) => {
   const dayTasks = await findDayTasks(req.day.id);
   const oneTimeTasks = await findOneTimeTasks(req.day.id);
@@ -49,14 +54,14 @@ export const updateDayTask = async (req, res) => {
   let data;
   let pairs;
   if (start && finish) {
-     pairs = [
+    pairs = [
       { column: 'status', value: `'${status}'` },
       { column: 'comment', value: `'${comment}'` },
       { column: 'start', value: `${start}` },
       { column: 'finish', value: `${finish}` },
     ];
   } else if (finish) {
-     pairs = [
+    pairs = [
       { column: 'status', value: `'${status}'` },
       { column: 'comment', value: `'${comment}'` },
       { column: 'finish', value: `${finish}` },
@@ -92,9 +97,8 @@ export const updateDayTask = async (req, res) => {
         `'${comment}'`,
         `id = ${req.dayTask.id}`
       );
-    } 
-  } else {
-      if (req.dayTask.status !== status) {
+    }
+  } else if (req.dayTask.status !== status) {
     if (start) {
       data = await dayTasksModel.updateWithReturn(
         pairs,
@@ -120,13 +124,14 @@ export const updateDayTask = async (req, res) => {
         pairs,
         `id = ${req.dayTask.id}`
       );
-    } } else {
+    }
+  } else {
     data = await dayTasksModel.updateOneWithReturn(
       'comment',
       `'${comment}'`,
       `id = ${req.dayTask.id}`
     );
-  } }
+  }
   const dayTask = data.rows[0];
   res.status(203).send({ dayTask, oneTime });
 };
@@ -150,11 +155,11 @@ export const addDayTask = async (req, res) => {
 };
 
 export const deleteDayTask = async (req, res) => {
-  const {oneTime} = req.body;
+  const { oneTime } = req.body;
   if (oneTime) {
     await oneTimeTasksModel.delete(`id = ${req.dayTask.id}`);
   } else {
-  await dayTasksModel.delete(`id = ${req.dayTask.id}`);
+    await dayTasksModel.delete(`id = ${req.dayTask.id}`);
   }
   res.status(203).send({ id: req.dayTask.id, oneTime });
 };
@@ -163,6 +168,6 @@ export const addOneTimeTask = async (req, res) => {
   const { name, description, start } = req.body;
   const columns = 'name, description, start, day_id';
   const values = `'${name}', '${description}', ${start}, ${req.day.id}`;
-   await oneTimeTasksModel.insert(columns, values);
+  await oneTimeTasksModel.insert(columns, values);
   res.status(201).send({ name });
 };

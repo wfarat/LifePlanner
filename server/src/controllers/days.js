@@ -9,13 +9,33 @@ const findDayByDayRef = async (userId, dayRef) => {
 };
 
 export const findDay = async (req, res, next) => {
-  let day = await findDayByDayRef(req.userId, req.params.dayRef);
+  const { dayRef } = req.params;
+  let day = await findDayByDayRef(req.userId, dayRef);
   if (!day) {
-    const data = await daysModel.insertWithReturn('day_ref, user_id', `${req.params.dayRef}, ${req.userId}`);
+    const data = await daysModel.insertWithReturn(
+      'day_ref, user_id',
+      `${dayRef}, ${req.userId}`
+    );
     [ day ] = data.rows;
-    }
-    req.day = day;
-    next();
+
+    const dateYear = dayRef.slice(0, 4);
+    const dateMonth = dayRef.slice(4, 6);
+    const dateDay = dayRef.slice(6, 8);
+
+    const dateCompiled = new Date(`${dateYear}-${dateMonth}-${dateDay}`);
+
+    const weekDay = dateCompiled.getDay();
+    const tasksData = await tasksModel.select(
+      'id',
+      ` WHERE repeat @> '{${weekDay}}'::int[] AND user_id = ${req.userId}`
+    );
+    const tasks = tasksData.rows;
+    tasks.forEach(async (task) => {
+      await dayTasksModel.insert('day_id, task_id', `${day.id}, ${task.id}`);
+    });
+  }
+  req.day = day;
+  next();
 };
 
 export const sendDay = async (req, res) => {

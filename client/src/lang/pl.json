@@ -157,6 +157,7 @@
   "goaltask.repeats": "/Powtórzeń :",
   "message.goalname": "Proszę wpisz nazwę celu.",
   "message.goalexits": "Cel o tej nazwie już istnieje.",
-  "button.addone": "Zadanie",
-  "message.addtasksuccess": "Pomyślnie dodano zadanie:"
+  "button.addone": "Planuj zadania jednorazowe",
+  "message.addtasksuccess": "Pomyślnie dodano zadanie:",
+  "goal.pickdates": "Ustal początek i koniec (niewymagane)"
 }
