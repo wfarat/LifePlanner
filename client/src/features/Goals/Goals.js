@@ -45,21 +45,21 @@ export default function Goals() {
             <ListGroup.Item action as={Link} key={goal.id} to={`${goal.id}`}>
             <Row>
               <Col>{goal.name}</Col>
-              <Col>
+              <Col> {goal.start &&
               <FormattedDate
                 value={goal.start}
                 year="numeric"
                 month="long"
                 day="numeric"
-              />
-              </Col>
-              <Col>
+              />}
+              </Col> 
+              <Col>{goal.finish && 
               <FormattedDate
                 value={goal.finish}
                 year="numeric"
                 month="long"
                 day="numeric"
-              />
+              /> }
               </Col>
             </Row>
             <Row>

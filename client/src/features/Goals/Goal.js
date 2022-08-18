@@ -11,7 +11,7 @@ import {
 import Button from 'react-bootstrap/Button';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate, Outlet } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Modal from 'react-bootstrap/Modal';
@@ -56,6 +56,8 @@ export default function Goal() {
     setVal('');
   };
   const handleAddTask = (task, times) => {
+    console.log(task.id)
+    if (goalTasks.findIndex((goal) => goal.task_id === Number(task.id)) === -1) {
     if (task.id === 'null') {
       setMessage(intl.formatMessage({ id: 'message.task' }));
       return;
@@ -69,6 +71,9 @@ export default function Goal() {
       },
     };
     dispatch(addGoalTask(data));
+  } else {
+    setMessage(intl.formatMessage({ id: 'message.taskadded' }));
+  }
   };
   const handleUpdateGoal = () => {
     if (val && keyName) {
@@ -175,7 +180,7 @@ export default function Goal() {
           const task = tasks.find((task) => task.id === goalTask.task_id);
           const progress = (goalTask.done / goalTask.times) * 100;
           return (
-            <Row key={goalTask.id} className="border-bottom border-secondary">
+            <Row key={goalTask.id} as={Link} to={`${goalTask.id}/remove`} className="border-bottom border-secondary listLink">
               {task && <Col>{task.name}</Col>}
               <Col className="justify">
                 <ProgressBar
@@ -212,6 +217,7 @@ export default function Goal() {
           </OverlayTrigger>
         </Col>
       </Row>
+      <Outlet />
     </Container>
   );
 }

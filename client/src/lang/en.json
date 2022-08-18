@@ -159,5 +159,8 @@
   "message.goalexists": "Goal with this name already exists.",
   "button.addone": "Plan one time tasks",
   "message.addtasksuccess": "Successfully added task:",
-  "goal.picktimes": "Start and finish dates (not required)"
+  "goal.picktimes": "Start and finish dates (not required)",
+  "goaltask.remove": "Removing task",
+  "goaltask.question": "Are you sure you want to remove this task? You will lose progress for this task.",
+  "button.removetask": "Delete task"
 }

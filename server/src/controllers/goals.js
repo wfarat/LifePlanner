@@ -27,6 +27,10 @@ const findGoalById = async (goalId, userId) => {
   );
   return data.rows[0];
 };
+const findGoalTaskById = async (goalTaskId) => {
+  const data = await goalTasksModel.select('*', ` WHERE id = ${goalTaskId}`);
+  return data.rows[0];
+}
 export const findAllGoals = async (req, res, next) => {
   const goals = await findByUser(req.userId);
   if (!goals) {
@@ -50,12 +54,22 @@ export const findGoal = async (req, res, next, goalId) => {
 export const findGoalTasks = async (req, res, next) => {
   const goalTasks = await findTasksByGoal(req.goal.id);
   if (!goalTasks) {
-    res.status(404).send({ message: 'No goals for this goal.' });
+    res.status(404).send({ message: 'No tasks for this goal.' });
   } else {
     req.goalTasks = goalTasks;
     next();
   }
 };
+
+export const findGoalTask = async (req, res, next, goalTaskId) => {
+  const goalTask = await findGoalTaskById(goalTaskId);
+  if (!goalTask) {
+    res.status(404).send({ message: 'Goal task not found.'});
+  } else {
+    req.goalTask = goalTask;
+    next();
+  }
+}
 export const sendGoalTasks = async (req, res) => {
   res.status(200).send({ goalTasks: req.goalTasks });
 };
@@ -130,3 +144,9 @@ export const updateGoal = async (req, res) => {
   const goal = data.rows[0];
   res.status(203).send({ goal });
 };
+
+export const removeGoalTask = async (req, res) => {
+  await goalTasksModel.delete(`id = ${req.goalTask.id}`)
+  await goalsModel.updateOne('times', `times - ${req.goalTask.times}`, `id = ${req.goalTask.goal_id}`);
+  res.status(200).send( {goalTaskId: req.goalTask.id });
+}

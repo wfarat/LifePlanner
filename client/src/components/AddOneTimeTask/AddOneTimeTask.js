@@ -10,6 +10,7 @@ import Container from 'react-bootstrap/esm/Container';
 
 import {
   addOneTimeTask,
+  clearName,
   selectDayTasks,
 } from '../../features/dayTasks/dayTasksSlice';
 export default function AddOneTimeTask() {
@@ -48,6 +49,9 @@ export default function AddOneTimeTask() {
         },
       };
       dispatch(addOneTimeTask(data));
+      setTimeout(() => {
+        dispatch(clearName());
+      }, 5000)
     } else {
       setMessage(intl.formatMessage({ id: 'message.taskname' }));
     }

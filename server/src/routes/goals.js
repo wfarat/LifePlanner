@@ -7,7 +7,9 @@ import {
   deleteGoal,
   findAllGoals,
   findGoal,
+  findGoalTask,
   findGoalTasks,
+  removeGoalTask,
   sendGoals,
   sendGoalTasks,
   updateGoal,
@@ -17,11 +19,13 @@ const goalsRouter = express.Router();
 goalsRouter.use(checkAuth);
 
 goalsRouter.param('goalId', findGoal);
+goalsRouter.param('goalTaskId', findGoalTask);
 
 goalsRouter.get('/', findAllGoals, sendGoals);
 goalsRouter.get('/:goalId', findGoalTasks, sendGoalTasks);
 goalsRouter.post('/', addGoal);
 goalsRouter.post('/:goalId', addGoalTask);
 goalsRouter.delete('/:goalId', deleteGoal);
+goalsRouter.delete('/task/:goalTaskId', removeGoalTask);
 goalsRouter.put('/:goalId', updateGoal);
 export default goalsRouter;
