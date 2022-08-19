@@ -32,6 +32,7 @@ import AdminUser from './features/admin/AdminUser';
 import IntlProviderWrapper from './context/IntlProviderWrapper';
 import AddOneTimeTask from './components/AddOneTimeTask/AddOneTimeTask';
 import RemoveGoalTask from './components/RemoveGoalTask/RemoveGoalTask';
+import Stats from './features/tasks/Stats';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -84,6 +85,7 @@ root.render(
                   <Route path="tasks/:taskId" element={<Task />} />
                   <Route path="/one" element={<AddOneTimeTask />} />
                   <Route path="tasks/add" element={<AddTask />} />
+                  <Route path="tasks/stats" element={<Stats />} />
                   <Route path="tasks/add/:goalId" element={<AddTask />} />
                   <Route path="tasks/add/day/:dayRef" element={<AddTask />} />
                   <Route path="goals" element={<Goals />} />

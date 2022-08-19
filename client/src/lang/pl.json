@@ -162,5 +162,8 @@
   "goal.pickdates": "Ustal początek i koniec (niewymagane)",
   "goaltask.remove": "Usuwanie zadania",
   "goaltask.question": "Czy na pewno usunąć zadanie? Stracisz postęp tego zadania.",
-  "button.removetask": "Usuń zadanie"
+  "button.removetask": "Usuń zadanie",
+  "tasks.stats": "Statystyka:",
+  "button.stats": "Statystyki",
+  "stats.header": "Statystyki zadań"
 }

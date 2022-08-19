@@ -162,5 +162,8 @@
   "goal.picktimes": "Start and finish dates (not required)",
   "goaltask.remove": "Removing task",
   "goaltask.question": "Are you sure you want to remove this task? You will lose progress for this task.",
-  "button.removetask": "Delete task"
+  "button.removetask": "Delete task",
+  "task.stats": "Stats:",
+  "button.stats": "Stats",
+  "stats.header": "Task stats"
 }

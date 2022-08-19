@@ -33,10 +33,18 @@ export const updateTask = createAsyncThunk('updateTask', async (data) => {
   });
   return res.data;
 });
+export const getAllTasksStats = createAsyncThunk('getAllTasksStats', async (data) => {
+  const res = await axios('/api/tasks/stats', {
+    method: 'GET',
+    headers: { 'x-access-token': data.accessToken }
+  })
+  console.log(res.data);
+  return res.data;
+})
 const tasksSlice = createSlice({
   name: 'tasks',
   initialState: {
-    data: { tasks: [], message: '' },
+    data: { tasks: [], taskStats: [], allStats: { nostatus: [], total: [], warning: [], success: [], danger: [] }, message: '' },
     status: 'idle',
   },
   reducers: {},
@@ -100,6 +108,18 @@ const tasksSlice = createSlice({
       .addCase(updateTask.rejected, (state) => {
         state.status = 'rejected';
         state.data.message = 'There was a problem with updating a task.';
+      })
+      .addCase(getAllTasksStats.pending, (state) => {
+        state.status = 'pending';
+      })
+      .addCase(getAllTasksStats.fulfilled, (state, { payload }) => {
+        state.status = 'idle';
+        state.data.allStats = payload.allStats;
+        state.data.message = '';
+      })
+      .addCase(getAllTasksStats.rejected, (state) => {
+        state.status = 'rejected';
+        state.data.message = 'There was a problem with loading all tasks stats';
       });
   },
 });

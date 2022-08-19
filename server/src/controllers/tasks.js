@@ -4,6 +4,7 @@ import {
   dayTasksModel,
   goalsModel,
 } from '../models/models';
+import { pool } from '../models/pool';
 
 const findByUser = async (userId) => {
   const data = await tasksModel.select('*', ` WHERE user_id = ${userId}`);
@@ -90,3 +91,34 @@ export const updateTask = async (req, res) => {
     res.status(203).send({ task });
   }
 };
+
+export const getAllTasksStats = async (req, res) => {
+  const total = await pool.query(`SELECT COUNT(*), day_tasks.task_id
+  FROM days, day_tasks
+  WHERE days.id = day_tasks.day_id AND days.user_id = ${req.userId}
+  GROUP BY day_tasks.task_id`);
+  const success = await pool.query(`SELECT COUNT(*), day_tasks.task_id
+  FROM days, day_tasks
+  WHERE days.id = day_tasks.day_id AND days.user_id = ${req.userId} AND day_tasks.status = 'success'
+  GROUP BY day_tasks.task_id`);
+  const danger = await pool.query(`SELECT COUNT(*), day_tasks.task_id
+  FROM days, day_tasks
+  WHERE days.id = day_tasks.day_id AND days.user_id = ${req.userId} AND day_tasks.status = 'danger'
+  GROUP BY day_tasks.task_id`);
+  const warning = await pool.query(`SELECT COUNT(*), day_tasks.task_id
+  FROM days, day_tasks
+  WHERE days.id = day_tasks.day_id AND days.user_id = ${req.userId} AND day_tasks.status = 'warning'
+  GROUP BY day_tasks.task_id`);
+  const nostatus = await pool.query(`SELECT COUNT(*), day_tasks.task_id
+  FROM days, day_tasks
+  WHERE days.id = day_tasks.day_id AND days.user_id = ${req.userId} AND day_tasks.status = ''
+  GROUP BY day_tasks.task_id`);
+  const allStats = {
+    total: total.rows,
+    success: success.rows,
+    danger: danger.rows,
+    warning: warning.rows,
+    nostatus: nostatus.rows
+  }
+  res.status(200).send({ allStats })
+}
