@@ -33,18 +33,42 @@ export const updateTask = createAsyncThunk('updateTask', async (data) => {
   });
   return res.data;
 });
-export const getAllTasksStats = createAsyncThunk('getAllTasksStats', async (data) => {
-  const res = await axios('/api/tasks/stats', {
-    method: 'GET',
-    headers: { 'x-access-token': data.accessToken }
-  })
-  console.log(res.data);
-  return res.data;
-})
+export const getAllTasksStats = createAsyncThunk(
+  'getAllTasksStats',
+  async (data) => {
+    const res = await axios('/api/tasks/stats', {
+      method: 'GET',
+      headers: { 'x-access-token': data.accessToken },
+    });
+    return res.data;
+  }
+);
+export const getStatsByDayRef = createAsyncThunk(
+  'getStatsByDayRef',
+  async (data) => {
+    const res = await axios('/api/tasks/stats', {
+      method: 'POST',
+      headers: { 'x-access-token': data.accessToken },
+      data: data.days,
+    });
+    return res.data;
+  }
+);
 const tasksSlice = createSlice({
   name: 'tasks',
   initialState: {
-    data: { tasks: [], taskStats: [], allStats: { nostatus: [], total: [], warning: [], success: [], danger: [] }, message: '' },
+    data: {
+      tasks: [],
+      taskStats: [],
+      allStats: {
+        nostatus: [],
+        total: [],
+        warning: [],
+        success: [],
+        danger: [],
+      },
+      message: '',
+    },
     status: 'idle',
   },
   reducers: {},
@@ -118,6 +142,18 @@ const tasksSlice = createSlice({
         state.data.message = '';
       })
       .addCase(getAllTasksStats.rejected, (state) => {
+        state.status = 'rejected';
+        state.data.message = 'There was a problem with loading all tasks stats';
+      })
+      .addCase(getStatsByDayRef.pending, (state) => {
+        state.status = 'pending';
+      })
+      .addCase(getStatsByDayRef.fulfilled, (state, { payload }) => {
+        state.status = 'idle';
+        state.data.allStats = payload.allStats;
+        state.data.message = '';
+      })
+      .addCase(getStatsByDayRef.rejected, (state) => {
         state.status = 'rejected';
         state.data.message = 'There was a problem with loading all tasks stats';
       });

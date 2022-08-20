@@ -7,8 +7,8 @@ import {
   findTask,
   sendTasks,
   updateTask,
-  getTaskStats,
-  getAllTasksStats
+  getAllTasksStats,
+  getStatsByDayRef,
 } from '../controllers/tasks';
 
 const tasksRouter = express.Router();
@@ -21,4 +21,5 @@ tasksRouter.post('/', addTask);
 tasksRouter.delete('/:taskId', deleteTask);
 tasksRouter.put('/:taskId', updateTask);
 tasksRouter.get('/stats', getAllTasksStats);
+tasksRouter.post('/stats', getStatsByDayRef);
 export default tasksRouter;

@@ -165,5 +165,6 @@
   "button.removetask": "Usuń zadanie",
   "tasks.stats": "Statystyka:",
   "button.stats": "Statystyki",
-  "stats.header": "Statystyki zadań"
+  "stats.header": "Statystyki zadań",
+  "stats.dates": "Wybierz okres:"
 }

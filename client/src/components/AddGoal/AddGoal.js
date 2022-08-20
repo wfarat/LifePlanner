@@ -36,7 +36,7 @@ export default function AddGoal() {
             description,
             tasksArray,
             startDate,
-            endDate
+            endDate,
           },
         };
         dispatch(addGoal(data));
@@ -95,19 +95,19 @@ export default function AddGoal() {
         </Form.Group>
         <FormattedMessage id="goal.pickdates" />
         <DatePicker
-      selectsRange={true}
-      startDate={startDate}
-      endDate={endDate}
-      onChange={(update) => {
-        setDateRange(update);
-      }}
-      withPortal
-    />
-      <Form.Text className="text-danger">
+          selectsRange={true}
+          startDate={startDate}
+          endDate={endDate}
+          onChange={(update) => {
+            setDateRange(update);
+          }}
+          withPortal
+        />
+        <Form.Text className="text-danger">
           {message}
           {goalsData.message}
         </Form.Text>
-        </Form>
+      </Form>
       <AddGoalTask
         handleAddTask={handleAddTask}
         handleDeleteTask={handleDeleteTask}

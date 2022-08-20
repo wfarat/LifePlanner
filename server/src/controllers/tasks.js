@@ -118,7 +118,43 @@ export const getAllTasksStats = async (req, res) => {
     success: success.rows,
     danger: danger.rows,
     warning: warning.rows,
-    nostatus: nostatus.rows
+    nostatus: nostatus.rows,
+  };
+  res.status(200).send({ allStats });
+};
+
+export const getStatsByDayRef = async (req, res) => {
+  const { start, end } = req.body;
+  if (start && end) {
+    const total = await pool.query(`SELECT COUNT(*), day_tasks.task_id
+    FROM days, day_tasks
+    WHERE days.id = day_tasks.day_id AND days.user_id = ${req.userId} AND days.day_ref >= ${start} AND days.day_ref <= ${end}
+    GROUP BY day_tasks.task_id`);
+    const success = await pool.query(`SELECT COUNT(*), day_tasks.task_id
+    FROM days, day_tasks
+    WHERE days.id = day_tasks.day_id AND days.user_id = ${req.userId} AND day_tasks.status = 'success' AND days.day_ref >= ${start} AND days.day_ref <= ${end}
+    GROUP BY day_tasks.task_id`);
+    const danger = await pool.query(`SELECT COUNT(*), day_tasks.task_id
+    FROM days, day_tasks
+    WHERE days.id = day_tasks.day_id AND days.user_id = ${req.userId} AND day_tasks.status = 'danger' AND days.day_ref >= ${start} AND days.day_ref <= ${end}
+    GROUP BY day_tasks.task_id`);
+    const warning = await pool.query(`SELECT COUNT(*), day_tasks.task_id
+    FROM days, day_tasks
+    WHERE days.id = day_tasks.day_id AND days.user_id = ${req.userId} AND day_tasks.status = 'warning' AND days.day_ref >= ${start} AND days.day_ref <= ${end}
+    GROUP BY day_tasks.task_id`);
+    const nostatus = await pool.query(`SELECT COUNT(*), day_tasks.task_id
+    FROM days, day_tasks
+    WHERE days.id = day_tasks.day_id AND days.user_id = ${req.userId} AND day_tasks.status = '' AND days.day_ref >= ${start} AND days.day_ref <= ${end}
+    GROUP BY day_tasks.task_id`);
+    const allStats = {
+      total: total.rows,
+      success: success.rows,
+      danger: danger.rows,
+      warning: warning.rows,
+      nostatus: nostatus.rows,
+    };
+    res.status(200).send({ allStats });
+  } else {
+    res.status(400).send();
   }
-  res.status(200).send({ allStats })
-}
+};

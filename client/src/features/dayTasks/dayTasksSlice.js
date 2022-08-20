@@ -54,9 +54,9 @@ const dayTasksSlice = createSlice({
     status: 'idle',
   },
   reducers: {
-    clearName (state) {
-      state.data.name = ''
-    }
+    clearName(state) {
+      state.data.name = '';
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -153,4 +153,4 @@ const dayTasksSlice = createSlice({
 export const selectDayTasks = (state) => state.dayTasks.data;
 export const selectStatus = (state) => state.dayTasks.status;
 export default dayTasksSlice.reducer;
-export const {clearName} = dayTasksSlice.actions;
+export const { clearName } = dayTasksSlice.actions;

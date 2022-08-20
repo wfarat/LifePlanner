@@ -165,5 +165,6 @@
   "button.removetask": "Delete task",
   "task.stats": "Stats:",
   "button.stats": "Stats",
-  "stats.header": "Task stats"
+  "stats.header": "Task stats",
+  "stats.dates": "Choose period:"
 }

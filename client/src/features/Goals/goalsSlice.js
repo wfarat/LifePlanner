@@ -15,13 +15,16 @@ export const getGoalTasks = createAsyncThunk('getGoalTasks', async (data) => {
   });
   return res.data;
 });
-export const removeGoalTask = createAsyncThunk('removeGoalTask', async (data) => {
-  const res = await axios(`/api/goals/task/${data.goalTaskId}`, {
-    method: 'DELETE',
-    headers: { 'x-access-token': data.accessToken },
-  });
-  return res.data;
-})
+export const removeGoalTask = createAsyncThunk(
+  'removeGoalTask',
+  async (data) => {
+    const res = await axios(`/api/goals/task/${data.goalTaskId}`, {
+      method: 'DELETE',
+      headers: { 'x-access-token': data.accessToken },
+    });
+    return res.data;
+  }
+);
 export const addGoal = createAsyncThunk('addGoal', async (data) => {
   const res = await axios(`/api/goals`, {
     method: 'POST',

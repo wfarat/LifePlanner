@@ -149,7 +149,9 @@ export default function DayTaskList() {
                   </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  <Form.Text className="text-dark">{task.description}</Form.Text>
+                  <Form.Text className="text-dark">
+                    {task.description}
+                  </Form.Text>
                   <Form.Select
                     disabled={disabled}
                     key={task.id}
@@ -271,7 +273,9 @@ export default function DayTaskList() {
                       </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                    <Form.Text className="text-dark">{findTask.description}</Form.Text>
+                      <Form.Text className="text-dark">
+                        {findTask.description}
+                      </Form.Text>
                       <Form.Select
                         disabled={disabled}
                         key={task.id}

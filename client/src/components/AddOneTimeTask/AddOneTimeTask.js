@@ -51,7 +51,7 @@ export default function AddOneTimeTask() {
       dispatch(addOneTimeTask(data));
       setTimeout(() => {
         dispatch(clearName());
-      }, 5000)
+      }, 5000);
     } else {
       setMessage(intl.formatMessage({ id: 'message.taskname' }));
     }

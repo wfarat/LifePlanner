@@ -1,4 +1,4 @@
-import {  useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -34,9 +34,9 @@ export default function Tasks() {
             );
           })}
       </ListGroup>
-        <Button variant="warning" className="mt-3" as={Link} to="stats">
-          <FormattedMessage id="button.stats" />
-        </Button>
+      <Button variant="warning" className="mt-3" as={Link} to="stats">
+        <FormattedMessage id="button.stats" />
+      </Button>
     </Container>
   );
 }

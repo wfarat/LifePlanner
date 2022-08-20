@@ -30,7 +30,7 @@ const findGoalById = async (goalId, userId) => {
 const findGoalTaskById = async (goalTaskId) => {
   const data = await goalTasksModel.select('*', ` WHERE id = ${goalTaskId}`);
   return data.rows[0];
-}
+};
 export const findAllGoals = async (req, res, next) => {
   const goals = await findByUser(req.userId);
   if (!goals) {
@@ -64,12 +64,12 @@ export const findGoalTasks = async (req, res, next) => {
 export const findGoalTask = async (req, res, next, goalTaskId) => {
   const goalTask = await findGoalTaskById(goalTaskId);
   if (!goalTask) {
-    res.status(404).send({ message: 'Goal task not found.'});
+    res.status(404).send({ message: 'Goal task not found.' });
   } else {
     req.goalTask = goalTask;
     next();
   }
-}
+};
 export const sendGoalTasks = async (req, res) => {
   res.status(200).send({ goalTasks: req.goalTasks });
 };
@@ -78,20 +78,22 @@ export const sendGoals = async (req, res) => {
 };
 
 export const addGoal = async (req, res) => {
-  const { description, name, tasksArray, startDate, endDate } = req.body;
+  const {
+    description, name, tasksArray, startDate, endDate
+  } = req.body;
   let goal;
   if (startDate && endDate) {
-  const start = dayjs.utc(startDate).toISOString();
-  const finish = dayjs.utc(endDate).toISOString();
-  const columns = 'name, description, user_id, start, finish';
-  const values = `'${name}', '${description}', ${req.userId}, '${start}', '${finish}'`;
-  const data = await goalsModel.insertWithReturn(columns, values);
-  [ goal ] = data.rows;
+    const start = dayjs.utc(startDate).toISOString();
+    const finish = dayjs.utc(endDate).toISOString();
+    const columns = 'name, description, user_id, start, finish';
+    const values = `'${name}', '${description}', ${req.userId}, '${start}', '${finish}'`;
+    const data = await goalsModel.insertWithReturn(columns, values);
+    [ goal ] = data.rows;
   } else {
-  const columns = 'name, description, user_id';
-  const values = `'${name}', '${description}', ${req.userId}`;
-  const data = await goalsModel.insertWithReturn(columns, values);
-  [ goal ] = data.rows;
+    const columns = 'name, description, user_id';
+    const values = `'${name}', '${description}', ${req.userId}`;
+    const data = await goalsModel.insertWithReturn(columns, values);
+    [ goal ] = data.rows;
   }
   if (tasksArray.length > 0) {
     tasksArray.forEach(async (task) => {
@@ -146,7 +148,11 @@ export const updateGoal = async (req, res) => {
 };
 
 export const removeGoalTask = async (req, res) => {
-  await goalTasksModel.delete(`id = ${req.goalTask.id}`)
-  await goalsModel.updateOne('times', `times - ${req.goalTask.times}`, `id = ${req.goalTask.goal_id}`);
-  res.status(200).send( {goalTaskId: req.goalTask.id });
-}
+  await goalTasksModel.delete(`id = ${req.goalTask.id}`);
+  await goalsModel.updateOne(
+    'times',
+    `times - ${req.goalTask.times}`,
+    `id = ${req.goalTask.goal_id}`
+  );
+  res.status(200).send({ goalTaskId: req.goalTask.id });
+};
