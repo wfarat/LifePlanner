@@ -35,7 +35,6 @@ authRouter.post('/auth/google', async (req, res) => {
   }
   const token = jwt.sign({ id: user.id }, jwtSecret);
   res.send({
-    profile,
     user: {
       id: user.id,
       firstname: user.firstname,

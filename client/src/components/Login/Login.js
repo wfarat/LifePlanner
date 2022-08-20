@@ -22,7 +22,6 @@ export default function Login() {
       const tokens = await axios.post('/api/auth/google', {
         code,
       });
-
       dispatch(loginGoogle(tokens.data));
     },
     flow: 'auth-code',

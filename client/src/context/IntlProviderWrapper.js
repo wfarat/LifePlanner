@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IntlContext, languages } from './IntlContext';
 import { IntlProvider } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,11 @@ export default function IntlProviderWrapper({ children }) {
   const [langs, setLangs] = useState(
     defaultValue ? defaultValue : languages.en
   );
+  useEffect(() => {
+    if (user.auth) {
+    setLangs(languages[user.user.lang])
+    }
+  }, [user.auth]);
   const dispatch = useDispatch();
   const handleChange = (e) => {
     const lang = e.target.value;

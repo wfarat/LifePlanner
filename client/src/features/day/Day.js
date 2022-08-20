@@ -12,14 +12,12 @@ import Form from 'react-bootstrap/Form';
 import { Outlet, Link } from 'react-router-dom';
 import { selectUser } from '../users/userSlice';
 import {
-  createDay,
   findDay,
   selectDay,
   updateDay,
   selectStatus,
 } from './daySlice';
 import Button from 'react-bootstrap/Button';
-import { Plus } from 'react-bootstrap-icons';
 import useRandomQuote from '../../hooks/useRandomQuote';
 import { FormattedMessage, useIntl, FormattedDate } from 'react-intl';
 
