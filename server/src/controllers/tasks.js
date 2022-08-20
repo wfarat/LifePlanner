@@ -3,6 +3,7 @@ import {
   goalTasksModel,
   dayTasksModel,
   goalsModel,
+  daysModel,
 } from '../models/models';
 import { pool } from '../models/pool';
 
@@ -45,23 +46,39 @@ export const addTask = async (req, res) => {
   const {
     repeat, name, duration, description, goal, times
   } = req.body;
+  const columns = 'user_id, repeat, name, duration, description';
+  const values = `${req.userId}, '{${repeat}}', '${name}', ${duration}, '${description}'`;
+  const data = await tasksModel.insertWithReturn(columns, values);
+  const task = data.rows[0];
   if (goal && times > 0) {
-    const columns = 'user_id, repeat, name, duration, description';
-    const values = `${req.userId}, '{${repeat}}', '${name}', ${duration}, '${description}'`;
-    const data = await tasksModel.insertWithReturn(columns, values);
-    const task = data.rows[0];
     await goalTasksModel.insert(
       'goal_id, task_id, times',
       `${goal}, ${task.id}, ${times}`
     );
     await goalsModel.updateOne('times', `times + ${times}`, `id = ${goal}`);
-    res.status(201).send({ task });
-  } else {
-    const columns = 'user_id, repeat, name, duration, description';
-    const values = `${req.userId}, '{${repeat}}', '${name}', ${duration}, '${description}'`;
-    const data = await tasksModel.insertWithReturn(columns, values);
-    res.status(201).send({ task: data.rows[0] });
   }
+  if (repeat.length > 0) {
+    const value = new Date();
+    let d = value.getDate();
+    if (d < 10) {
+      d = `0${d}`;
+    }
+    let month = value.getMonth() + 1;
+    if (month < 10) {
+      month = `0${month}`;
+    }
+    const year = value.getFullYear();
+    const dayRef = Number(`${year}${month}${d}`);
+    const daysData = await daysModel.select(
+      'id',
+      ` WHERE weekday = ANY ('{${repeat}}'::int[]) AND user_id = ${req.userId} AND day_ref >= ${dayRef}`
+    );
+    const days = daysData.rows;
+    days.forEach(async (day) => {
+      await dayTasksModel.insert('day_id, task_id', `${day.id}, ${task.id}`);
+    });
+  }
+  res.status(201).send({ task });
 };
 
 export const deleteTask = async (req, res) => {

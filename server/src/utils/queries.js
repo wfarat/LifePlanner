@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS days (
   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
   day_ref INT NOT NULL,
   user_id INT NOT NULL,
+  weekday INT,
   comment VARCHAR DEFAULT '',
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
@@ -112,7 +113,6 @@ INSERT INTO day_notes (day_id, content) VALUES (1, 'blah blah');
 `;
 
 export const alterAllTables = `
-ALTER TABLE goals
-ADD start TIMESTAMPTZ;
-ALTER TABLE goals
-ADD finish TIMESTAMPTZ;`;
+ALTER TABLE days
+ADD weekday INT;
+`;

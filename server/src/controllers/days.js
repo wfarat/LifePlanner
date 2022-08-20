@@ -12,16 +12,16 @@ export const findDay = async (req, res, next) => {
   const { dayRef } = req.params;
   let day = await findDayByDayRef(req.userId, dayRef);
   if (!day) {
-    const data = await daysModel.insertWithReturn(
-      'day_ref, user_id',
-      `${dayRef}, ${req.userId}`
-    );
-    [ day ] = data.rows;
     const dateYear = dayRef.slice(0, 4);
     const dateMonth = dayRef.slice(4, 6);
     const dateDay = dayRef.slice(6, 8);
     const dateCompiled = new Date(`${dateYear}-${dateMonth}-${dateDay}`);
     const weekDay = dateCompiled.getDay();
+    const data = await daysModel.insertWithReturn(
+      'day_ref, user_id, weekday',
+      `${dayRef}, ${req.userId}, ${weekDay}`
+    );
+    [ day ] = data.rows;
     const tasksData = await tasksModel.select(
       'id',
       ` WHERE repeat @> '{${weekDay}}'::int[] AND user_id = ${req.userId}`
