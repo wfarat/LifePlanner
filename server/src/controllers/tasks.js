@@ -7,6 +7,17 @@ import {
 } from '../models/models';
 import { pool } from '../models/pool';
 
+const value = new Date();
+let d = value.getDate();
+if (d < 10) {
+  d = `0${d}`;
+}
+let month = value.getMonth() + 1;
+if (month < 10) {
+  month = `0${month}`;
+}
+const year = value.getFullYear();
+const dayRef = Number(`${year}${month}${d}`);
 const findByUser = async (userId) => {
   const data = await tasksModel.select('*', ` WHERE user_id = ${userId}`);
   return data.rows;
@@ -58,17 +69,6 @@ export const addTask = async (req, res) => {
     await goalsModel.updateOne('times', `times + ${times}`, `id = ${goal}`);
   }
   if (repeat.length > 0) {
-    const value = new Date();
-    let d = value.getDate();
-    if (d < 10) {
-      d = `0${d}`;
-    }
-    let month = value.getMonth() + 1;
-    if (month < 10) {
-      month = `0${month}`;
-    }
-    const year = value.getFullYear();
-    const dayRef = Number(`${year}${month}${d}`);
     const daysData = await daysModel.select(
       'id',
       ` WHERE weekday = ANY ('{${repeat}}'::int[]) AND user_id = ${req.userId} AND day_ref >= ${dayRef}`
@@ -91,12 +91,25 @@ export const deleteTask = async (req, res) => {
 export const updateTask = async (req, res) => {
   const { keyName, val } = req.body;
   if (keyName === 'repeat') {
+    const futureDaysData = await daysModel.select('id', ` WHERE user_id = ${req.userId} AND day_ref >= ${dayRef}`);
+    const futureDays = futureDaysData.rows;
+    futureDays.forEach(async (futureDay) => {
+    await dayTasksModel.delete(`task_id = ${req.task.id} AND day_id = ${futureDay.id}`);
+    });
     const data = await tasksModel.updateOneWithReturn(
       keyName,
       `'{${val}}'`,
       `id = ${req.task.id}`
     );
     const task = data.rows[0];
+    const daysData = await daysModel.select(
+      'id',
+      ` WHERE weekday = ANY ('{${val}}'::int[]) AND user_id = ${req.userId} AND day_ref >= ${dayRef}`
+    );
+    const days = daysData.rows;
+    days.forEach(async (day) => {
+      await dayTasksModel.insert('day_id, task_id', `${day.id}, ${task.id}`);
+    });
     res.status(203).send({ task });
   } else {
     const data = await tasksModel.updateOneWithReturn(
