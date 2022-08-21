@@ -22,6 +22,7 @@ export default function useRandomQuote() {
     intl.formatMessage({ id: 'quotes.wsc1' }),
     intl.formatMessage({ id: 'quotes.hf1' }),
     intl.formatMessage({ id: 'quotes.rn1' }),
+    intl.formatMessage({ id: 'quotes.rc1' }),
     intl.formatMessage({ id: 'quotes.wsc2' }),
     intl.formatMessage({ id: 'quotes.fn1' }),
     intl.formatMessage({ id: 'quotes.fn2' }),
@@ -29,6 +30,19 @@ export default function useRandomQuote() {
     intl.formatMessage({ id: 'quotes.er3' }),
     intl.formatMessage({ id: 'quotes.er4' }),
     intl.formatMessage({ id: 'quotes.mt1' }),
+    intl.formatMessage({ id: 'quotes.wj3' }),
+    intl.formatMessage({ id: 'quotes.wj4' }),
+    intl.formatMessage({ id: 'quotes.e1' }),
+    intl.formatMessage({ id: 'quotes.e2' }),
+    intl.formatMessage({ id: 'quotes.e3' }),
+    intl.formatMessage({ id: 'quotes.jwg1' }),
+    intl.formatMessage({ id: 'quotes.jwg2' }),
+    intl.formatMessage({ id: 'quotes.s1' }),
+    intl.formatMessage({ id: 'quotes.s2' }),
+    intl.formatMessage({ id: 'quotes.s3' }),
+    intl.formatMessage({ id: 'quotes.cc1' }),
+    intl.formatMessage({ id: 'quotes.cc2' }),
+    intl.formatMessage({ id: 'quotes.cc3' }),
   ];
   const random = Math.floor(Math.random() * Quotes.length);
 
