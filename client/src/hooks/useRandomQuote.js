@@ -43,6 +43,17 @@ export default function useRandomQuote() {
     intl.formatMessage({ id: 'quotes.cc1' }),
     intl.formatMessage({ id: 'quotes.cc2' }),
     intl.formatMessage({ id: 'quotes.cc3' }),
+    intl.formatMessage({ id: 'quotes.ma4' }),
+    intl.formatMessage({ id: 'quotes.lt1' }),
+    intl.formatMessage({ id: 'quotes.mw1' }),
+    intl.formatMessage({ id: 'quotes.bmb1' }),
+    intl.formatMessage({ id: 'quotes.jkr1' }),
+    intl.formatMessage({ id: 'quotes.ow2' }),
+    intl.formatMessage({ id: 'quotes.ws1' }),
+    intl.formatMessage({ id: 'quotes.te2' }),
+    intl.formatMessage({ id: 'quotes.tr1' }),
+    intl.formatMessage({ id: 'quotes.tr2' }),
+    intl.formatMessage({ id: 'quotes.tr3' }),
   ];
   const random = Math.floor(Math.random() * Quotes.length);
 
