@@ -31,8 +31,8 @@ import DayNotes from './features/dayNotes/DayNotes';
 import AdminUser from './features/admin/AdminUser';
 import IntlProviderWrapper from './context/IntlProviderWrapper';
 import AddOneTimeTask from './components/AddOneTimeTask/AddOneTimeTask';
-import RemoveGoalTask from './components/RemoveGoalTask/RemoveGoalTask';
 import Stats from './features/tasks/Stats';
+import EditGoalTask from './components/EditGoalTask/EditGoalTask';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -92,8 +92,8 @@ root.render(
                   <Route path="goals/add" element={<AddGoal />} />
                   <Route path="goals/:goalId" element={<Goal />}>
                     <Route
-                      path="/goals/:goalId/:goalTaskId/remove"
-                      element={<RemoveGoalTask />}
+                      path="/goals/:goalId/:goalTaskId/edit"
+                      element={<EditGoalTask />}
                     />
                   </Route>
                   <Route path="user/notes" element={<Notes />} />

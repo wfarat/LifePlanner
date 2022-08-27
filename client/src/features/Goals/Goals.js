@@ -40,7 +40,7 @@ export default function Goals() {
       <ListGroup>
         {goals.length > 0 &&
           goals.map((goal) => {
-            const progress = (goal.done / goal.times) * 100;
+            const progress = Math.round((goal.done / goal.times) * 1000) / 10;
             return (
               <ListGroup.Item action as={Link} key={goal.id} to={`${goal.id}`}>
                 <Row>

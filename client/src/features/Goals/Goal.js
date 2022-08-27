@@ -177,17 +177,16 @@ export default function Goal() {
           <FormattedMessage id="goals.progress" />
         </Col>
       </Row>
+      <ListGroup>
       {goalTasks.length > 0 &&
         goalTasks.map((goalTask) => {
           const task = tasks.find((task) => task.id === goalTask.task_id);
-          const progress = (goalTask.done / goalTask.times) * 100;
+          const progress = Math.round((goalTask.done / goalTask.times) * 1000) / 10;
           return (
-            <Row
-              key={goalTask.id}
-              as={Link}
-              to={`${goalTask.id}/remove`}
-              className="border-bottom border-secondary listLink"
-            >
+            <ListGroup.Item action key={goalTask.id}
+            as={Link}
+            to={`${goalTask.id}/edit`}>
+              <Row>
               {task && <Col>{task.name}</Col>}
               <Col className="justify">
                 <ProgressBar
@@ -199,8 +198,10 @@ export default function Goal() {
                 />
               </Col>
             </Row>
+            </ListGroup.Item>
           );
         })}
+        </ListGroup>
       <AddGoalTask tasksArray={[]} handleAddTask={handleAddTask} />
       <p className="text-danger">
         {goalsData.message} {message}

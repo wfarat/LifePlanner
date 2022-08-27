@@ -156,3 +156,14 @@ export const removeGoalTask = async (req, res) => {
   );
   res.status(200).send({ goalTaskId: req.goalTask.id });
 };
+
+export const editGoalTask = async (req, res) => {
+  const { times } = req.body;
+  await goalsModel.updateOne(
+    'times',
+    `times - ${req.goalTask.times} + ${times}`,
+    `id = ${req.goalTask.goal_id}`
+  );
+  const data = await goalTasksModel.updateOneWithReturn('times', `${times}`, `id = ${req.goalTask.id}`);
+  res.status(203).send({ goalTask: data.rows[0]});
+}
