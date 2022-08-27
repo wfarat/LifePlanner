@@ -9,15 +9,21 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/esm/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import { useNavigate } from 'react-router-dom';
 import { selectUser } from '../../features/users/userSlice';
-import { editGoalTask, removeGoalTask } from '../../features/Goals/goalsSlice';
+import { editGoalTask, removeGoalTask, selectGoals } from '../../features/Goals/goalsSlice';
 export default function EditGoalTask() {
   const params = useParams();
   const user = useSelector(selectUser);
+  const {goalTasks} = useSelector(selectGoals);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [times, setTimes] = useState(1);
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false)
+    navigate('../');
+  };
   useEffect(() => {
     setShow(true);
   }, [params.goalTaskId]);
@@ -28,6 +34,7 @@ export default function EditGoalTask() {
     };
     dispatch(removeGoalTask(data));
     setShow(false);
+    navigate('../');
   };
   const handleUpdate = () => {
     const data = {
@@ -37,7 +44,9 @@ export default function EditGoalTask() {
     };
     dispatch(editGoalTask(data));
     setShow(false);
+    navigate('../');
   }
+  const goalTask = goalTasks.find((task) => task.id === Number(params.goalTaskId));
   const popover = (
     <Popover id="popover-basic">
       <Popover.Header as="h3">
@@ -62,9 +71,12 @@ export default function EditGoalTask() {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-dark">
+          <Form.Text>
+            <FormattedMessage id="goaltask.times" /> {goalTask && goalTask.times}
+          </Form.Text>
         <Form.Group as={Row}>
         <Form.Label column xs="8">
-          <FormattedMessage id="goals.times" values={{ times }} />
+          <FormattedMessage id="goals.times"/>
         </Form.Label>
         <Col xs="4">
           <Form.Control
