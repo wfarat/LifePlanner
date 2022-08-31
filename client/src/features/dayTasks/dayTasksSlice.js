@@ -19,11 +19,20 @@ export const addDayTask = createAsyncThunk('addDayTasks', async (data) => {
 export const updateDayTask = createAsyncThunk(
   'updateDayTasks',
   async (data) => {
-    const res = await axios(`/api/days/tasks/${data.dayTaskId}`, {
+    let res;
+    if (data.dayTask.oneTime) {
+      res = await axios(`/api/days/tasks/one/${data.dayTaskId}`, {
+        method: 'PUT',
+        headers: { 'x-access-token': data.accessToken },
+        data: data.dayTask,
+      });
+    } else {
+    res = await axios(`/api/days/tasks/${data.dayTaskId}`, {
       method: 'PUT',
       headers: { 'x-access-token': data.accessToken },
       data: data.dayTask,
     });
+  }
     return res.data;
   }
 );

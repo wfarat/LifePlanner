@@ -34,18 +34,21 @@ export const sendDayTasks = async (req, res) => {
 };
 export const findDayTask = async (req, res, next, taskId) => {
   const dayTask = await findDayTaskById(taskId);
-  if (dayTask) {
-    req.dayTask = dayTask;
-    next();
-  } else {
-    const oneTimeDayTask = await findOneTimeTaskById(taskId);
+  if (!dayTask) {
+      res.status(404).send();
+    } else {
+      req.dayTask = dayTask;
+      next();
+  }
+};
+export const findOneTask = async (req, res, next, oneId) => {
+    const oneTimeDayTask = await findOneTimeTaskById(oneId);
     if (!oneTimeDayTask) {
       res.status(404).send();
     } else {
       req.dayTask = oneTimeDayTask;
       next();
     }
-  }
 };
 export const updateDayTask = async (req, res) => {
   const {

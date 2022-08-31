@@ -10,6 +10,7 @@ import {
   updateDayTask,
   findDayTask,
   addOneTimeTask,
+  findOneTask
 } from '../controllers/dayTasks';
 import {
   addDayNote,
@@ -24,7 +25,7 @@ daysRouter.use(checkAuth);
 daysRouter.param('dayRef', findDay);
 daysRouter.param('noteId', findDayNote);
 daysRouter.param('taskId', findDayTask);
-
+daysRouter.param('oneId', findOneTask);
 daysRouter.get('/:dayRef', sendDay);
 daysRouter.put('/', updateDay);
 
@@ -39,4 +40,5 @@ daysRouter.put('/notes/:noteId', updateDayNote);
 daysRouter.delete('/notes/:noteId', deleteDayNote);
 
 daysRouter.post('/:dayRef/tasks/one', addOneTimeTask);
+daysRouter.put('/tasks/one/:oneId', updateDayTask);
 export default daysRouter;

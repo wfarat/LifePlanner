@@ -84,7 +84,6 @@ export default function DayTaskList() {
         finish,
       },
     };
-    console.log(data);
     dispatch(updateDayTask(data));
     setComment('');
     setStatus('');
