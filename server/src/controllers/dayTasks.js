@@ -80,17 +80,10 @@ export const updateDayTask = async (req, res) => {
   }
   if (oneTime) {
     if (req.dayTask.status !== status) {
-      if (start) {
         data = await oneTimeTasksModel.updateWithReturn(
           pairs,
           `id = ${req.dayTask.id}`
         );
-      } else {
-        data = await oneTimeTasksModel.updateWithReturn(
-          pairs,
-          `id = ${req.dayTask.id}`
-        );
-      }
     } else {
       data = await oneTimeTasksModel.updateOneWithReturn(
         'comment',
@@ -99,12 +92,6 @@ export const updateDayTask = async (req, res) => {
       );
     }
   } else if (req.dayTask.status !== status) {
-    if (start) {
-      data = await dayTasksModel.updateWithReturn(
-        pairs,
-        `id = ${req.dayTask.id}`
-      );
-    } else {
       if (status === 'success') {
         const goalData = await goalTasksModel.updateOneWithReturn(
           'done',
@@ -124,7 +111,6 @@ export const updateDayTask = async (req, res) => {
         pairs,
         `id = ${req.dayTask.id}`
       );
-    }
   } else {
     data = await dayTasksModel.updateOneWithReturn(
       'comment',
