@@ -91,7 +91,7 @@ export const updateDayTask = async (req, res) => {
         `id = ${req.dayTask.id}`
       );
     }
-  } else if (req.dayTask.status !== status) {
+  } else if (req.dayTask.status !== status && !oneTime) {
     if (status === 'success') {
       const goalData = await goalTasksModel.updateOneWithReturn(
         'done',
