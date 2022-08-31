@@ -35,7 +35,7 @@ export default function AddGoalTask(props) {
       </Form.Select>
       <Form.Group as={Row}>
         <Form.Label column xs="8">
-          <FormattedMessage id="goals.times"/>
+          <FormattedMessage id="goals.times" />
         </Form.Label>
         <Col xs="4">
           <Form.Control

@@ -24,6 +24,7 @@ export const updateDayTask = createAsyncThunk(
       headers: { 'x-access-token': data.accessToken },
       data: data.dayTask,
     });
+    console.log(res.data);
     return res.data;
   }
 );

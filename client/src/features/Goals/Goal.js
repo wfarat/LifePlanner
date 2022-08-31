@@ -178,30 +178,34 @@ export default function Goal() {
         </Col>
       </Row>
       <ListGroup>
-      {goalTasks.length > 0 &&
-        goalTasks.map((goalTask) => {
-          const task = tasks.find((task) => task.id === goalTask.task_id);
-          const progress = Math.round((goalTask.done / goalTask.times) * 1000) / 10;
-          return (
-            <ListGroup.Item action key={goalTask.id}
-            as={Link}
-            to={`${goalTask.id}/edit`}>
-              <Row>
-              {task && <Col>{task.name}</Col>}
-              <Col className="justify">
-                <ProgressBar
-                  style={{ margin: '3px' }}
-                  animated
-                  variant={progress === 100 ? 'success' : 'warning'}
-                  now={progress}
-                  label={`${progress}%`}
-                />
-              </Col>
-            </Row>
-            </ListGroup.Item>
-          );
-        })}
-        </ListGroup>
+        {goalTasks.length > 0 &&
+          goalTasks.map((goalTask) => {
+            const task = tasks.find((task) => task.id === goalTask.task_id);
+            const progress =
+              Math.round((goalTask.done / goalTask.times) * 1000) / 10;
+            return (
+              <ListGroup.Item
+                action
+                key={goalTask.id}
+                as={Link}
+                to={`${goalTask.id}/edit`}
+              >
+                <Row>
+                  {task && <Col>{task.name}</Col>}
+                  <Col className="justify">
+                    <ProgressBar
+                      style={{ margin: '3px' }}
+                      animated
+                      variant={progress === 100 ? 'success' : 'warning'}
+                      now={progress}
+                      label={`${progress}%`}
+                    />
+                  </Col>
+                </Row>
+              </ListGroup.Item>
+            );
+          })}
+      </ListGroup>
       <AddGoalTask tasksArray={[]} handleAddTask={handleAddTask} />
       <p className="text-danger">
         {goalsData.message} {message}

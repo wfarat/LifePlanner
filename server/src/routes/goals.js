@@ -13,7 +13,7 @@ import {
   sendGoals,
   sendGoalTasks,
   updateGoal,
-  editGoalTask
+  editGoalTask,
 } from '../controllers/goals';
 
 const goalsRouter = express.Router();

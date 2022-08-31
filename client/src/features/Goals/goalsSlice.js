@@ -59,11 +59,11 @@ export const updateGoal = createAsyncThunk('updateGoal', async (data) => {
 export const editGoalTask = createAsyncThunk('editGoalTask', async (data) => {
   const res = await axios(`/api/goals/task/${data.goalTaskId}`, {
     method: 'PUT',
-    headers: { 'x-access-token': data.accessToken},
-    data: data.goalTask
-  })
+    headers: { 'x-access-token': data.accessToken },
+    data: data.goalTask,
+  });
   return res.data;
-})
+});
 const goalsSlice = createSlice({
   name: 'goals',
   initialState: {

@@ -91,10 +91,15 @@ export const deleteTask = async (req, res) => {
 export const updateTask = async (req, res) => {
   const { keyName, val } = req.body;
   if (keyName === 'repeat') {
-    const futureDaysData = await daysModel.select('id', ` WHERE user_id = ${req.userId} AND day_ref >= ${dayRef}`);
+    const futureDaysData = await daysModel.select(
+      'id',
+      ` WHERE user_id = ${req.userId} AND day_ref >= ${dayRef}`
+    );
     const futureDays = futureDaysData.rows;
     futureDays.forEach(async (futureDay) => {
-    await dayTasksModel.delete(`task_id = ${req.task.id} AND day_id = ${futureDay.id}`);
+      await dayTasksModel.delete(
+        `task_id = ${req.task.id} AND day_id = ${futureDay.id}`
+      );
     });
     const data = await tasksModel.updateOneWithReturn(
       keyName,

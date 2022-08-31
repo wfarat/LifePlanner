@@ -80,10 +80,10 @@ export const updateDayTask = async (req, res) => {
   }
   if (oneTime) {
     if (req.dayTask.status !== status) {
-        data = await oneTimeTasksModel.updateWithReturn(
-          pairs,
-          `id = ${req.dayTask.id}`
-        );
+      data = await oneTimeTasksModel.updateWithReturn(
+        pairs,
+        `id = ${req.dayTask.id}`
+      );
     } else {
       data = await oneTimeTasksModel.updateOneWithReturn(
         'comment',
@@ -92,25 +92,25 @@ export const updateDayTask = async (req, res) => {
       );
     }
   } else if (req.dayTask.status !== status) {
-      if (status === 'success') {
-        const goalData = await goalTasksModel.updateOneWithReturn(
+    if (status === 'success') {
+      const goalData = await goalTasksModel.updateOneWithReturn(
+        'done',
+        'done + 1',
+        `task_id = '${taskId}' AND times > done`
+      );
+      const goalTask = goalData.rows;
+      goalTask.forEach(async (task) => {
+        await goalsModel.updateOne(
           'done',
           'done + 1',
-          `task_id = '${taskId}' AND times > done`
+          `id = '${task.goal_id}'`
         );
-        const goalTask = goalData.rows;
-        goalTask.forEach(async (task) => {
-          await goalsModel.updateOne(
-            'done',
-            'done + 1',
-            `id = '${task.goal_id}'`
-          );
-        });
-      }
-      data = await dayTasksModel.updateWithReturn(
-        pairs,
-        `id = ${req.dayTask.id}`
-      );
+      });
+    }
+    data = await dayTasksModel.updateWithReturn(
+      pairs,
+      `id = ${req.dayTask.id}`
+    );
   } else {
     data = await dayTasksModel.updateOneWithReturn(
       'comment',

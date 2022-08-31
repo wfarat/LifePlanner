@@ -15,7 +15,7 @@ export default function IntlProviderWrapper({ children }) {
   );
   useEffect(() => {
     if (user.auth) {
-    setLangs(languages[user.user.lang])
+      setLangs(languages[user.user.lang]);
     }
   }, [user.auth]);
   const dispatch = useDispatch();

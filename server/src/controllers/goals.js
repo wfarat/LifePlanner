@@ -164,6 +164,10 @@ export const editGoalTask = async (req, res) => {
     `times - ${req.goalTask.times} + ${times}`,
     `id = ${req.goalTask.goal_id}`
   );
-  const data = await goalTasksModel.updateOneWithReturn('times', `${times}`, `id = ${req.goalTask.id}`);
-  res.status(203).send({ goalTask: data.rows[0]});
-}
+  const data = await goalTasksModel.updateOneWithReturn(
+    'times',
+    `${times}`,
+    `id = ${req.goalTask.id}`
+  );
+  res.status(203).send({ goalTask: data.rows[0] });
+};
