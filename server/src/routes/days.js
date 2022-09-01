@@ -41,4 +41,5 @@ daysRouter.delete('/notes/:noteId', deleteDayNote);
 
 daysRouter.post('/:dayRef/tasks/one', addOneTimeTask);
 daysRouter.put('/tasks/one/:oneId', updateDayTask);
+daysRouter.delete('/tasks/one/:oneId', deleteDayTask);
 export default daysRouter;

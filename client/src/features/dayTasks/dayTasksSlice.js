@@ -37,11 +37,20 @@ export const updateDayTask = createAsyncThunk(
   }
 );
 export const deleteDayTask = createAsyncThunk('deleteDayTask', async (data) => {
-  const res = await axios(`/api/days/tasks/${data.dayTaskId}`, {
+  let res;
+  if (data.dayTask.oneTime) {
+    res = await axios(`/api/days/tasks/one/${data.dayTaskId}`, {
+      method: 'DELETE',
+      headers: { 'x-access-token': data.accessToken },
+      data: data.dayTask,
+    });
+  } else {
+   res = await axios(`/api/days/tasks/${data.dayTaskId}`, {
     method: 'DELETE',
     headers: { 'x-access-token': data.accessToken },
     data: data.dayTask,
   });
+}
   return res.data;
 });
 
